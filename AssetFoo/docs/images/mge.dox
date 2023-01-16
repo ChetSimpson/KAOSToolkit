@@ -1,0 +1,106 @@
+/*! \page fileformats_tc1014_mge ColorMax and ColorMax Deluxe MGE Image File Format
+
+The MGE image file format was created by Greg Miller and Erik Gavriluk as the
+image format for ColorMax and ColorMax Deluxe. It supports a single 320x200 16
+color image with title, colorspace information, colormap animations, and
+optional compression.
+
+<h2>Format Overview</h2>
+
+<h2>Header Layout</h2>
+
+The MGE file format includes a 51 byte header at the beginning of the file
+followed by the image data. The following table lists the fields composing
+the header, their offset, size, and description.
+
+
+Offset | Size |	Description
+------ | -----|-----------------------------
+	0  | 1	  |	Image Type.
+	1  | 16	  |	Colormap .
+	17 | 1	  |	Colorspace.
+	18 | 1	  |	Compression Flag.
+	19 | 30	  |	Title (null terminated)
+	49 | 1	  |	Color Cycle Delay
+	50 | 1	  |	Color Cycle Range
+
+<h3>Image Type</h3>
+
+The `Image Type` field defines the dimensions and pixel depth of image. The
+following table lists the dimensions and pixel depths by `Image Type` supported
+by the MGE format.
+
+Type | Dimensions | Colors | Pixel Depth | Size In Bytes
+:--: | :--------: | :----: | ----------- | -------------
+0    | 320 x 200  | 16     | 4 bpp       | 32,000
+
+<h3>Colormap</h3>
+
+The `Colormap` field is 16 bytes in length with each byte defining a color
+in [TC1014 RGB222](\ref platform_tc1014_RGB222) or [TC1014 C4I2](\ref platform_tc1014_C4I2)
+format depending on the value in the `Colorspace` field.
+
+<h3>Colorspace</h3>
+
+The value in the `Colorspace` field specifies the format of the data stored in
+the `Colormap` field. The following table lists the supported colorspace types
+and their value.
+
+Value | Colorspace & Format
+:---: | :------------------
+0     | [TC1014 RGB222](\ref platform_tc1014_RGB222)
+1     | [TC1014 C4I2](\ref platform_tc1014_C4I2)
+
+<h3>Image Compression</h3>
+
+The `Compression Flag` field specifies whether the images is compressed or not. If the
+value of the `Compression Flag` is 0 (zero) the image data is compressed; otherwise the
+image data is uncompressed.
+
+For compressed images, the MGE format incorporates a standard run-length encoding scheme
+comprised of a series of byte pairs for the run count and data.
+
+<h3>Title</h3>
+
+The `Title` field is 30 bytes long and contains a null terminated string.
+
+<h3>Color Cycling</h3>
+
+The color cycling fields specify the speed and range of colors in the colormap
+to cycle as an animation. The `Color Cycle Delay` field specifies the speed of
+the animation in 1/60th of a second. The `Color Cycle Range` field specfies the
+range of colors in the colormap to cycle with the high nibble (upper 4 bits)
+specifying the first color in the range and the low nibble (lower 4 bits)
+specifying the last color in the range.
+
+During animation the colors in the colormap are roated down from their current
+position with the color in the first slot of range moved to the last slot in the
+range.
+
+<h2>Image data</h2>
+
+The image data immediately follows the header and uses a 4 bits per pixel (16 color)
+packed pixel format. If the image is uncompressed the image data is 32,000 bytes
+long and is interpreted literally. If the image is compressed the image data is a
+variable number of RLE pair byte values. The first byte is the count and specifies
+the number of times to repeat the pixel data. The second byte is the pixel
+data and contains 2 pixels in packed pixel format. A count byte with a value of 0
+(zero) indicates the end of the compressed image data.
+
+A pseudo code fragment to uncompress a compressed MGE image might look like this.
+
+	 Loop until end of input data or n is 0
+		Expecting:
+			Read the next source byte into n
+			Read the next source byte into v
+			Copy v into the image n times
+		Endloop
+
+
+\sa [MGE Image Implementation Details](\ref hypertech::kaos::assetfoo::images::mge::mge_image).
+\sa [MGE Image Loader Implementation Details](\ref hypertech::kaos::assetfoo::images::mge::mge_image_reader).
+\sa Getting The Picture With OS-9 Part 1 - The Rainbow, Volume 10 Number 3 - October 1990.
+\sa Displaying Picture Files Using OS-9 Level II Graphics Part II - The Rainbow, Volume 10 Number 4 - November 1990.
+\sa Displaying Picture Files Using OS-9 Level II Graphics Part III - The Rainbow, Volume 10 Number 5 - December 1990.
+
+*/

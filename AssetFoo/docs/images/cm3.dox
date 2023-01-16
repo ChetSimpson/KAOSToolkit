@@ -1,0 +1,156 @@
+﻿/*! \page fileformats_tc1014_cm3 CoCoMax III Image File Format
+
+The CM3 file format was created for the CoCoMax III graphics editor and supports
+multiple image sizes, color animationa and cycling, and an optional collection
+of monochrome patterns.
+
+<h2>File Format Overview</h2>
+
+The CM3 file format includes three parts; a 29 byte header followed by an optional
+243 byte pattern table containing 24 patterns, and 1 (one) or 2 (two) 320x192 image
+pages.
+
+
+<h2>Header Details</h2>
+
+The CM3 file format includes a 29 byte header that includes the colormap, animation
+and cycling colors, and various settings and bit flags. The following table lists
+the fields composing the header.
+	
+Offset | Size in bytes | Name			   | Description
+------ | ------------- | ----------------  | -----------
+0      | 1			   | Image Flags	   | Attributes of the image file.
+1      | 16			   | Colormap		   | 16 slot colormap
+17     | 1			   | Animation Rate	   | Speed of color animation
+18     | 1			   | Color Cycle Rate  | Speed of color cycling.
+26     | 8			   | Color Cycle List  | Colors used for cycling.
+27     | 1			   | Animation Flags   | Attributes for the color animation
+28     | 1			   | Color Cycle Flags | Attributes for the color cycling.
+	
+<h3>Image Flags</h3>
+
+The `Image Flags` field specifies the number of image pages included in the
+image data section and the inclusion of the pattern table. The following table
+lists the bit flags in the `Image  Flags` field.
+
+Bit | Description
+--- | -----------
+7	| Number of image pages. 0 = single page (192 rows), 1 = two pages (384 rows)
+6	| \<UNKNOWN>
+5	| \<UNKNOWN>
+4	| \<UNKNOWN>
+3	| \<UNKNOWN>
+2	| \<UNKNOWN>
+1	| \<UNKNOWN>
+0	| Exclude patterns (0 = include patterns, 1 = exclude patterns)
+
+<h3>Colormap</h3>
+
+The `Colormap` field is 16 bytes in length with each byte defining a color
+in [TC1014 RGB222](\ref platform_tc1014_RGB222) or [TC1014 C4I2](\ref platform_tc1014_C4I2)
+format. The colorspace defining the entries of the colormap is not included in
+the image format and must be determined by other means.
+
+<h3>Animation Rate</h3>
+
+The `Animation Rate` field specifies the speed in a 60th's of a second the
+colors in colormap indexes 11, 12, 13, and 14 are rotated through the colormap.
+
+<h3>Color Cycle Rate</h3>
+
+The `Color Cycle Rate` field specifies the speed in a 60th's of a second the colors
+in the `Color Cycle List` field are cycled through index 10 in the colormap.
+
+<h3>Color Cycle List</h3>
+
+The `Color Cycle List` field is 8 bytes in length with each byte defining a color
+in [TC1014 RGB222](\ref platform_tc1014_RGB222) or [TC1014 C4I2](\ref platform_tc1014_C4I2)
+format. The colors in this list are used for the color cycling animation feature
+of the image. Like the `Colormap` field, the colorspace defining the entries is not
+included and must be determined by other means.
+
+<h3>Animation Flags</h3>
+
+The `Animation Flags` field includes settings for animation through rotating
+entires in the colormap. The following table lists the bit flags in the
+`Animation Flags` field.
+
+Bit | Description
+--- | -----------
+7	| 0 = animation disabled, 1 = animation enabled
+6	| \<UNKNOWN>
+5	| \<UNKNOWN>
+4	| \<UNKNOWN>
+3	| \<UNKNOWN>
+2	| \<UNKNOWN>
+1	| \<UNKNOWN>
+0	| \<UNKNOWN>
+	
+<h4>Cycling Flags</h4>
+	
+The `Cycling Flags` field includes settings for color cycling through index 10 in
+the colormap. The following table lists the bit flags in the `Animation Flags`
+field.
+
+Bit | Description
+--- | -----------
+7	| 0 = cycling disabled, 1 = cycling enabled
+6	| \<UNKNOWN>
+5	| \<UNKNOWN>
+4	| \<UNKNOWN>
+3	| \<UNKNOWN>
+2	| \<UNKNOWN>
+1	| \<UNKNOWN>
+0	| \<UNKNOWN>
+	
+
+<h2>Pattern Table</h2>
+
+Immediately following the header is an optional pattern table consisting of 24
+monochrome bitmap patterns. If bit 0 of the `Image Flags` field is set to 0
+(zero) the pattern table is present; otherwise it is not. The following table
+shows the layout of the pattern table.
+
+Offset | Size in bytes | Description
+------ | ------------- | -----------
+0	   | 3             | Header
+3      | 240           | Patterns
+
+The header always contains zero's. Each pattern in the table is 10 bytes in size
+for a total of 240 bytes. The following table shows the layout of each pattern
+in the table.
+
+Offset | Size in bytes | Description
+------ | ------------- | -----------
+0	   | 1             | Colormap index for pattern color 0 (bit value 0)
+1      | 1             | Colormap index for pattern color 1 (bit value 1)
+2      | 8             | 8x8 monochrome bitmap pattern
+
+
+<h2>Image Data Compression</h2>
+
+\todo Add details on compression
+
+<h2>Cycling and Animation</h2>
+
+The CM3 format supports the ability to specify independant color cycling and
+color animations for an image.
+
+When color cycling is enabled (via the `Color Cycle Flags`) the colors defined
+in the `Color Cycle List` field are cycled in order in index 10 of the colormap.
+The speed of the cycling is specified in 60ths of a second by the
+`Color Cycle Rate` field.
+
+When color animation is enabled (via the `Color Animation Flags`) the colors
+defined in `Colormap` indexes 11, 12, 13, and 14 are rotated. The speed of the
+rotation is specified in 60ths of a second by the `Animation Rate` field.
+
+
+\sa [CM3 Image Implementation Details](\ref hypertech::kaos::assetfoo::images::cm3::cm3_image).
+\sa [CM3 Image Loader Implementation Details](\ref hypertech::kaos::assetfoo::images::cm3::cm3_image_reader).
+\sa Getting The Picture With OS-9 - The Rainbow, Volume 10 Number 3 - October 1990.
+\sa Displaying Picture Files Using OS-9 Level II Graphics Part II - The Rainbow, Volume 10 Number 4 - November 1990.
+\sa Displaying Picture Files Using OS-9 Level II Graphics Part III - The Rainbow, Volume 10 Number 5 - December 1990.
+
+
+*/

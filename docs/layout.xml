@@ -1,0 +1,46 @@
+<doxygenlayout version="1.0">
+		<navindex>
+			<tab type="mainpage" visible="yes" title="KAOS Toolkit" />
+			<!--<tab type="pages" visible="yes" title="" intro=""/>-->
+			<tab type="usergroup" visible="yes" title="API Reference" intro="x">
+				<tab type="namespaces" visible="yes" title="">
+					<tab type="namespacelist" visible="yes" title="" intro=""/>
+					<tab type="namespacemembers" visible="yes" title="" intro=""/>
+				</tab>
+				<tab type="classes" visible="yes" title="">
+					<tab type="classlist" visible="yes" title="" intro=""/>
+					<tab type="classindex" visible="$ALPHABETICAL_INDEX" title=""/>
+					<tab type="hierarchy" visible="yes" title="" intro=""/>
+					<tab type="classmembers" visible="yes" title="" intro=""/>
+				</tab>
+				<tab type="files" visible="yes" title="">
+					<tab type="filelist" visible="yes" title="" intro=""/>
+					<tab type="globals" visible="yes" title="" intro=""/>
+				</tab>
+				<tab type="examples" visible="yes" title="" intro=""/>
+			</tab>
+
+			<tab type="usergroup" visible="yes" title="Reference Documents" intro="">
+				<tab type="user" url="@ref image_file_formats" visible="yes" title="Image File Formats"/>
+			</tab>
+			<tab type="user" url="todo.html" visible="yes" title="TODO list"/>
+
+		</navindex>
+		<!--<class>
+			...
+		</class>
+		<namespace>
+			...
+		</namespace>
+		<concept>
+			...
+		</concept>
+		<file>
+			...
+		</file>-->
+		<!--<group>
+		</group>
+		<directory>
+			...
+		</directory>-->
+</doxygenlayout>

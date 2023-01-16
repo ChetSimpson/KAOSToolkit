@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="types">
+      <UniqueIdentifier>{4e6acbef-7328-4c2b-a983-c2f42d40c8b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="io">
+      <UniqueIdentifier>{058b97fb-1d81-44d3-87be-b49b5ef46b5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility">
+      <UniqueIdentifier>{5739931b-b493-4167-ada1-0a1fc0221e28}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Types\test_box_iterator.cpp">
+      <Filter>types</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Types\test_rgba_color.cpp">
+      <Filter>types</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Types\test_vector2.cpp">
+      <Filter>types</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Types\test_empty_bitfield.cpp">
+      <Filter>types</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Types\test_split_bitfield.cpp">
+      <Filter>types</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Types\test_single_bitfield.cpp">
+      <Filter>types</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Types\test_fixed_variant.cpp">
+      <Filter>types</Filter>
+    </ClCompile>
+    <ClCompile Include="src\types\test_box_view.cpp">
+      <Filter>types</Filter>
+    </ClCompile>
+    <ClCompile Include="src\types\test_dimension2d.cpp">
+      <Filter>types</Filter>
+    </ClCompile>
+    <ClCompile Include="src\io\test_binary_reader.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\test_bit_reader.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utility\test_byteswap.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

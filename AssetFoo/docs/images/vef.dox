@@ -1,0 +1,110 @@
+/*! \page fileformats_tc1014_vef OS-9/6809 VEF Image File Format
+
+The VEF image file format was created by the engineering team that developed
+OS-9 Level II and was later extended by Mike Haaland of HyperTech Software to
+support compression. It supports a wide range of image sizes and all pixel
+depths of the TC1014 platform.
+
+<h2>Format Overview</h2>
+
+The VEF file format includes an 18 byte header at the beginning of the file
+followed by the image data.
+
+<h2>Header Layout</h2>
+
+The VEF image header is 18 bytes long and includes the image type and colormap.
+The following table is a breakdown of the VEF header.
+
+Offset | Size in bytes | Description
+------ | ------------- | :----------
+    0  | 1			   | Image Flags.
+    1  | 1			   | Image Type.
+    2  | 16			   | Colormap.
+
+
+<h3>Image Flags</h3>
+
+The `Image Flags` field contains only a single bit flag specifying if the image
+is uncompressed or compressed. If the high bit is clear (zero) the image is
+uncompressed; otherwise it is compressed using a method commonly referred to as
+_squashed_ encoding.
+
+<h3>Image Types</h3>
+
+The `Image Type` field defines the dimensions and pixel depth of image. The
+following table lists the dimensions and pixel depths by `Image Type` supported
+by the VEF format.
+
+Type | Dimensions | Colors | Pixel Depth | Size In Bytes
+:--: | :--------: | :----: | ----------- | -------------
+0    | 320 x 200  | 16     | 4 bpp       | 32,000
+1    | 640 x 200  | 4      | 2 bpp       | 32,000
+2    | 160 x 200  | 16     | 4 bpp       | 16,000
+3    | 320 x 200  | 4      | 2 bpp       | 16,000
+4    | 640 x 200  | 2      | 1 bpp       | 16,000
+
+<h3>Colormap</h3>
+
+The `Colormap` field is always 16 bytes with only the first _n_ entries used
+depending on the number of colors in the image with each byte defining a color
+in [TC1014 RGB222](\ref platform_tc1014) format. 
+
+
+<h2>Image Data</h2>
+
+<h3>Uncompressed Image Data</h3>
+
+If the image is uncompressed the picture data is stored immediately after the
+header. See the `Image Type` table for size in bytes of the uncompressed image
+data for each of the supported resolutions.
+
+<h3>Compressed Image Data</h3>
+
+If the image is compressed each half-row of the image is packed into individual
+blocks containing multiple packets of both literal data and run-length encoded
+data. Each half-row block has the following layout.
+
+Size in bytes | Description
+------------- | :----------
+1             | Number of packet data bytes in the block.
+2..n          | 2..n bytes containing 1 or more packets of data.
+
+
+<h4>Packet Data</h4>
+
+Each packet consists of a one byte header followed by one or more bytes of data.
+The header byte contains two parts - a compression flag and a byte count. The
+high bit of the header is the compression flag and the lower seven bits is a
+count value (_n_). If the high bit is clear (zero) the packet header is following
+by _n_ bytes that are copied as literal data; otherwise the the packet contains a
+single data byte that is repeated _n_ times.
+
+A pseudo code fragment to *unsquash* a compressed block might look like this.
+
+	 Loop until end of block data or end of half-row
+		Expecting:
+			Read the next source byte into n.
+			If n is less than 128, copy the next n bytes literally.
+			Else copy the next byte n-128 times.
+		Endloop
+
+<h4>Application Notes</h4>
+
+1. Since the only image height supported is 200 rows there will always be 400
+half-row blocks in a compressed image.
+2. The count value (_n_) included in the packet header cannot be zero regardless
+of whether the packet is a run-length encoding or a literal.
+3. Some image compression programs erroneously include packets that exceed the
+upper bounds of a half-row block. Special care must be taken to account for
+these type of overruns when decompressing a packet otherwise the resulting
+image will be distorted.
+
+
+\sa [VEF Image Implementation Details](\ref hypertech::kaos::assetfoo::images::vef::vef_image).
+\sa [VEF Image Loader Implementation Details](\ref hypertech::kaos::assetfoo::images::vef::vef_image_reader).
+\sa [MVCanvas VEF documentation online](http://www.sdc.org/~goosey/os9/vef.format.txt).
+\sa Getting The Picture With OS-9 Part 1 - The Rainbow, Volume 10 Number 3 - October 1990.
+\sa Displaying Picture Files Using OS-9 Level II Graphics Part II - The Rainbow, Volume 10 Number 4 - November 1990.
+\sa Displaying Picture Files Using OS-9 Level II Graphics Part III - The Rainbow, Volume 10 Number 5 - December 1990.
+
+*/

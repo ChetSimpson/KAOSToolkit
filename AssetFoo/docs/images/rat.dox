@@ -1,0 +1,85 @@
+/*! \page fileformats_tc1014_rat The Rat Graphics Design Package Image File Format
+
+The RAT image file format was created by Roland Knight and Dave Dies for use
+with Diecom's graphics editor *The Rat Graphics Design Package* for the Color
+Computer 3. It supports a single image resolution of 320x199 at 4 bits per
+pixel (16 colors). The compression method used is a variant of run-length
+encording.
+
+<h2>File Format Overview</h2>
+
+The RAT file format includes two parts; a 19 byte header followed by the image
+data.
+
+<h2>Header Details</h2>
+
+The RAT file format includes a 19 byte header that includes an *escape* value
+used for decompression, a colormap, a compression flag, and a background color. 
+The following table lists the fields composing the header.
+	
+Offset | Size in bytes | Description
+------ | ------------- | -----------
+0      | 1			   | Escape Code
+1      | 1			   | Compression Flag
+2      | 16			   | Colormap
+18     | 1			   | Background Color
+
+<h3>Escape Code</h3>
+
+The `Escape Code` field specifies a value used to decompress the image.
+
+<h3>Compression Flag</h3>
+
+The `Compression Flag` field specifies whether the images is compressed or not.
+If the value of the `Compression Flag` is 0 (zero) the image data is not
+compressed; otherwise the image data is compressed.
+
+<h3>Colormap</h3>
+
+The `Colormap` field is 16 bytes in length with each byte defining a color
+in [TC1014 RGB222](\ref platform_tc1014_RGB222) or [TC1014 C4I2](\ref platform_tc1014_C4I2)
+format. The colorspace defining the entries of the colormap is not included in
+the image format and must be determined by other means.
+
+<h3>Background Color</h3>
+
+The `Background Color` field is a single byte defining a color in
+[TC1014 RGB222](\ref platform_tc1014_RGB222) or [TC1014 C4I2](\ref platform_tc1014_C4I2)
+format. The colorspace defining the entries of the colormap is not included in
+the image format and must be determined by other means.
+
+The use of this color is currently unknown.
+
+<h2>Image data</h2>
+
+The image data immediately follows the header and uses a 4 bits per pixel (16 color)
+packed pixel format. If the image is uncompressed the image data is 31,840 bytes
+long and is interpreted literally. If the image is compressed the image data is a
+combination of uncompressed blocks and RLE pair byte values.
+
+Compressed images use an escape code to indicate that a series of bytes have
+been compressed using the run-length encoding method. When a byte is read from
+the image data is is compared against the value in the `Escape Code` field of
+the header. If the value does not match it is interpreted literally and the byte
+is added to the image. If the value does match then the next two bytes following
+the escape byte are a run-length encoded byte pair. The first byte of pair pair
+is the count and specifies the number of times to repeat the pixel data. The
+second byte is the pixel data and contains 2 pixels in packed pixel format.
+
+A pseudo code fragment to uncompress a compressed RAT image might look like this.
+
+	 Loop until end of input data
+		Expecting:
+			Read the next source byte into n
+			If n matches the escape code then
+				Read the next source byte into r
+				Read the next source byte into v
+				Copy v into the image r times.
+			Else copy n into the image
+		Endloop
+
+\sa [RAT Image Implementation Details](\ref hypertech::kaos::assetfoo::images::rat::rat_image).
+\sa [RAT Image Loader Implementation Details](\ref hypertech::kaos::assetfoo::images::rat::rat_image_reader).
+\sa Displaying Picture Files Using OS-9 Level II Graphics Part II - The Rainbow, Volume 10 Number 4 - November 1990.
+
+*/

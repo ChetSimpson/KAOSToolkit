@@ -1,0 +1,27 @@
+/*! \page fileformats_tc1014_hrs Davinci 3 Image File Format
+
+The HRS file format is a generic format used by Davinci 3 and a handful of
+lesser known programs for the Color Computer 3. It is a simple format containing
+only a colormap and a 320x192 16 color image. The following table shows the
+layout of the HRS file format.
+
+Offset | Size in bytes | Description
+------ | ------------- | ---------------- 
+0      | 1			   | Colormap
+1      | 30,720		   | Image Data
+
+<h2>Colormap</h2>
+
+The `Colormap` field is 16 bytes in length with each byte defining a color
+in [TC1014 RGB222](\ref platform_tc1014_RGB222) or [TC1014 C4I2](\ref platform_tc1014_C4I2)
+format. The colorspace defining the entries of the colormap is not included in
+the image format and must be determined by other means.
+
+<h2>Image Data</h2>
+
+The image data is stored uncompressed in a 4 bits per pixel packed pixel format.
+
+\sa [HRS Image Implementation Details](\ref hypertech::kaos::assetfoo::images::tc1014::tc1014_image).
+\sa [HRS Image Loader Implementation Details](\ref hypertech::kaos::assetfoo::images::hrs::hrs_image_reader).
+
+*/

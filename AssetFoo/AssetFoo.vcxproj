@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\asset_reader.cpp" />
+    <ClCompile Include="src\Colors\color_converter.cpp" />
+    <ClCompile Include="src\Colors\color_layout.cpp" />
+    <ClCompile Include="src\Colors\color_map.cpp" />
+    <ClCompile Include="src\colors\gimp\gimp_palette_reader.cpp" />
+    <ClCompile Include="src\colors\tc1014\tc1014_color_converter.cpp" />
+    <ClCompile Include="src\colors\tc1014\tc1014_color_layout.cpp" />
+    <ClCompile Include="src\images\cm3\cm3_image.cpp" />
+    <ClCompile Include="src\images\cm3\cm3_image_reader.cpp" />
+    <ClCompile Include="src\images\hash.cpp" />
+    <ClCompile Include="src\images\hrs\hrs_image_reader.cpp" />
+    <ClCompile Include="src\images\image.cpp" />
+    <ClCompile Include="src\images\mge\mge_image.cpp" />
+    <ClCompile Include="src\images\mge\mge_image_reader.cpp" />
+    <ClCompile Include="src\images\png\png_image_reader.cpp" />
+    <ClCompile Include="src\images\rat\rat_image.cpp" />
+    <ClCompile Include="src\images\rat\rat_image_reader.cpp" />
+    <ClCompile Include="src\images\tc1014\tc1014_image.cpp" />
+    <ClCompile Include="src\images\tc1014\tc1014_image_reader.cpp" />
+    <ClCompile Include="src\images\vef\vef_image_reader.cpp" />
+    <ClCompile Include="src\Pixel\packed_pixel_converter.cpp" />
+    <ClCompile Include="src\Pixel\packed_pixel_layout.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="docs\images\cm3.dox" />
+    <None Include="docs\images\formats.dox" />
+    <None Include="docs\images\hrs.dox" />
+    <None Include="docs\images\mge.dox" />
+    <None Include="docs\images\rat.dox" />
+    <None Include="docs\images\vef.dox" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\kaos\assetfoo\abstract_packed_pixel_layout.h" />
+    <ClInclude Include="include\kaos\assetfoo\asset.h" />
+    <ClInclude Include="include\kaos\assetfoo\asset_reader.h" />
+    <ClInclude Include="include\kaos\assetfoo\colors\color_converter.h" />
+    <ClInclude Include="include\kaos\assetfoo\colors\color_layout.h" />
+    <ClInclude Include="include\kaos\assetfoo\colors\color_map.h" />
+    <ClInclude Include="include\kaos\assetfoo\colors\color_space.h" />
+    <ClInclude Include="include\kaos\assetfoo\colors\gimp\gimp_palette_reader.h" />
+    <ClInclude Include="include\kaos\assetfoo\colors\tc1014\tc1014_color_converter.h" />
+    <ClInclude Include="include\kaos\assetfoo\colors\tc1014\tc1014_color_layout.h" />
+    <ClInclude Include="include\kaos\assetfoo\exceptions.h" />
+    <ClInclude Include="include\kaos\assetfoo\images\cm3\cm3_image.h" />
+    <ClInclude Include="include\kaos\assetfoo\images\cm3\cm3_image_reader.h" />
+    <ClInclude Include="include\kaos\assetfoo\images\hash.h" />
+    <ClInclude Include="include\kaos\assetfoo\images\hrs\hrs_image_reader.h" />
+    <ClInclude Include="include\kaos\assetfoo\images\image.h" />
+    <ClInclude Include="include\kaos\assetfoo\images\mge\mge_image.h" />
+    <ClInclude Include="include\kaos\assetfoo\images\mge\mge_image_reader.h" />
+    <ClInclude Include="include\kaos\assetfoo\images\monochrome_pattern.h" />
+    <ClInclude Include="include\kaos\assetfoo\images\png\png_image_reader.h" />
+    <ClInclude Include="include\kaos\assetfoo\images\rat\rat_image.h" />
+    <ClInclude Include="include\kaos\assetfoo\images\rat\rat_image_reader.h" />
+    <ClInclude Include="include\kaos\assetfoo\images\tc1014\tc1014_image.h" />
+    <ClInclude Include="include\kaos\assetfoo\images\tc1014\tc1014_image_reader.h" />
+    <ClInclude Include="include\kaos\assetfoo\images\vef\vef_image.h" />
+    <ClInclude Include="include\kaos\assetfoo\images\vef\vef_image_reader.h" />
+    <ClInclude Include="include\kaos\assetfoo\pixels\packed_pixel_converter.h" />
+    <ClInclude Include="include\kaos\assetfoo\pixels\packed_pixel_layout.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{f62661dc-1812-4a14-8749-24a993c1fd4b}</ProjectGuid>
+    <RootNamespace>AssetFoo</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\KAOSToolkit.props" />
+    <Import Project="..\AssetFoo\AssetFoo.props" />
+    <Import Project="..\KAOSCore\KAOSCore.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\KAOSToolkit.props" />
+    <Import Project="..\AssetFoo\AssetFoo.props" />
+    <Import Project="..\KAOSCore\KAOSCore.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\KAOSToolkit.props" />
+    <Import Project="..\AssetFoo\AssetFoo.props" />
+    <Import Project="..\KAOSCore\KAOSCore.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\KAOSToolkit.props" />
+    <Import Project="..\AssetFoo\AssetFoo.props" />
+    <Import Project="..\KAOSCore\KAOSCore.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)external/lodepng/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)external/lodepng/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)external/lodepng/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)external/lodepng/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\boost.1.81.0\build\boost.targets" Condition="Exists('..\packages\boost.1.81.0\build\boost.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\boost.1.81.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.81.0\build\boost.targets'))" />
+  </Target>
+</Project>

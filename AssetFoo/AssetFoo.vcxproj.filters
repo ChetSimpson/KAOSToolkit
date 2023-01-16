@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\colors">
+      <UniqueIdentifier>{e32cbad3-20c8-4f41-9dfc-36670a103f20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\colors\gimp">
+      <UniqueIdentifier>{9b588eb4-25d5-439f-8159-a5e90d4af2f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\pixel">
+      <UniqueIdentifier>{3aaf2da7-c8c7-48e1-b423-d1b1804d820a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\pixels">
+      <UniqueIdentifier>{9b4f9854-1504-4fa3-9f0b-e56e4a55013c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\colors">
+      <UniqueIdentifier>{2836fc88-051e-44b0-b105-748b48d37909}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\colors\gimp">
+      <UniqueIdentifier>{a8f96b47-ba36-469b-a97b-e1e409c56350}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\images">
+      <UniqueIdentifier>{d36486ee-6579-4ffb-857c-3e3b46cc7e27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\images">
+      <UniqueIdentifier>{cd338524-32ae-402d-a1e9-09ea5c78378d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation">
+      <UniqueIdentifier>{e6888f49-446a-46d0-a35e-2feac2ca63c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation\images">
+      <UniqueIdentifier>{98f10033-2d37-4475-aaa3-0ee6a3e5cdd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\images\mge">
+      <UniqueIdentifier>{74e1a463-883c-4f10-ae55-381f006f127b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\images\mge">
+      <UniqueIdentifier>{97206c9a-8e07-4993-9807-77ac55b017f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\images\tc1014">
+      <UniqueIdentifier>{945a8758-a324-4b0a-9afe-fc6238146cdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\images\tc1014">
+      <UniqueIdentifier>{0f115ee0-9565-4100-ae34-38cf44ca9a8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\images\vef">
+      <UniqueIdentifier>{8c04b5fb-f412-4c46-aa2a-9714ce342784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\images\vef">
+      <UniqueIdentifier>{6a7c01d1-c971-4149-9449-d85d07f55b45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\images\rat">
+      <UniqueIdentifier>{af5801eb-90be-41a4-b444-ede6a93f60a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\images\rat">
+      <UniqueIdentifier>{913d6f72-b5a7-4a43-8b0b-33316f730c8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\images\hrs">
+      <UniqueIdentifier>{2bf0d9fa-f3d8-42ea-af5d-6cbb9c6a19c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\images\hrs">
+      <UniqueIdentifier>{cac77a69-eecc-4bd1-b498-7762a29a0f7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\images\cm3">
+      <UniqueIdentifier>{4933e587-160b-4e6f-9212-ba66566398d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\images\cm3">
+      <UniqueIdentifier>{09243377-9703-4a1d-ac87-a4b10d694761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\images\png">
+      <UniqueIdentifier>{a6f11a94-ae99-43f3-8b6d-a774ce348cae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\images\png">
+      <UniqueIdentifier>{a0fe5f8a-8ace-46a5-81ad-2508ca2af1f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\colors\tc1014">
+      <UniqueIdentifier>{feac83f4-afcb-48ab-a840-29f0c1afc55a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\colors\tc1014">
+      <UniqueIdentifier>{1d33955b-1b62-4020-ae4a-e70a5452eb5b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Pixel\packed_pixel_layout.cpp">
+      <Filter>Source Files\pixel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Colors\color_converter.cpp">
+      <Filter>Source Files\colors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Colors\color_map.cpp">
+      <Filter>Source Files\colors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pixel\packed_pixel_converter.cpp">
+      <Filter>Source Files\pixel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Colors\color_layout.cpp">
+      <Filter>Source Files\colors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\image.cpp">
+      <Filter>Source Files\images</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\mge\mge_image.cpp">
+      <Filter>Source Files\images\mge</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\tc1014\tc1014_image.cpp">
+      <Filter>Source Files\images\tc1014</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\hash.cpp">
+      <Filter>Source Files\images</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\rat\rat_image.cpp">
+      <Filter>Source Files\images\rat</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\cm3\cm3_image.cpp">
+      <Filter>Source Files\images\cm3</Filter>
+    </ClCompile>
+    <ClCompile Include="src\colors\gimp\gimp_palette_reader.cpp">
+      <Filter>Source Files\colors\gimp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\cm3\cm3_image_reader.cpp">
+      <Filter>Source Files\images\cm3</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\hrs\hrs_image_reader.cpp">
+      <Filter>Source Files\images\hrs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\mge\mge_image_reader.cpp">
+      <Filter>Source Files\images\mge</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\png\png_image_reader.cpp">
+      <Filter>Source Files\images\png</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\rat\rat_image_reader.cpp">
+      <Filter>Source Files\images\rat</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\tc1014\tc1014_image_reader.cpp">
+      <Filter>Source Files\images\tc1014</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\vef\vef_image_reader.cpp">
+      <Filter>Source Files\images\vef</Filter>
+    </ClCompile>
+    <ClCompile Include="src\asset_reader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\colors\tc1014\tc1014_color_converter.cpp">
+      <Filter>Source Files\colors\tc1014</Filter>
+    </ClCompile>
+    <ClCompile Include="src\colors\tc1014\tc1014_color_layout.cpp">
+      <Filter>Source Files\colors\tc1014</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="docs\images\cm3.dox">
+      <Filter>Documentation\images</Filter>
+    </None>
+    <None Include="docs\images\formats.dox">
+      <Filter>Documentation\images</Filter>
+    </None>
+    <None Include="docs\images\mge.dox">
+      <Filter>Documentation\images</Filter>
+    </None>
+    <None Include="docs\images\rat.dox">
+      <Filter>Documentation\images</Filter>
+    </None>
+    <None Include="docs\images\vef.dox">
+      <Filter>Documentation\images</Filter>
+    </None>
+    <None Include="packages.config" />
+    <None Include="docs\images\hrs.dox">
+      <Filter>Documentation\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\kaos\assetfoo\abstract_packed_pixel_layout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\asset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\colors\color_converter.h">
+      <Filter>Header Files\colors</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\colors\color_layout.h">
+      <Filter>Header Files\colors</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\colors\color_map.h">
+      <Filter>Header Files\colors</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\hash.h">
+      <Filter>Header Files\images</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\image.h">
+      <Filter>Header Files\images</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\monochrome_pattern.h">
+      <Filter>Header Files\images</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\cm3\cm3_image.h">
+      <Filter>Header Files\images\cm3</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\mge\mge_image.h">
+      <Filter>Header Files\images\mge</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\rat\rat_image.h">
+      <Filter>Header Files\images\rat</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\tc1014\tc1014_image.h">
+      <Filter>Header Files\images\tc1014</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\pixels\packed_pixel_converter.h">
+      <Filter>Header Files\pixels</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\pixels\packed_pixel_layout.h">
+      <Filter>Header Files\pixels</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\exceptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\vef\vef_image.h">
+      <Filter>Header Files\images\vef</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\asset_reader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\colors\gimp\gimp_palette_reader.h">
+      <Filter>Header Files\colors\gimp</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\cm3\cm3_image_reader.h">
+      <Filter>Header Files\images\cm3</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\hrs\hrs_image_reader.h">
+      <Filter>Header Files\images\hrs</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\mge\mge_image_reader.h">
+      <Filter>Header Files\images\mge</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\png\png_image_reader.h">
+      <Filter>Header Files\images\png</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\rat\rat_image_reader.h">
+      <Filter>Header Files\images\rat</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\tc1014\tc1014_image_reader.h">
+      <Filter>Header Files\images\tc1014</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\vef\vef_image_reader.h">
+      <Filter>Header Files\images\vef</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\colors\color_space.h">
+      <Filter>Header Files\colors</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\colors\tc1014\tc1014_color_converter.h">
+      <Filter>Header Files\colors\tc1014</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\colors\tc1014\tc1014_color_layout.h">
+      <Filter>Header Files\colors\tc1014</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{786aa0b3-a835-4afb-81be-face2e5012c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{d334fe70-1d22-48e4-9c5e-f9ee1c7ecf52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\pixels">
+      <UniqueIdentifier>{6eae338a-86f2-4dc0-a6b8-9bbdb6642e9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\colors">
+      <UniqueIdentifier>{851e9bfc-43ce-4309-a3fb-508fa73c9243}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\colors\gimp">
+      <UniqueIdentifier>{3099266c-fdfc-4d44-9505-c2ad7064f059}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\images">
+      <UniqueIdentifier>{2228c375-073f-424a-bc6b-1f60269aef1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\images\mge">
+      <UniqueIdentifier>{1cef500b-5b20-416e-a8dd-66a44995d864}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\images\vef">
+      <UniqueIdentifier>{9df28049-f1b2-4910-ae21-166c3bb9b377}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\images\rat">
+      <UniqueIdentifier>{46b22cc4-06a7-461d-a518-afb36a3cfeb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\images\tc1014">
+      <UniqueIdentifier>{ca4fc381-cad9-43e7-8394-b7c8e1b9e03a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\images\hrs">
+      <UniqueIdentifier>{80694bec-52e0-42ce-bce3-73d18fe22317}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\images\cm3">
+      <UniqueIdentifier>{4de761c6-5252-440d-abd0-1c366202bd22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\images">
+      <UniqueIdentifier>{92b3211a-f8b3-4cf8-aa79-c9794672a88a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\images\cm3">
+      <UniqueIdentifier>{73681c97-7d39-40b1-81e2-7af8cb6f0555}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\images\png">
+      <UniqueIdentifier>{3152d969-bb0b-4704-90d3-938e5031adfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\colors\tc1014">
+      <UniqueIdentifier>{944cdd60-56ce-43ec-9c2d-6ab9b6495524}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Pixels\test_packed_pixel_layout.cpp">
+      <Filter>Source Files\pixels</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Colors\test_color_map.cpp">
+      <Filter>Source Files\colors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Colors\GIMP\test_gimp_palette_loader.cpp">
+      <Filter>Source Files\colors\gimp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pixels\test_packed_pixel_converter.cpp">
+      <Filter>Source Files\pixels</Filter>
+    </ClCompile>
+    <ClCompile Include="src\colors\test_color_converter_base.cpp">
+      <Filter>Source Files\colors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\colors\test_color_converter_with_alpha.cpp">
+      <Filter>Source Files\colors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\colors\test_color_converter_withoutalpha.cpp">
+      <Filter>Source Files\colors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\test_image.cpp">
+      <Filter>Source Files\images</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\mge\test_mge_image_loader.cpp">
+      <Filter>Source Files\images\mge</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\vef\test_vef_image_loader.cpp">
+      <Filter>Source Files\images\vef</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\rat\test_rat_image_loader.cpp">
+      <Filter>Source Files\images\rat</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\rat\test_rat_image.cpp">
+      <Filter>Source Files\images\rat</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\tc1014\test_tc1014_image.cpp">
+      <Filter>Source Files\images\tc1014</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\hrs\test_hrs_image_loader.cpp">
+      <Filter>Source Files\images\hrs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\cm3\test_cm3_image.cpp">
+      <Filter>Source Files\images\cm3</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\cm3\test_cm3_image_loader.cpp">
+      <Filter>Source Files\images\cm3</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\cm3\default_patterns.cpp">
+      <Filter>Source Files\images\cm3</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\tc1014\test_tc1014_image_loader.cpp">
+      <Filter>Source Files\images\tc1014</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\png\test_png_image_loader.cpp">
+      <Filter>Source Files\images\png</Filter>
+    </ClCompile>
+    <ClCompile Include="src\colors\tc1014\test_tc1014_color_converter.cpp">
+      <Filter>Source Files\colors\tc1014</Filter>
+    </ClCompile>
+    <ClCompile Include="src\colors\tc1014\test_tc1014_color_layout.cpp">
+      <Filter>Source Files\colors\tc1014</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\mge\New folder\test_mge_image.cpp">
+      <Filter>Source Files\images\mge</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\test_monochrome_pattern.cpp">
+      <Filter>Source Files\images</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\kaos\assetfoo\test\base_fixture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\test\load_tc1014_image_test_expectations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\test\images\cm3\default_patterns.h">
+      <Filter>Header Files\images\cm3</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
