@@ -42,6 +42,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "external", "external", "{CD
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lodepng", "external\lodepng\lodepng.vcxproj", "{96527595-3579-4C9D-A060-F652E9E9FAB1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PugiXML", "external\vs\PugiXML\PugiXML.vcxproj", "{2937218E-D47E-447A-BEB9-C64316F14EE6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -98,6 +100,14 @@ Global
 		{96527595-3579-4C9D-A060-F652E9E9FAB1}.Release|x64.Build.0 = Release|x64
 		{96527595-3579-4C9D-A060-F652E9E9FAB1}.Release|x86.ActiveCfg = Release|Win32
 		{96527595-3579-4C9D-A060-F652E9E9FAB1}.Release|x86.Build.0 = Release|Win32
+		{2937218E-D47E-447A-BEB9-C64316F14EE6}.Debug|x64.ActiveCfg = Debug|x64
+		{2937218E-D47E-447A-BEB9-C64316F14EE6}.Debug|x64.Build.0 = Debug|x64
+		{2937218E-D47E-447A-BEB9-C64316F14EE6}.Debug|x86.ActiveCfg = Debug|Win32
+		{2937218E-D47E-447A-BEB9-C64316F14EE6}.Debug|x86.Build.0 = Debug|Win32
+		{2937218E-D47E-447A-BEB9-C64316F14EE6}.Release|x64.ActiveCfg = Release|x64
+		{2937218E-D47E-447A-BEB9-C64316F14EE6}.Release|x64.Build.0 = Release|x64
+		{2937218E-D47E-447A-BEB9-C64316F14EE6}.Release|x86.ActiveCfg = Release|Win32
+		{2937218E-D47E-447A-BEB9-C64316F14EE6}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,6 +118,7 @@ Global
 		{4354C7FA-E508-4853-BA52-205637A8E9FB} = {855182F2-DE97-4823-9186-7B2DAFCEED42}
 		{CD3D59CB-9810-487D-BABF-6B933A854252} = {6A4D1863-B102-414F-99F5-A7E25EAA6FFE}
 		{96527595-3579-4C9D-A060-F652E9E9FAB1} = {CD3D59CB-9810-487D-BABF-6B933A854252}
+		{2937218E-D47E-447A-BEB9-C64316F14EE6} = {CD3D59CB-9810-487D-BABF-6B933A854252}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46B50BB4-83CC-4F3A-9DB8-98CB2AC8C293}

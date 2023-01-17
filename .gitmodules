@@ -2,3 +2,7 @@
 	path = external/lodepng
 	url = https://github.com/ChetSimpson/lodepng
 	branch = kaos
+[submodule "external/pugixml"]
+	path = external/pugixml
+	url = https://github.com/ChetSimpson/pugixml.git
+	branch = kaos
