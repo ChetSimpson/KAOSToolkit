@@ -85,9 +85,6 @@
     <ProjectReference Include="..\external\lodepng\lodepng.vcxproj">
       <Project>{96527595-3579-4c9d-a060-f652e9e9fab1}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\external\vs\PugiXML\PugiXML.vcxproj">
-      <Project>{2937218e-d47e-447a-beb9-c64316f14ee6}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\KAOSCore\KAOSCore.vcxproj">
       <Project>{0da8b796-3e26-475c-b65e-fa8ccea53757}</Project>
     </ProjectReference>
