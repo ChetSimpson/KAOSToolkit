@@ -30,6 +30,9 @@
     <Filter Include="Header Files\utility">
       <UniqueIdentifier>{c9ba33da-c0fb-4060-8389-75e8d1580a84}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\xml">
+      <UniqueIdentifier>{e5f53ed8-9b99-42ae-95a4-d02f3b84245c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Types\fixed_variant.cpp">
@@ -99,6 +102,9 @@
     </ClInclude>
     <ClInclude Include="include\kaos\core\types\dimension2.h">
       <Filter>Header Files\types</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\core\xml\pugixml_extensions.h">
+      <Filter>Header Files\xml</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

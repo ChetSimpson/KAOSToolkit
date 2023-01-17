@@ -10,6 +10,9 @@
     <Filter Include="utility">
       <UniqueIdentifier>{5739931b-b493-4167-ada1-0a1fc0221e28}</UniqueIdentifier>
     </Filter>
+    <Filter Include="xml">
+      <UniqueIdentifier>{3e86d59a-f4bf-456a-8c3f-08d75a80329f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Types\test_box_iterator.cpp">
@@ -47,6 +50,9 @@
     </ClCompile>
     <ClCompile Include="src\utility\test_byteswap.cpp">
       <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\xml\test_get_attribute.cpp">
+      <Filter>xml</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

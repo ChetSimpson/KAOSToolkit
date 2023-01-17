@@ -64,6 +64,7 @@
     <ClCompile Include="src\Types\test_vector2.cpp" />
     <ClCompile Include="src\utility\test_bit_reader.cpp" />
     <ClCompile Include="src\utility\test_byteswap.cpp" />
+    <ClCompile Include="src\xml\test_get_attribute.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KAOSCore\KAOSCore.vcxproj">

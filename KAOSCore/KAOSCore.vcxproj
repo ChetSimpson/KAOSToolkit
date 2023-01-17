@@ -171,6 +171,7 @@
     <ClInclude Include="include\kaos\core\utility\bit.h" />
     <ClInclude Include="include\kaos\core\utility\bit_reader.h" />
     <ClInclude Include="include\kaos\core\utility\string.h" />
+    <ClInclude Include="include\kaos\core\xml\pugixml_extensions.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -180,4 +180,34 @@ namespace hypertech { namespace kaos { namespace core { namespace exceptions
 		{ return "bad value cast: lexical conversion error"; }
 	};
 
+
+	class attribute_not_found_error : public std::runtime_error
+	{
+	public:
+
+		attribute_not_found_error(const std::string& attribute_name)
+			: std::runtime_error("attribute `" + attribute_name + "` not found")
+		{}
+
+	};
+
+	class attribute_conversion_error : public std::runtime_error
+	{
+	public:
+
+		attribute_conversion_error(
+			const std::string& error_message,
+			const std::string& attribute_name,
+			const std::type_info& target_type)
+			: std::runtime_error(
+				error_message
+				+ " error encountered while converting attribute `"
+				+ attribute_name
+				+ "` to `"
+				+ target_type.name()
+				+ "`")
+		{}
+
+	};
+
 }}}}

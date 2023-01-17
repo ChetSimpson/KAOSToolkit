@@ -27,6 +27,7 @@
 		}												\
 	}, except );
 
+//	FIXME: Rename to TEST_DiscardResult
 #define DEBUG_DiscardResult(x) ((void)(x))
 
 #define KAOS_DEATH_TEST(test_case_name, test_name)						\
