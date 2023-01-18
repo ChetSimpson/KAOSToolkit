@@ -5,6 +5,7 @@
 #pragma once
 #include <pugixml/pugixml.hpp>
 #include <kaos/core/exceptions.h>
+#include <kaos/core/type_traits.h>
 #include <boost/algorithm/string.hpp>
 #include <charconv>
 #include <string>
@@ -17,13 +18,7 @@ namespace pugi
 	namespace details
 	{
 
-		//	FIXME: This is a duplicate. We need a typetraits.h file for this.
-		//	FIXME: Add integral_not_bool<T>
-		template<class Type_>
-		concept integral_not_bool_v = !std::is_same_v<Type_, bool> && std::is_integral_v<Type_>;
-
-		template <class Type_>
-		struct integral_not_bool : std::bool_constant<integral_not_bool_v<Type_>> {};
+		using ::hypertech::kaos::core::integral_not_bool_v;
 
 		template<class Type_, bool ThrowIfNotFound_>
 		[[nodiscard]] std::from_chars_result convert_from_chars(
