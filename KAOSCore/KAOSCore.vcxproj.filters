@@ -106,6 +106,9 @@
     <ClInclude Include="include\kaos\core\xml\pugixml_extensions.h">
       <Filter>Header Files\xml</Filter>
     </ClInclude>
+    <ClInclude Include="include\kaos\core\type_traits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

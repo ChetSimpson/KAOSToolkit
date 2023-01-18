@@ -4,6 +4,7 @@
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
 #include <kaos/core/utility/bit.h>
+#include <kaos/core/type_traits.h>
 #include <istream>
 #include <string>
 #include <vector>
@@ -12,13 +13,6 @@
 
 namespace hypertech { namespace kaos { namespace core { namespace io
 {
-
-	namespace details
-	{
-		template<class Type_>
-		concept integral_not_bool = std::is_integral_v<Type_> && !std::is_same_v<Type_, bool>;
-	}
-
 
 	/// @brief Endian aware binary stream reader
 	/// 
@@ -226,7 +220,7 @@ namespace hypertech { namespace kaos { namespace core { namespace io
 		/// @return A std::vector of type Type_.
 		/// 
 		/// @exception hypertech::kaos::core::exceptions::file_error If an error occurs while extracting the values.
-		template<details::integral_not_bool Type_>
+		template<integral_not_bool_v Type_>
 		[[nodiscard]] std::vector<Type_> read_vector(size_type size);
 
 		/// @brief extracts a multiple byte values from the stream and stores them in
@@ -340,23 +334,29 @@ namespace hypertech { namespace kaos { namespace core { namespace io
 	template<std::integral Type_>
 	binary_reader& binary_reader::read(const span_type<Type_>& output)
 	{
-		if (input_.read(reinterpret_cast<char*>(output.data()), output.size_bytes()) && swap_bytes_)
+		if (input_.read(reinterpret_cast<char*>(output.data()), output.size_bytes()))
 		{
-			if constexpr (std::is_same<Type_, bool>::value)
+			if (swap_bytes_)
 			{
-				std::transform(
-					begin(output),
-					end(output),
-					begin(output),
-					[](auto value) { return value != 0; });
+				if constexpr (sizeof(Type_) > 1)
+				{
+					std::transform(
+						begin(output),
+						end(output),
+						begin(output),
+						utility::byteswap<Type_>);
+				}
 			}
-			else if constexpr(sizeof(Type_) > 1)
+
+			if constexpr (std::is_same_v<Type_, bool>)
 			{
+				static_assert(sizeof(Type_) == 1, "Expected type bool to be 1 byte in size");
+
 				std::transform(
-					begin(output),
-					end(output),
-					begin(output),
-					utility::byteswap<Type_>);
+					reinterpret_cast<char*>(output.data()),
+					reinterpret_cast<char*>(output.data()) + output.size_bytes(),
+					reinterpret_cast<char*>(output.data()),
+					[](char value) -> bool { return value == 0 ? false : true; });
 			}
 		}
 
@@ -406,7 +406,7 @@ namespace hypertech { namespace kaos { namespace core { namespace io
 	}
 
 	//	TODO: Possibly add specialization for vector<bool>
-	template<details::integral_not_bool Type_>
+	template<integral_not_bool_v Type_>
 	std::vector<Type_> binary_reader::read_vector(size_type size)
 	{
 		std::vector<Type_> value(size, 0);
