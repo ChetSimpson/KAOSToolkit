@@ -168,6 +168,7 @@
     <ClInclude Include="include\kaos\core\types\single_bitfield.h" />
     <ClInclude Include="include\kaos\core\types\split_bitfield.h" />
     <ClInclude Include="include\kaos\core\types\vector2.h" />
+    <ClInclude Include="include\kaos\core\type_traits.h" />
     <ClInclude Include="include\kaos\core\utility\bit.h" />
     <ClInclude Include="include\kaos\core\utility\bit_reader.h" />
     <ClInclude Include="include\kaos\core\utility\string.h" />

@@ -100,6 +100,9 @@
     <ClInclude Include="include\kaos\core\types\dimension2.h">
       <Filter>Header Files\types</Filter>
     </ClInclude>
+    <ClInclude Include="include\kaos\core\type_traits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -4,6 +4,7 @@
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
 #include <kaos/core/utility/bit.h>
+#include <kaos/core/type_traits.h>
 #include <istream>
 #include <string>
 #include <vector>
@@ -12,13 +13,6 @@
 
 namespace hypertech { namespace kaos { namespace core { namespace io
 {
-
-	namespace details
-	{
-		template<class Type_>
-		concept integral_not_bool = std::is_integral_v<Type_> && !std::is_same_v<Type_, bool>;
-	}
-
 
 	/// @brief Endian aware binary stream reader
 	/// 
@@ -226,7 +220,7 @@ namespace hypertech { namespace kaos { namespace core { namespace io
 		/// @return A std::vector of type Type_.
 		/// 
 		/// @exception hypertech::kaos::core::exceptions::file_error If an error occurs while extracting the values.
-		template<details::integral_not_bool Type_>
+		template<integral_not_bool_v Type_>
 		[[nodiscard]] std::vector<Type_> read_vector(size_type size);
 
 		/// @brief extracts a multiple byte values from the stream and stores them in
@@ -412,7 +406,7 @@ namespace hypertech { namespace kaos { namespace core { namespace io
 	}
 
 	//	TODO: Possibly add specialization for vector<bool>
-	template<details::integral_not_bool Type_>
+	template<integral_not_bool_v Type_>
 	std::vector<Type_> binary_reader::read_vector(size_type size)
 	{
 		std::vector<Type_> value(size, 0);
