@@ -340,23 +340,29 @@ namespace hypertech { namespace kaos { namespace core { namespace io
 	template<std::integral Type_>
 	binary_reader& binary_reader::read(const span_type<Type_>& output)
 	{
-		if (input_.read(reinterpret_cast<char*>(output.data()), output.size_bytes()) && swap_bytes_)
+		if (input_.read(reinterpret_cast<char*>(output.data()), output.size_bytes()))
 		{
-			if constexpr (std::is_same<Type_, bool>::value)
+			if (swap_bytes_)
 			{
-				std::transform(
-					begin(output),
-					end(output),
-					begin(output),
-					[](auto value) { return value != 0; });
+				if constexpr (sizeof(Type_) > 1)
+				{
+					std::transform(
+						begin(output),
+						end(output),
+						begin(output),
+						utility::byteswap<Type_>);
+				}
 			}
-			else if constexpr(sizeof(Type_) > 1)
+
+			if constexpr (std::is_same_v<Type_, bool>)
 			{
+				static_assert(sizeof(Type_) == 1, "Expected type bool to be 1 byte in size");
+
 				std::transform(
-					begin(output),
-					end(output),
-					begin(output),
-					utility::byteswap<Type_>);
+					reinterpret_cast<char*>(output.data()),
+					reinterpret_cast<char*>(output.data()) + output.size_bytes(),
+					reinterpret_cast<char*>(output.data()),
+					[](char value) -> bool { return value == 0 ? false : true; });
 			}
 		}
 
