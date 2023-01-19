@@ -51,7 +51,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 			{
 				if (value < 0)
 				{
-					throw exceptions::negative_overflow_error(typeid(OutputType_), typeid(InputType_));
+					throw exceptions::negative_overflow_error(typeid(InputType_), typeid(OutputType_));
 				}
 			}
 
@@ -61,11 +61,11 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 			}
 			catch (::boost::numeric::positive_overflow&)
 			{
-				throw exceptions::positive_overflow_error(typeid(OutputType_), typeid(InputType_));
+				throw exceptions::positive_overflow_error(typeid(InputType_), typeid(OutputType_));
 			}
 			catch (::boost::numeric::negative_overflow&)
 			{
-				throw exceptions::negative_overflow_error(typeid(OutputType_), typeid(InputType_));
+				throw exceptions::negative_overflow_error(typeid(InputType_), typeid(OutputType_));
 			}
 		}
 
@@ -267,7 +267,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		switch (type_)
 		{
 		case tag_type::Empty:
-			throw exceptions::empty_cast_error(typeid(string_type), typeid(void));
+			throw exceptions::empty_cast_error(typeid(void), typeid(string_type));
 
 		case tag_type::Boolean:
 			return std::get<boolean_type>(value_) ? "true" : "false";
@@ -302,22 +302,22 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		switch (type_)
 		{
 		case tag_type::Empty:
-			throw exceptions::empty_cast_error(typeid(string_type), typeid(void));
+			throw exceptions::empty_cast_error(typeid(void), typeid(path_type));
 
 		case tag_type::Boolean:
-			throw exceptions::incompatible_type_error(typeid(path_type), typeid(boolean_type));
+			throw exceptions::incompatible_type_error(typeid(boolean_type), typeid(path_type));
 
 		case tag_type::Integer:
-			throw exceptions::incompatible_type_error(typeid(path_type), typeid(integer_type));
+			throw exceptions::incompatible_type_error(typeid(integer_type), typeid(path_type));
 
 		case tag_type::Unsigned:
-			throw exceptions::incompatible_type_error(typeid(path_type), typeid(unsigned_type));
+			throw exceptions::incompatible_type_error(typeid(unsigned_type), typeid(path_type));
 
 		case tag_type::Float:
-			throw exceptions::incompatible_type_error(typeid(path_type), typeid(float_type));
+			throw exceptions::incompatible_type_error(typeid(float_type), typeid(path_type));
 
 		case tag_type::Double:
-			throw exceptions::incompatible_type_error(typeid(path_type), typeid(double_type));
+			throw exceptions::incompatible_type_error(typeid(double_type), typeid(path_type));
 
 		case tag_type::String:
 			return std::get<string_type>(value_);
@@ -326,7 +326,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 			return std::get<path_type>(value_);
 
 		case tag_type::Color:
-			throw exceptions::incompatible_type_error(typeid(path_type), typeid(color_type));
+			throw exceptions::incompatible_type_error(typeid(color_type), typeid(path_type));
 		}
 
 		throw std::runtime_error("Unknown value type encountered in conversion to string");
@@ -337,7 +337,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		switch (type_)
 		{
 		case tag_type::Empty:
-			throw exceptions::empty_cast_error(typeid(string_type), typeid(void));
+			throw exceptions::empty_cast_error(typeid(void), typeid(color_type));
 
 		case tag_type::Boolean:
 			return std::get<boolean_type>(value_) ? color_type(255, 255, 255) : color_type();
@@ -360,18 +360,18 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 				const auto& value(std::get<string_type>(value_));
 				if (value.empty() || value[0] != '#')
 				{
-					throw exceptions::lexical_error(typeid(color_type), typeid(string_type));
+					throw exceptions::lexical_error(typeid(string_type), typeid(color_type));
 				}
 
 				return color_type(::boost::lexical_cast<packedcolor_from_hex>(value.data() + 1, value.size() - 1));
 			}
 			catch (::boost::bad_lexical_cast&)
 			{
-				throw exceptions::lexical_error(typeid(color_type), typeid(string_type));
+				throw exceptions::lexical_error(typeid(string_type), typeid(color_type));
 			}
 
 		case tag_type::Path:
-			throw exceptions::incompatible_type_error(typeid(color_type), typeid(path_type));
+			throw exceptions::incompatible_type_error(typeid(path_type), typeid(color_type));
 
 		case tag_type::Color:
 			return std::get<color_type>(value_);
@@ -390,7 +390,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		switch (type_)
 		{
 		case tag_type::Empty:
-			throw exceptions::empty_cast_error(typeid(OutputType_), typeid(void));
+			throw exceptions::empty_cast_error(typeid(void), typeid(OutputType_));
 
 		case tag_type::Boolean:
 			return extended_numeric_cast<OutputType_>(std::get<boolean_type>(value_));
@@ -417,7 +417,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 				{
 					if(!value.empty() && value[0] == '-')
 					{
-						throw exceptions::negative_overflow_error(typeid(OutputType_), typeid(string_type));
+						throw exceptions::negative_overflow_error(typeid(string_type), typeid(OutputType_));
 					}
 
 					if(boost::iequals(value, false_string_))
@@ -433,7 +433,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 
 				if (lexical_precheck<std::is_unsigned<OutputType_>::value>::is_negative(value))
 				{
-					throw exceptions::negative_overflow_error(typeid(OutputType_), typeid(string_type));
+					throw exceptions::negative_overflow_error(typeid(string_type), typeid(OutputType_));
 				}
 
 				return ::boost::lexical_cast<OutputType_>(value);
@@ -444,13 +444,13 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 			}
 
 		case tag_type::Path:
-			throw exceptions::incompatible_type_error(typeid(OutputType_), typeid(path_type));
+			throw exceptions::incompatible_type_error(typeid(path_type), typeid(OutputType_));
 
 		case tag_type::Color:
 
 			if constexpr (std::is_same<OutputType_, bool>::value)
 			{
-				throw exceptions::incompatible_type_error(typeid(OutputType_), typeid(string_type));
+				throw exceptions::incompatible_type_error(typeid(color_type), typeid(OutputType_));
 			}
 
 			if constexpr (std::is_unsigned<OutputType_>::value)
