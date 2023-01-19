@@ -4,6 +4,7 @@
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
 #include <kaos/core/types/rgba_color.h>
+#include <boost/uuid/uuid.hpp>
 #include <variant>
 #include <string>
 #include <stdexcept>
@@ -31,18 +32,20 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 			Double,		//!<	Double precision floating point value
 			String,		//!<	String value
 			Path,		//!<	Path value
-			Color		//!<	RGBA color value.
+			Color,		//!<	RGBA color value.
+			Uuid,
 		};
 
 		
-		using string_type = std::string;		//!< @brief String type held by fixed_variant.
-		using boolean_type = bool;				//!< @brief Boolean type held by fixed_variant.
-		using integer_type = std::int64_t;		//!< @brief Signed interger type held by fixed_variant.
-		using unsigned_type = std::uint64_t;	//!< @brief Unsigned interger type held by fixed_variant.
-		using float_type = float;				//!< @brief Decimal number type held by fixed_variant.
-		using double_type = double;				//!< @brief Double precision decimal number type held by fixed_variant.
-		using color_type = rgba_color;			//!< @brief Color type held by fixed_variant.
-		using path_type = std::filesystem::path;	//!< @brief Path type held by value.
+		using string_type = std::string;		//!< String type held by fixed_variant.
+		using boolean_type = bool;				//!< Boolean type held by fixed_variant.
+		using integer_type = std::int64_t;		//!< Signed interger type held by fixed_variant.
+		using unsigned_type = std::uint64_t;	//!< Unsigned interger type held by fixed_variant.
+		using float_type = float;				//!< Decimal number type held by fixed_variant.
+		using double_type = double;				//!< Double precision decimal number type held by fixed_variant.
+		using color_type = rgba_color;			//!< Color type held by fixed_variant.
+		using path_type = std::filesystem::path;	//!< Path type held by value.
+		using uuid_type = boost::uuids::uuid;	//!< UUID type
 
 		/// @brief Storage type used to hold values
 		using storge_type = std::variant<
@@ -54,7 +57,8 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 			double_type,
 			string_type,
 			path_type,
-			color_type>;
+			color_type,
+			uuid_type>;
 
 
 	public:
@@ -101,6 +105,8 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		/// @brief Create a color value.
 		/// @param value The value.
 		explicit fixed_variant(color_type value) noexcept;
+		
+		explicit fixed_variant(const uuid_type& value) noexcept;
 
 
 		/// @brief Create a copy of another fixed_variant.
@@ -181,6 +187,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		/// @param value The value.
 		fixed_variant& operator=(color_type value) noexcept;
 
+		fixed_variant& operator=(const uuid_type& value) noexcept;
 
 		/// @brief Get the tag type of the value
 		/// @return The tag indicating the value type currently held by the value instance.
@@ -303,6 +310,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		/// and cannot be converted.
 		color_type as_color() const;
 
+		uuid_type as_uuid() const;
 
 	private:
 

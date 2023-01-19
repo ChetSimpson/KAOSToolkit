@@ -12,6 +12,8 @@
 namespace hypertech { namespace kaos { namespace core { namespace types { namespace unittests
 {
 
+	//	FIXME: rename interger to integer
+
 	namespace
 	{
 		constexpr auto integer_type_max(std::numeric_limits<fixed_variant::integer_type>::max());
@@ -33,6 +35,13 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 
 		const auto color1value{fixed_variant(color1color)};
 		const auto color2value{fixed_variant(color2color)};
+
+		const auto raw_uuid{ fixed_variant::uuid_type{
+			0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+			0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f
+		} };
+
+		const fixed_variant uuid_value(raw_uuid);
 	}
 
 
@@ -235,6 +244,30 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 		EXPECT_TRUE(exception_caught);
 	}
 
+	TEST(fixed_variant, convert_empty_to_uuid)
+	{
+		EXPECT_THROW(fixed_variant().as_uuid(), exceptions::empty_cast_error);
+	}
+
+	TEST(fixed_variant, convert_empty_to_uuid_exception_typeinfo)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant().as_uuid();
+		}
+		catch (exceptions::empty_cast_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(void));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
 	TEST(fixed_variant, assign_empty)
 	{
 		fixed_variant v(fixed_variant::boolean_type(false));
@@ -339,6 +372,31 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 		//	bool -> color
 		EXPECT_EQ(fixed_variant(fixed_variant::boolean_type(false)).as_color(), fixed_variant::color_type());
 		EXPECT_EQ(fixed_variant(fixed_variant::boolean_type(true)).as_color(), fixed_variant::color_type(255, 255, 255));
+	}
+
+	TEST(fixed_variant, convert_boolean_to_uuid)
+	{
+		//	bool -> uuid
+		EXPECT_THROW(fixed_variant(fixed_variant::boolean_type(true)).as_uuid(), exceptions::incompatible_type_error);
+	}
+
+	TEST(fixed_variant, convert_boolean_to_uuid_exception_typeinfo)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::boolean_type(true)).as_uuid();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::boolean_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
 	}
 #pragma endregion
 
@@ -508,6 +566,31 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(color1int)).as_color(), color1color);
 		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(color2int)).as_color(), color2color);
 	}
+
+	TEST(fixed_variant, convert_integer_to_uuid)
+	{
+		//	int -> uuid
+		EXPECT_THROW(fixed_variant(fixed_variant::integer_type(0)).as_uuid(), exceptions::incompatible_type_error);
+	}
+
+	TEST(fixed_variant, convert_integer_to_uuid_exception_typeinfo)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::integer_type(0)).as_uuid();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::integer_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
 #pragma endregion
 
 
@@ -648,6 +731,31 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 		//	unsigned -> color
 		EXPECT_EQ(fixed_variant(fixed_variant::unsigned_type(color1uint)).as_color(), color1color);
 		EXPECT_EQ(fixed_variant(fixed_variant::unsigned_type(color2uint)).as_color(), color2color);
+	}
+
+	TEST(fixed_variant, convert_unsigned_to_uuid)
+	{
+		//	unsigned -> uuid
+		EXPECT_THROW(fixed_variant(fixed_variant::unsigned_type(0)).as_uuid(), exceptions::incompatible_type_error);
+	}
+
+	TEST(fixed_variant, convert_unsigned_to_uuid_exception_typeinfo)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::unsigned_type(0)).as_uuid();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::unsigned_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
 	}
 #pragma endregion
 
@@ -853,6 +961,31 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 		//	float -> color
 		EXPECT_EQ(fixed_variant(fixed_variant::float_type(color1int)).as_color(), color1color);
 		EXPECT_EQ(fixed_variant(fixed_variant::float_type(color2int)).as_color(), color2color);
+	}
+
+	TEST(fixed_variant, convert_float_to_uuid)
+	{
+		//	float -> uuid
+		EXPECT_THROW(fixed_variant(fixed_variant::float_type(0)).as_uuid(), exceptions::incompatible_type_error);
+	}
+
+	TEST(fixed_variant, convert_float_to_uuid_exception_typeinfo)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::float_type(0)).as_uuid();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::float_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
 	}
 #pragma endregion
 
@@ -1111,6 +1244,31 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 		//	double -> color
 		EXPECT_EQ(fixed_variant(fixed_variant::double_type(color1int)).as_color(), color1color);
 		EXPECT_EQ(fixed_variant(fixed_variant::double_type(color2int)).as_color(), color2color);
+	}
+
+	TEST(fixed_variant, convert_double_to_uuid)
+	{
+		//	double -> uuid
+		EXPECT_THROW(fixed_variant(fixed_variant::double_type(0)).as_uuid(), exceptions::incompatible_type_error);
+	}
+
+	TEST(fixed_variant, convert_double_to_uuid_exception_typeinfo)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::double_type(0)).as_uuid();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::double_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
 	}
 #pragma endregion
 
@@ -1500,6 +1658,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 		EXPECT_EQ(value.as_path(), "world");
 	}
 
+	//	FIXME: Need exception checks for types other than color
 	TEST(fixed_variant, convert_path)
 	{
 		EXPECT_THROW(fixed_variant(fixed_variant::path_type()).as_boolean(), exceptions::incompatible_type_error);
@@ -1510,11 +1669,14 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 
 		EXPECT_EQ(fixed_variant(fixed_variant::path_type("D:/file.txt")).as_string(), fixed_variant::string_type("D:/file.txt"));
 		EXPECT_EQ(fixed_variant(fixed_variant::path_type("D:/file.txt")).as_path(), fixed_variant::path_type("D:/file.txt"));
+	}
 
+	TEST(fixed_variant, convert_path_to_color)
+	{
 		EXPECT_THROW(fixed_variant(fixed_variant::path_type()).as_color(), exceptions::incompatible_type_error);
 	}
 
-	TEST(fixed_variant, convert_path_exception_typeinfo)
+	TEST(fixed_variant, convert_path_to_color_exception_typeinfo)
 	{
 		bool exception_caught(false);
 
@@ -1528,6 +1690,30 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 
 			EXPECT_EQ(e.source(), typeid(fixed_variant::path_type));
 			EXPECT_EQ(e.target(), typeid(fixed_variant::color_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_path_to_uuid)
+	{
+		EXPECT_THROW(fixed_variant(fixed_variant::path_type()).as_uuid(), exceptions::incompatible_type_error);
+	}
+
+	TEST(fixed_variant, convert_path_to_uuid_exception_typeinfo)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::path_type()).as_uuid();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::path_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
 		}
 
 		EXPECT_TRUE(exception_caught);
@@ -1642,6 +1828,235 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 		//	color -> color
 		EXPECT_EQ(color1value.as_color(), color1color);
 		EXPECT_EQ(color2value.as_color(), color2color);
+	}
+
+	TEST(fixed_variant, convert_color_to_uuid)
+	{
+		//	color -> uuid
+		EXPECT_THROW(color1value.as_uuid(), exceptions::incompatible_type_error);
+	}
+
+	TEST(fixed_variant, convert_color_to_uuid_exception_typeinfo)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			color1value.as_uuid();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::color_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+#pragma endregion
+
+
+#pragma region UUID
+	TEST(fixed_variant, create_uuid)
+	{
+		EXPECT_EQ(fixed_variant(fixed_variant::uuid_type()).type(), fixed_variant::tag_type::Uuid);
+	}
+
+	TEST(fixed_variant, assign_uuid)
+	{
+		fixed_variant v;
+
+		v = raw_uuid;
+		EXPECT_EQ(v.type(), fixed_variant::tag_type::Uuid);
+		EXPECT_EQ(v.as_uuid(), raw_uuid);
+	}
+
+	TEST(fixed_variant, convert_uuid_to_boolean)
+	{
+		//	uuid -> bool
+		EXPECT_THROW(uuid_value.as_boolean(), exceptions::incompatible_type_error);
+	}
+
+	TEST(fixed_variant, convert_uuid_to_boolean_exception_typeinfo)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			uuid_value.as_boolean();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::uuid_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::boolean_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_uuid_to_integer)
+	{
+		//	uuid -> integer
+		EXPECT_THROW(uuid_value.as_interger(), exceptions::incompatible_type_error);
+	}
+
+	TEST(fixed_variant, convert_uuid_to_integer_exception_typeinfo)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			uuid_value.as_interger();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::uuid_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::integer_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_uuid_to_unsigned)
+	{
+		//	uuid -> unsigned
+		EXPECT_THROW(uuid_value.as_unsigned(), exceptions::incompatible_type_error);
+	}
+
+	TEST(fixed_variant, convert_uuid_to_unsigned_exception_typeinfo)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			uuid_value.as_unsigned();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::uuid_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::unsigned_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_uuid_to_float)
+	{
+		//	uuid -> float
+		EXPECT_THROW(uuid_value.as_float(), exceptions::incompatible_type_error);
+	}
+
+	TEST(fixed_variant, convert_uuid_to_float_exception_typeinfo)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			uuid_value.as_float();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::uuid_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::float_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_uuid_to_double)
+	{
+		//	uuid -> double
+		EXPECT_THROW(uuid_value.as_double(), exceptions::incompatible_type_error);
+	}
+
+	TEST(fixed_variant, convert_uuid_to_double_exception_typeinfo)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			uuid_value.as_double();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::uuid_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::double_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_uuid_to_string)
+	{
+		//	uuid -> string
+		EXPECT_EQ(uuid_value.as_string(), "00010203-0405-0607-0809-0a0b0c0d0e0f");
+	}
+
+	TEST(fixed_variant, convert_uuid_to_path)
+	{
+		//	uuid -> path
+		EXPECT_THROW(uuid_value.as_path(), exceptions::incompatible_type_error);
+	}
+
+	TEST(fixed_variant, convert_uuid_to_path_exception_typeinfo)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			uuid_value.as_path();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::uuid_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::path_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_uuid_to_color)
+	{
+		//	uuid -> color
+		EXPECT_THROW(uuid_value.as_color(), exceptions::incompatible_type_error);
+	}
+
+	TEST(fixed_variant, convert_uuid_to_color_exception_typeinfo)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			uuid_value.as_color();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::uuid_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::color_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_uuid_to_uuid)
+	{
+		//	uuid -> uuid
+		EXPECT_EQ(uuid_value.as_uuid(), raw_uuid);
 	}
 #pragma endregion
 
