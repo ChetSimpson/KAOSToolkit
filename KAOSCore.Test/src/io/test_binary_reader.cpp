@@ -12,130 +12,131 @@
 
 
 // FIXME: This set of tests do not cover the reader.bad() flag
-namespace
-{
-
-	using binary_reader = hypertech::kaos::core::io::binary_reader;
-
-	struct big_endian_ordering
-	{
-		static constexpr binary_reader::ordering_type type()
-		{
-			return binary_reader::ordering_type::big;
-		}
-	};
-
-	struct little_endian_ordering
-	{
-		static constexpr binary_reader::ordering_type type()
-		{
-			return binary_reader::ordering_type::little;
-		}
-	};
-
-	template<class Type_, class OrderingType_>
-	struct typed_test_data;
-
-	template<class OrderingType_>
-	struct typed_test_data<void, OrderingType_>
-	{
-		static const auto ordering = OrderingType_::type();
-		static inline const auto data = std::string("\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0A\x0B\x0C\x0D\x0E\x0F", 16);
-	};
-
-
-	template<class Type_, class OrderingType_>
-	requires std::is_same_v<Type_, bool>
-		struct typed_test_data<Type_, OrderingType_>
-	{
-		using value_type = Type_;
-		static const auto ordering = OrderingType_::type();
-		static inline const auto data = std::string("\x00\x01\x02\x03\x00\x05\x06\x07\x00\x09\x0A\x0B\x00\x0D\x0E\x0F", 16);
-		static inline const auto expected = std::array<value_type, 16>{
-			false, true, true, true, false, true, true, true,
-			false, true, true, true, false, true, true, true
-		};
-	};
-
-
-	template<class Type_, class OrderingType_>
-	requires std::is_same_v<Type_, int8_t> || std::is_same_v<Type_, uint8_t>
-		struct typed_test_data<Type_, OrderingType_> : typed_test_data<void, OrderingType_>
-	{
-		using value_type = Type_;
-		static inline const auto expected = std::array<value_type, 16>{
-			0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-			0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F
-		};
-	};
-
-	template<class Type_, class OrderingType_>
-	requires std::is_same_v<Type_, int16_t> || std::is_same_v<Type_, uint16_t>
-		struct typed_test_data<Type_, OrderingType_> : typed_test_data<void, OrderingType_>
-	{
-		using value_type = Type_;
-		static inline const auto expected = std::array<value_type, 8>{
-			0x0001, 0x0203, 0x0405, 0x0607, 0x0809, 0x0a0b, 0x0c0d, 0x0e0f
-		};
-	};
-
-	template<class Type_, class OrderingType_>
-	requires std::is_same_v<Type_, int32_t> || std::is_same_v<Type_, uint32_t>
-		struct typed_test_data<Type_, OrderingType_> : typed_test_data<void, OrderingType_>
-	{
-		using value_type = Type_;
-		static inline const auto expected = std::array<value_type, 4>{
-			0x00010203, 0x04050607, 0x08090A0B, 0x0C0D0E0F
-		};
-	};
-
-	template<class Type_, class OrderingType_>
-	requires std::is_same_v<Type_, int64_t> || std::is_same_v<Type_, uint64_t>
-		struct typed_test_data<Type_, OrderingType_> : typed_test_data<void, OrderingType_>
-	{
-		using value_type = Type_;
-		static inline const auto expected = std::array<value_type, 2>{
-			0x0001020304050607, 0X08090A0B0C0D0E0F
-		};
-	};
-
-
-	template<class TestDataType_>
-	class test_binary_reader : public ::testing::Test
-	{
-	protected:
-
-		using test_data = TestDataType_;
-		static const auto ordering_ = TestDataType_::ordering;
-
-		template<class Type_>
-		constexpr Type_ byteswap_if(Type_ value)
-		{
-			if constexpr (ordering_ == binary_reader::ordering_type::native)
-			{
-				value = hypertech::kaos::core::utility::byteswap(value);
-			}
-
-			return value;
-		}
-	};
-
-
-
-
-
-	const std::array<uint8_t, 16> general_test_data
-	{
-		0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-		0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f
-	};
-
-	const auto string_test_data(std::string(general_test_data.begin(), general_test_data.end()));
-}
-
 
 namespace hypertech::kaos::core::io::unittests
 {
+
+	namespace
+	{
+
+		using binary_reader = hypertech::kaos::core::io::binary_reader;
+
+		struct big_endian_ordering
+		{
+			static constexpr binary_reader::ordering_type type()
+			{
+				return binary_reader::ordering_type::big;
+			}
+		};
+
+		struct little_endian_ordering
+		{
+			static constexpr binary_reader::ordering_type type()
+			{
+				return binary_reader::ordering_type::little;
+			}
+		};
+
+		template<class Type_, class OrderingType_>
+		struct typed_test_data;
+
+		template<class OrderingType_>
+		struct typed_test_data<void, OrderingType_>
+		{
+			static const auto ordering = OrderingType_::type();
+			static inline const auto data = std::string("\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0A\x0B\x0C\x0D\x0E\x0F", 16);
+		};
+
+
+		template<class Type_, class OrderingType_>
+		requires std::is_same_v<Type_, bool>
+			struct typed_test_data<Type_, OrderingType_>
+		{
+			using value_type = Type_;
+			static const auto ordering = OrderingType_::type();
+			static inline const auto data = std::string("\x00\x01\x02\x03\x00\x05\x06\x07\x00\x09\x0A\x0B\x00\x0D\x0E\x0F", 16);
+			static inline const auto expected = std::array<value_type, 16>{
+				false, true, true, true, false, true, true, true,
+				false, true, true, true, false, true, true, true
+			};
+		};
+
+
+		template<class Type_, class OrderingType_>
+		requires std::is_same_v<Type_, int8_t> || std::is_same_v<Type_, uint8_t>
+			struct typed_test_data<Type_, OrderingType_> : typed_test_data<void, OrderingType_>
+		{
+			using value_type = Type_;
+			static inline const auto expected = std::array<value_type, 16>{
+				0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+				0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F
+			};
+		};
+
+		template<class Type_, class OrderingType_>
+		requires std::is_same_v<Type_, int16_t> || std::is_same_v<Type_, uint16_t>
+			struct typed_test_data<Type_, OrderingType_> : typed_test_data<void, OrderingType_>
+		{
+			using value_type = Type_;
+			static inline const auto expected = std::array<value_type, 8>{
+				0x0001, 0x0203, 0x0405, 0x0607, 0x0809, 0x0a0b, 0x0c0d, 0x0e0f
+			};
+		};
+
+		template<class Type_, class OrderingType_>
+		requires std::is_same_v<Type_, int32_t> || std::is_same_v<Type_, uint32_t>
+			struct typed_test_data<Type_, OrderingType_> : typed_test_data<void, OrderingType_>
+		{
+			using value_type = Type_;
+			static inline const auto expected = std::array<value_type, 4>{
+				0x00010203, 0x04050607, 0x08090A0B, 0x0C0D0E0F
+			};
+		};
+
+		template<class Type_, class OrderingType_>
+		requires std::is_same_v<Type_, int64_t> || std::is_same_v<Type_, uint64_t>
+			struct typed_test_data<Type_, OrderingType_> : typed_test_data<void, OrderingType_>
+		{
+			using value_type = Type_;
+			static inline const auto expected = std::array<value_type, 2>{
+				0x0001020304050607, 0X08090A0B0C0D0E0F
+			};
+		};
+
+
+		template<class TestDataType_>
+		class test_binary_reader : public ::testing::Test
+		{
+		protected:
+
+			using test_data = TestDataType_;
+			static const auto ordering_ = TestDataType_::ordering;
+
+			template<class Type_>
+			constexpr Type_ byteswap_if(Type_ value)
+			{
+				if constexpr (ordering_ == binary_reader::ordering_type::native)
+				{
+					value = hypertech::kaos::core::utility::byteswap(value);
+				}
+
+				return value;
+			}
+		};
+
+
+
+
+
+		const std::array<uint8_t, 16> general_test_data
+		{
+			0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+			0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f
+		};
+
+		const auto string_test_data(std::string(general_test_data.begin(), general_test_data.end()));
+	}
+
 
 #pragma region operator bool
 	TEST(test_binary_reader, operator_bool)

@@ -10,80 +10,80 @@
 #include <vector>
 
 
-namespace
-{
-	template<class TestDataType_>
-	class test_bit_reader : public ::testing::Test
-	{
-	};
-
-	template<class Type_>
-	struct typed_test_data;
-
-	template<>
-	struct typed_test_data<uint8_t>
-	{
-		static const inline std::vector<uint8_t> data = {
-			0b10101010U,
-			0b11111111U,
-			0b00000000U,
-			0b11110000U,
-			0b11001100U,
-			0b00110011U,
-			0b11100111U,
-			0b00011000U,
-			0b10000000U,
-			0b01000000U,
-			0b00100000U,
-			0b00010000U,
-			0b00001000U,
-			0b00000100U,
-			0b00000010U,
-			0b00000001U,
-		};
-	};
-
-	template<>
-	struct typed_test_data<uint16_t>
-	{
-		static const inline std::vector<uint16_t> data = {
-			0b1010101011111111U,
-			0b0000000011110000U,
-			0b1100110000110011U,
-			0b1110011100011000U,
-			0b1000000001000000U,
-			0b0010000000010000U,
-			0b0000100000000100U,
-			0b0000001000000001U,
-		};
-	};
-
-	template<>
-	struct typed_test_data<uint32_t>
-	{
-		static const inline std::vector<uint32_t> data = {
-			0b10101010111111110000000011110000U,
-			0b11001100001100111110011100011000U,
-			0b10000000010000000010000000010000U,
-			0b00001000000001000000001000000001U,
-		};
-
-	};
-
-	template<>
-	struct typed_test_data<uint64_t>
-	{
-		static const inline std::vector<uint64_t> data = {
-			0b1010101011111111000000001111000011001100001100111110011100011000U,
-			0b1000000001000000001000000001000000001000000001000000001000000001U,
-		};
-	};
-
-}
-
 
 namespace hypertech::kaos::core::utility::unittests
 {
+
+	namespace
+	{
+		template<class TestDataType_>
+		class test_bit_reader : public ::testing::Test
+		{
+		};
+
+		template<class Type_>
+		struct typed_test_data;
+
+		template<>
+		struct typed_test_data<uint8_t>
+		{
+			static const inline std::vector<uint8_t> data = {
+				0b10101010U,
+				0b11111111U,
+				0b00000000U,
+				0b11110000U,
+				0b11001100U,
+				0b00110011U,
+				0b11100111U,
+				0b00011000U,
+				0b10000000U,
+				0b01000000U,
+				0b00100000U,
+				0b00010000U,
+				0b00001000U,
+				0b00000100U,
+				0b00000010U,
+				0b00000001U,
+			};
+		};
+
+		template<>
+		struct typed_test_data<uint16_t>
+		{
+			static const inline std::vector<uint16_t> data = {
+				0b1010101011111111U,
+				0b0000000011110000U,
+				0b1100110000110011U,
+				0b1110011100011000U,
+				0b1000000001000000U,
+				0b0010000000010000U,
+				0b0000100000000100U,
+				0b0000001000000001U,
+			};
+		};
+
+		template<>
+		struct typed_test_data<uint32_t>
+		{
+			static const inline std::vector<uint32_t> data = {
+				0b10101010111111110000000011110000U,
+				0b11001100001100111110011100011000U,
+				0b10000000010000000010000000010000U,
+				0b00001000000001000000001000000001U,
+			};
+
+		};
+
+		template<>
+		struct typed_test_data<uint64_t>
+		{
+			static const inline std::vector<uint64_t> data = {
+				0b1010101011111111000000001111000011001100001100111110011100011000U,
+				0b1000000001000000001000000001000000001000000001000000001000000001U,
+			};
+		};
+
+	}
 
 	TEST(test_bit_reader, construct_default)
 	{

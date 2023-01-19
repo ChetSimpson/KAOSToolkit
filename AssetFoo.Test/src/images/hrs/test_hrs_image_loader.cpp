@@ -10,42 +10,42 @@
 #include <fstream>
 
 
-namespace
-{
-	using hypertech::kaos::assetfoo::images::hrs::hrs_image;
-	using hypertech::kaos::assetfoo::unittests::load_tc1014_image_test_expectations;
-
-	struct load_hrs_image_test_expectations : load_tc1014_image_test_expectations<
-		320,
-		192,
-		hrs_image::color_space_type::composite>
-	{};
-		
-	struct monalisa_hrs_expectations : load_hrs_image_test_expectations
-	{
-		static const inline auto filename = "TestData/images/hrs/monalisa.hrs";
-		
-		const hrs_image::native_color_map_type native_colormap
-		{
-			0x04, 0x03, 0x14, 0x24, 0x05, 0x15, 0x25, 0x35,
-			0x06, 0x16, 0x26, 0x36, 0x17, 0x1f, 0x31, 0x34
-		};
-		const std::array<uint32_t, 4> hash
-		{
-			0xe8ed5818, 0x4780fec3, 0xbfb03b96, 0xe48b1691
-		};
-	};
-
-
-
-	template<class TestType_>
-	class test_hrs_image_reader : public ::testing::Test {};
-
-	using testing_types = testing::Types<monalisa_hrs_expectations>;
-}
-
 namespace hypertech::kaos::assetfoo::images::hrs::unittests
 {
+
+	namespace
+	{
+		using hypertech::kaos::assetfoo::images::hrs::hrs_image;
+		using hypertech::kaos::assetfoo::unittests::load_tc1014_image_test_expectations;
+
+		struct load_hrs_image_test_expectations : load_tc1014_image_test_expectations<
+			320,
+			192,
+			hrs_image::color_space_type::composite>
+		{};
+		
+		struct monalisa_hrs_expectations : load_hrs_image_test_expectations
+		{
+			static const inline auto filename = "TestData/images/hrs/monalisa.hrs";
+		
+			const hrs_image::native_color_map_type native_colormap
+			{
+				0x04, 0x03, 0x14, 0x24, 0x05, 0x15, 0x25, 0x35,
+				0x06, 0x16, 0x26, 0x36, 0x17, 0x1f, 0x31, 0x34
+			};
+			const std::array<uint32_t, 4> hash
+			{
+				0xe8ed5818, 0x4780fec3, 0xbfb03b96, 0xe48b1691
+			};
+		};
+
+
+
+		template<class TestType_>
+		class test_hrs_image_reader : public ::testing::Test {};
+
+		using testing_types = testing::Types<monalisa_hrs_expectations>;
+	}
 
 	TEST(test_hrs_image_reader, load_file_not_found)
 	{

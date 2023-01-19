@@ -11,64 +11,64 @@
 #include <fstream>
 
 
-namespace
-{
-	using hypertech::kaos::assetfoo::images::mge::mge_image;
-	using hypertech::kaos::assetfoo::unittests::load_tc1014_image_test_expectations;
-
-	struct load_mge_image_test_expectations : load_tc1014_image_test_expectations<320, 200>
-	{};
-		
-	struct test1_uncompressed_mge_expectations : load_mge_image_test_expectations
-	{
-		static const inline auto filename = "TestData/images/mge/test1-uncompressed.mge";
-		static const inline std::string title = "THIS IS AN UNCOMPRESSED IMAGE";
-
-		const mge_image::native_color_map_type native_colormap
-		{
-			0x00, 0x07, 0x1f, 0x26, 0x12, 0x0b, 0x24, 0x3a,
-			0x14, 0x28, 0x2f, 0x3c, 0x27, 0x34, 0x1a, 0x3f
-		};
-		const std::array<uint32_t, 4> hash
-		{
-			0x7fa45014, 0xf02e5d2a, 0x7f836dd3, 0x56d75491
-		};
-	};
-
-	struct test1_compressed_mge_expectations : test1_uncompressed_mge_expectations
-	{
-		static const inline auto filename = "TestData/images/mge/test1-compressed.mge";
-		static const inline std::string title = "THIS IS A COMPRESSED IMAGE!!!";
-	};
-
-	struct titlepage_mge_expectations : load_mge_image_test_expectations
-	{
-		static const inline auto filename = "TestData/images/mge/cmd_titlepage.mge";
-		static const inline std::string title = "Color Max Deluxe title page";
-
-		const mge_image::native_color_map_type native_colormap
-		{
-			0x00, 0x20, 0x08, 0x10, 0x16, 0x24, 0x36, 0x3e,
-			0x07, 0x18, 0x2a, 0x22, 0x36, 0x0f, 0x2d, 0x3f
-		};
-		const std::array<uint32_t, 4> hash
-		{
-			0xba812ac6, 0xc5a0389a, 0x74794674, 0x6ce3d1b2
-		};
-	};
-
-
-	template<class TestType_>
-	class test_mge_image_reader : public ::testing::Test {};
-
-	using testing_types = testing::Types<
-		test1_uncompressed_mge_expectations,
-		test1_compressed_mge_expectations,
-		titlepage_mge_expectations>;
-}
-
 namespace hypertech::kaos::assetfoo::images::mge::unittests
 {
+
+	namespace
+	{
+		using hypertech::kaos::assetfoo::images::mge::mge_image;
+		using hypertech::kaos::assetfoo::unittests::load_tc1014_image_test_expectations;
+
+		struct load_mge_image_test_expectations : load_tc1014_image_test_expectations<320, 200>
+		{};
+		
+		struct test1_uncompressed_mge_expectations : load_mge_image_test_expectations
+		{
+			static const inline auto filename = "TestData/images/mge/test1-uncompressed.mge";
+			static const inline std::string title = "THIS IS AN UNCOMPRESSED IMAGE";
+
+			const mge_image::native_color_map_type native_colormap
+			{
+				0x00, 0x07, 0x1f, 0x26, 0x12, 0x0b, 0x24, 0x3a,
+				0x14, 0x28, 0x2f, 0x3c, 0x27, 0x34, 0x1a, 0x3f
+			};
+			const std::array<uint32_t, 4> hash
+			{
+				0x7fa45014, 0xf02e5d2a, 0x7f836dd3, 0x56d75491
+			};
+		};
+
+		struct test1_compressed_mge_expectations : test1_uncompressed_mge_expectations
+		{
+			static const inline auto filename = "TestData/images/mge/test1-compressed.mge";
+			static const inline std::string title = "THIS IS A COMPRESSED IMAGE!!!";
+		};
+
+		struct titlepage_mge_expectations : load_mge_image_test_expectations
+		{
+			static const inline auto filename = "TestData/images/mge/cmd_titlepage.mge";
+			static const inline std::string title = "Color Max Deluxe title page";
+
+			const mge_image::native_color_map_type native_colormap
+			{
+				0x00, 0x20, 0x08, 0x10, 0x16, 0x24, 0x36, 0x3e,
+				0x07, 0x18, 0x2a, 0x22, 0x36, 0x0f, 0x2d, 0x3f
+			};
+			const std::array<uint32_t, 4> hash
+			{
+				0xba812ac6, 0xc5a0389a, 0x74794674, 0x6ce3d1b2
+			};
+		};
+
+
+		template<class TestType_>
+		class test_mge_image_reader : public ::testing::Test {};
+
+		using testing_types = testing::Types<
+			test1_uncompressed_mge_expectations,
+			test1_compressed_mge_expectations,
+			titlepage_mge_expectations>;
+	}
 
 	TEST(test_mge_image_reader, load_file_not_found)
 	{

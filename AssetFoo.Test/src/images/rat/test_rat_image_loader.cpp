@@ -11,57 +11,57 @@
 #include <fstream>
 
 
-namespace
-{
-	using hypertech::kaos::assetfoo::images::rat::rat_image;
-	using hypertech::kaos::assetfoo::unittests::load_tc1014_image_test_expectations;
-
-	struct load_rat_image_test_expectations : load_tc1014_image_test_expectations<320, 199>
-	{};
-		
-	struct rattitle_rat_expectations : load_rat_image_test_expectations
-	{
-		static const inline auto filename = "TestData/images/rat/rat.rat";
-		static const inline auto background_color = rat_image::color_type (0, 0, 85);
-		const rat_image::native_color_map_type native_colormap
-		{
-			0x01, 0x10, 0x36, 0x20, 0x02, 0x38, 0x3e, 0x22,
-			0x34, 0x31, 0x04, 0x31, 0x24, 0x00, 0x07, 0x3f
-		};
-		const std::array<uint32_t, 4> hash
-		{
-			0x50a13ed3, 0x12fec005, 0x332969cf, 0x5515d217
-		};
-	};
-
-
-	struct title1_rat_expectations : load_rat_image_test_expectations
-	{
-		static const inline auto filename = "TestData/images/rat/rat1.rat";
-		static const inline auto background_color = rat_image::color_type (255, 0, 0);
-
-		const rat_image::native_color_map_type native_colormap
-		{
-			0x24, 0x1a, 0x00, 0x02, 0x06, 0x3c, 0x3e, 0x22,
-			0x34, 0x31, 0x04, 0x00, 0x00, 0x00, 0x03, 0x3f
-		};
-		const std::array<uint32_t, 4> hash
-		{
-			0x348d2524, 0xfbe1fc03, 0xb1c81e2a, 0x785f69df
-		};
-	};
-
-
-	template<class TestType_>
-	class test_rat_image_reader : public ::testing::Test {};
-
-	using testing_types = testing::Types<
-		rattitle_rat_expectations,
-		title1_rat_expectations>;
-}
-
 namespace hypertech::kaos::assetfoo::images::rat::unittests
 {
+
+	namespace
+	{
+		using hypertech::kaos::assetfoo::images::rat::rat_image;
+		using hypertech::kaos::assetfoo::unittests::load_tc1014_image_test_expectations;
+
+		struct load_rat_image_test_expectations : load_tc1014_image_test_expectations<320, 199>
+		{};
+		
+		struct rattitle_rat_expectations : load_rat_image_test_expectations
+		{
+			static const inline auto filename = "TestData/images/rat/rat.rat";
+			static const inline auto background_color = rat_image::color_type (0, 0, 85);
+			const rat_image::native_color_map_type native_colormap
+			{
+				0x01, 0x10, 0x36, 0x20, 0x02, 0x38, 0x3e, 0x22,
+				0x34, 0x31, 0x04, 0x31, 0x24, 0x00, 0x07, 0x3f
+			};
+			const std::array<uint32_t, 4> hash
+			{
+				0x50a13ed3, 0x12fec005, 0x332969cf, 0x5515d217
+			};
+		};
+
+
+		struct title1_rat_expectations : load_rat_image_test_expectations
+		{
+			static const inline auto filename = "TestData/images/rat/rat1.rat";
+			static const inline auto background_color = rat_image::color_type (255, 0, 0);
+
+			const rat_image::native_color_map_type native_colormap
+			{
+				0x24, 0x1a, 0x00, 0x02, 0x06, 0x3c, 0x3e, 0x22,
+				0x34, 0x31, 0x04, 0x00, 0x00, 0x00, 0x03, 0x3f
+			};
+			const std::array<uint32_t, 4> hash
+			{
+				0x348d2524, 0xfbe1fc03, 0xb1c81e2a, 0x785f69df
+			};
+		};
+
+
+		template<class TestType_>
+		class test_rat_image_reader : public ::testing::Test {};
+
+		using testing_types = testing::Types<
+			rattitle_rat_expectations,
+			title1_rat_expectations>;
+	}
 
 	TEST(test_rat_image_reader, load_file_not_found)
 	{
