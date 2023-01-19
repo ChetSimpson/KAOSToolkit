@@ -299,7 +299,7 @@ namespace hypertech { namespace kaos { namespace core { namespace xml {  namespa
 			EXPECT_THROWS_MESSAGE(
 				DEBUG_DiscardResult(try_get_attribute_as<TypeParam>(node, this->attribute_name_)),
 				exceptions::attribute_conversion_error,
-				("negative overflow error encountered converting attribute `"
+				("negative overflow error encountered while converting attribute `"
 					+ this->attribute_name_ + "` to `" + typeid(TypeParam).name() + "`").c_str());
 		}
 		else
