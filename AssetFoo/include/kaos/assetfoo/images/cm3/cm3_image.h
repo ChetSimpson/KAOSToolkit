@@ -8,7 +8,7 @@
 #include <array>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace cm3
+namespace hypertech::kaos::assetfoo::images::cm3
 {
 
 	/// @brief RGBA image with title, RGBA colormap, and original colormap
@@ -126,4 +126,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		return static_cast<cm3_image&&>(value);
 	}
 
-}}}}}
+}

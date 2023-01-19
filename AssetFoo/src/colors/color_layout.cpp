@@ -6,7 +6,7 @@
 #include <boost/numeric/conversion/cast.hpp>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
+namespace hypertech::kaos::assetfoo::colors
 {
 
 	color_layout::color_layout(
@@ -114,4 +114,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
 		return alpha_component_bitfield_;
 	}
 
-}}}}
+}

@@ -8,7 +8,7 @@
 #include <kaos/assetfoo/pixels/packed_pixel_layout.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace cm3
+namespace hypertech::kaos::assetfoo::images::cm3
 {
 
 	/// @brief Loads a CoCoMax III CM3 image
@@ -166,4 +166,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		return static_cast<cm3_image_reader&&>(value);
 	}
 
-}}}}}
+}

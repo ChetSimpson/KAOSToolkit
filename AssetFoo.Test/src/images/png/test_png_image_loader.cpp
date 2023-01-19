@@ -63,7 +63,7 @@ namespace
 		ninja_gaiden_png_expectations>;
 }
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace png { namespace unittests
+namespace hypertech::kaos::assetfoo::images::png::unittests
 {
 
 	TEST(test_png_image_reader, load_file_not_found)
@@ -105,4 +105,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 	REGISTER_TYPED_TEST_CASE_P(test_png_image_reader, load);
 	INSTANTIATE_TYPED_TEST_CASE_P(test_png_image_reader, test_png_image_reader, testing_types);
 
-}}}}}}
+}

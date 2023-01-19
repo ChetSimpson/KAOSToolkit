@@ -6,7 +6,7 @@
 #include <kaos/assetfoo/images/tc1014/tc1014_image.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace vef
+namespace hypertech::kaos::assetfoo::images::vef
 {
 
 	/// @brief VEF Image
@@ -39,4 +39,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		return static_cast<vef_image&&>(value);
 	}
 
-}}}}}
+}

@@ -8,7 +8,7 @@
 #include <filesystem>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo
+namespace hypertech::kaos::assetfoo
 {
 	namespace exceptions = core::exceptions;
 
@@ -36,4 +36,4 @@ namespace hypertech { namespace kaos { namespace assetfoo
 		return load(input_stream, filename);
 	}
 
-}}}
+}

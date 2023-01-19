@@ -8,7 +8,7 @@
 #include <kaos/assetfoo/pixels/packed_pixel_layout.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace mge
+namespace hypertech::kaos::assetfoo::images::mge
 {
 
 	/// @brief Loads a ColorMax (Deluxe) MGE image
@@ -112,4 +112,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		return static_cast<mge_image_reader&&>(value);
 	}
 
-}}}}}
+}

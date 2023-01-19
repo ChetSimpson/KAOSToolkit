@@ -10,7 +10,7 @@
 #include <kaos/assetfoo/colors/color_converter.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { namespace tc1014
+namespace hypertech::kaos::assetfoo::colors::tc1014
 {
 
 	/// @brief Color converter for TC1014 packed color values
@@ -125,4 +125,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { n
 		return static_cast<tc1014_color_converter&&>(value);
 	}
 
-}}}}}
+}

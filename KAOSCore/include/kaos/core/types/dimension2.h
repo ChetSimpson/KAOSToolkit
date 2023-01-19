@@ -9,7 +9,7 @@
 #include <type_traits>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace types
+namespace hypertech::kaos::core::types
 {
 
 	/// @brief 2D dimension containing two values width and height.
@@ -273,4 +273,4 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 	using dimension2f_fast = dimension2<float, true>;
 	using dimension2d_fast = dimension2<double, true>;
 
-}}}}
+}

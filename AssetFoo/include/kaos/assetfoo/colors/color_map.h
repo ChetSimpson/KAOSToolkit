@@ -10,7 +10,7 @@
 #include <optional>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
+namespace hypertech::kaos::assetfoo::colors
 {
 
 	/// @brief A collection of colors that can be accessed individually by index.
@@ -366,4 +366,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
 		return static_cast<color_map&&>(value);
 	}
 
-}}}}
+}

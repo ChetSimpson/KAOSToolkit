@@ -82,7 +82,7 @@ namespace
 }
 
 
-namespace hypertech { namespace kaos { namespace core { namespace utility {  namespace unittests
+namespace hypertech::kaos::core::utility::unittests
 {
 
 	TEST(test_bit_reader, construct_default)
@@ -181,4 +181,4 @@ namespace hypertech { namespace kaos { namespace core { namespace utility {  nam
 
 	INSTANTIATE_TYPED_TEST_CASE_P(test_bit_reader, test_bit_reader, read_testing_types);
 
-}}}}}
+}

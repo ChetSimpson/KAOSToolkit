@@ -8,7 +8,7 @@
 #include <numeric>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace types { namespace unittests
+namespace hypertech::kaos::core::types::unittests
 {
 
 #ifdef KAOS_ENABLE_CONTAINER_VERIFY
@@ -466,4 +466,4 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 	}
 #pragma endregion
 
-}}}}}
+}

@@ -6,7 +6,7 @@
 #include <kaos/core/exceptions.h>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace io
+namespace hypertech::kaos::core::io
 {
 
 	binary_reader::binary_reader(stream_type& input, ordering_type ordering)
@@ -153,6 +153,4 @@ namespace hypertech { namespace kaos { namespace core { namespace io
 		throw exceptions::file_error("file error: unexpected error encountered while reading from file");
 	}
 
-
-
-}}}}
+}

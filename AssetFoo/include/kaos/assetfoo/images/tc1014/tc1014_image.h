@@ -7,7 +7,7 @@
 #include <kaos/assetfoo/colors/tc1014/tc1014_color_converter.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace tc1014
+namespace hypertech::kaos::assetfoo::images::tc1014
 {
 
 	/// @brief TC1014 (Tandy Color Computer 3) image
@@ -112,4 +112,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		return static_cast<tc1014_image&&>(value);
 	}
 
-}}}}}
+}

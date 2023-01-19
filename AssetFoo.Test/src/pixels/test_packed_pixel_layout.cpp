@@ -8,7 +8,7 @@
 #include <algorithm>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace pixels { namespace unittests
+namespace hypertech::kaos::assetfoo::pixels::unittests
 {
 
 	class packed_pixel_layout_fixture : public ::testing::Test
@@ -371,5 +371,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace pixels { n
 		EXPECT_EQ(format.calculate_pitch(16, default_pitch_alignment_), 16);
 	}
 
-}}}}}
-
+}

@@ -7,7 +7,7 @@
 #include <cstdint>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace types
+namespace hypertech::kaos::core::types
 {
 
 	/// @brief Represents a RGBA (red, green, blue, alpha) color.
@@ -195,4 +195,4 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		component_value_type A;	//!<	The alpha component value of the color
 	};
 
-}}}}
+}

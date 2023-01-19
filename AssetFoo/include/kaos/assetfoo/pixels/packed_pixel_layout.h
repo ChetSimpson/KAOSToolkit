@@ -7,7 +7,7 @@
 #include <initializer_list>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace pixels
+namespace hypertech::kaos::assetfoo::pixels
 {
 
 	/// @brief Base implementation of the packed pixel format interface
@@ -72,4 +72,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace pixels
 		const bitfieldlist_type pixel_bitfields_;	//!<	List of pixel bitfields
 	};
 
-}}}}
+}

@@ -9,7 +9,7 @@
 #include <stdexcept>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace pixels
+namespace hypertech::kaos::assetfoo::pixels
 {
 	
 	const packed_pixel_layout packed_pixel_layout::BPP8(bitfieldlist_type({ {8, 0} }));
@@ -132,4 +132,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace pixels
 		return (pitch + alignment_in_bytes - 1) & ~(alignment_in_bytes - 1);
 	}
 
-}}}}
+}

@@ -7,7 +7,7 @@
 #include <gtest/gtest.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { namespace unittests
+namespace hypertech::kaos::assetfoo::colors::unittests
 {
 	using color_type = color_map::color_type;
 
@@ -411,4 +411,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { n
 		EXPECT_FALSE(colormap.index_of(test_colors::blue).has_value());
 	}
 
-}}}}}
+}

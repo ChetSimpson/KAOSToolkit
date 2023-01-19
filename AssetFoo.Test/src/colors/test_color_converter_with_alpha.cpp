@@ -13,7 +13,7 @@
 #include <gtest/gtest.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { namespace unittests
+namespace hypertech::kaos::assetfoo::colors::unittests
 {
 
 	class color_converter_with_alpha_fixture : public assetfoo::unittests::base_fixture
@@ -121,4 +121,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { n
 		EXPECT_EQ(converter_.from_rgb(test_colors::white.R, test_colors::white.G, test_colors::white.G), packed_colors::white);
 	}
 
-}}}}}
+}

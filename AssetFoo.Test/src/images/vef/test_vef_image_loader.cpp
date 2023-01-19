@@ -181,7 +181,7 @@ namespace
 }
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace vef { namespace unittests
+namespace hypertech::kaos::assetfoo::images::vef::unittests
 {
 
 	TEST(test_vef_image_reader, load_file_not_found)
@@ -257,4 +257,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 	REGISTER_TYPED_TEST_CASE_P(test_vef_image_reader, load);
 	INSTANTIATE_TYPED_TEST_CASE_P(test_vef_image_reader, test_vef_image_reader, testing_types);
 
-}}}}}}
+}

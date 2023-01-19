@@ -6,7 +6,7 @@
 #include <gtest/gtest.h>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace types { namespace unittests
+namespace hypertech::kaos::core::types::unittests
 {
 
 	TEST(rgba_color, default_ctor)
@@ -133,4 +133,4 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 		EXPECT_EQ(rgba_color(128, 128, 255).brightness(), 0.750980377f);
 	}
 
-}}}}}
+}

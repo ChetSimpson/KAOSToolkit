@@ -7,7 +7,7 @@
 #include <string>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace rat
+namespace hypertech::kaos::assetfoo::images::rat
 {
 
 	/// @brief RGBA image with background color, RGBA colormap, and original colormap
@@ -77,4 +77,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		return static_cast<rat_image&&>(value);
 	}
 
-}}}}}
+}

@@ -5,7 +5,7 @@
 #include <kaos/assetfoo/test/images/cm3/default_patterns.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace cm3 { namespace unittests
+namespace hypertech::kaos::assetfoo::images::cm3::unittests
 {
 
 	const cm3_image::pattern_type::pixelmap_type default_pattern_1_pixmap {0x55, 0xAA, 0x55, 0xAA, 0x55, 0xAA, 0x55, 0xAA};
@@ -86,4 +86,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		default_pattern_24
 	};
 
-}}}}}}
+}

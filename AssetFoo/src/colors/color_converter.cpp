@@ -9,7 +9,7 @@
 #include <cmath>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
+namespace hypertech::kaos::assetfoo::colors
 {
 
 	color_converter::color_converter(std::shared_ptr<const color_layout> color_format)
@@ -165,4 +165,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
 		return bitfield.set_in(0, scaled_component_value);
 	}
 
-}}}}
+}

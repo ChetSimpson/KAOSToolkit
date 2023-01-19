@@ -11,7 +11,7 @@
 #include <span>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace io
+namespace hypertech::kaos::core::io
 {
 
 	/// @brief Endian aware binary stream reader
@@ -454,4 +454,4 @@ namespace hypertech { namespace kaos { namespace core { namespace io
 		return reader.read(value);
 	}
 
-}}}}
+}

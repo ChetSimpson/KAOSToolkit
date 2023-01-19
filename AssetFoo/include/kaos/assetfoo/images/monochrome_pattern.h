@@ -7,7 +7,7 @@
 #include <array>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images
+namespace hypertech::kaos::assetfoo::images
 {
 
 	/// @brief Monochrome bitmap pattern
@@ -193,4 +193,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images
 		return static_cast<monochrome_pattern<Type_, ColorType_>&&>(value);
 	}
 
-}}}}
+}

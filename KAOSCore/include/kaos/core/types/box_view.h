@@ -9,7 +9,7 @@
 #include <stdexcept>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace types
+namespace hypertech::kaos::core::types
 {
 
 	/// @brief A simple 2 dimensional view of sequential data with dimensions and pitch/stride
@@ -382,4 +382,4 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		return static_cast<box_view<Type_>&&>(view);
 	}
 
-}}}}
+}

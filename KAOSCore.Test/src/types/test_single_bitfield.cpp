@@ -7,7 +7,7 @@
 #include <gtest/gtest.h>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace types { namespace unittests
+namespace hypertech::kaos::core::types::unittests
 {
 
 	TEST(single_bitfield, empty_name)
@@ -250,4 +250,4 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 		}
 	}
 
-}}}}}
+}

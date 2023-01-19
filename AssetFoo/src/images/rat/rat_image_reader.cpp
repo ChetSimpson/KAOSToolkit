@@ -9,7 +9,7 @@
 #include <kaos/core/exceptions.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace rat
+namespace hypertech::kaos::assetfoo::images::rat
 {
 
 	using core::io::binary_reader;
@@ -91,4 +91,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 			+ source_name + "`");
 	}
 
-}}}}}
+}

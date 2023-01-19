@@ -10,7 +10,7 @@
 #include <stdexcept>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace utility
+namespace hypertech::kaos::core::utility
 {
 
 	/// @brief Bit stream reader
@@ -168,4 +168,4 @@ namespace hypertech { namespace kaos { namespace core { namespace utility
 		value_type current_bit_ = 0;
 	};
 
-}}}}
+}

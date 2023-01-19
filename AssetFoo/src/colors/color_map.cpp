@@ -7,7 +7,7 @@
 #include <stdexcept>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
+namespace hypertech::kaos::assetfoo::colors
 {
 
 #pragma region Construction
@@ -264,5 +264,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
 	}
 #pragma endregion
 
-}}}}
-
+}

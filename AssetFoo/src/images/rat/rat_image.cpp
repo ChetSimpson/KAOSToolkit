@@ -5,7 +5,7 @@
 #include <kaos/assetfoo/images/rat/rat_image.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace rat
+namespace hypertech::kaos::assetfoo::images::rat
 {
 
 	rat_image::rat_image(
@@ -33,4 +33,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		return background_color_;
 	}
 
-}}}}}
+}

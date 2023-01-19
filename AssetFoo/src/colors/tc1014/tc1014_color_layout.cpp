@@ -5,7 +5,7 @@
 #include <kaos/assetfoo/colors/tc1014/tc1014_color_layout.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { namespace tc1014
+namespace hypertech::kaos::assetfoo::colors::tc1014
 {
 
 	const tc1014_color_layout::tc1014bitfield_type tc1014_color_layout::red_component_bitfield_({ "red", 1, 5, 1, 2 });
@@ -22,4 +22,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { n
 			alpha_component_bitfield_)
 	{}
 
-}}}}}
+}

@@ -5,7 +5,7 @@
 #include <kaos/assetfoo/images/tc1014/tc1014_image.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace tc1014
+namespace hypertech::kaos::assetfoo::images::tc1014
 {
 
 	tc1014_image::tc1014_image(
@@ -72,4 +72,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		return native_colormap_;
 	}
 
-}}}}}
+}

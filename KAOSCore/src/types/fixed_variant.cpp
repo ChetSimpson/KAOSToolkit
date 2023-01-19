@@ -13,7 +13,7 @@
 #include <cmath>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace types
+namespace hypertech::kaos::core::types
 {
 
 	const fixed_variant::string_type fixed_variant::false_string_("false");
@@ -465,4 +465,4 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 	}
 #pragma endregion
 
-}}}}
+}

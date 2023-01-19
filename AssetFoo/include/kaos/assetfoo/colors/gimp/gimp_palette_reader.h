@@ -7,7 +7,7 @@
 #include <string>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { namespace gimp
+namespace hypertech::kaos::assetfoo::colors::gimp
 {
 
 	/// @brief Asset reader for GIMP palette files.
@@ -54,4 +54,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { n
 		return static_cast<gimp_palette_reader&&>(value);
 	}
 
-}}}}}
+}

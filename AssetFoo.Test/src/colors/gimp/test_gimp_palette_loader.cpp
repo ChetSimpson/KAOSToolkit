@@ -12,7 +12,7 @@
 #include <filesystem>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { namespace gimp { namespace unittests
+namespace hypertech::kaos::assetfoo::colors::gimp::unittests
 {
 
 	namespace test_colors
@@ -307,4 +307,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { n
 			"Blue color level is outside the expected range of 0 to 255 in line '255 255 265' from file '<string stream>'");
 	}
 
-}}}}}}
+}

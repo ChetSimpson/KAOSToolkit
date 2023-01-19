@@ -7,7 +7,7 @@
 #include <boost/uuid/detail/md5.hpp>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images
+namespace hypertech::kaos::assetfoo::images
 {
 
 	using boost::uuids::detail::md5;
@@ -40,4 +40,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images
 		return digest;
 	}
 
-}}}}
+}

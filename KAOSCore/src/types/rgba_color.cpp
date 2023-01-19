@@ -6,7 +6,7 @@
 #include <stdexcept>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace types
+namespace hypertech::kaos::core::types
 {
 
 	float rgba_color::brightness() const
@@ -26,4 +26,4 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		return brightness;
 	}
 
-}}}}
+}

@@ -8,7 +8,7 @@
 #include <kaos/assetfoo/pixels/packed_pixel_layout.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace rat
+namespace hypertech::kaos::assetfoo::images::rat
 {
 
 	/// @brief Loads a Rat Graphics Package RAT image
@@ -105,4 +105,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		return static_cast<rat_image_reader&&>(value);
 	}
 
-}}}}}
+}

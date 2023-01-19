@@ -9,7 +9,7 @@
 #include <array>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { namespace tc1014 { namespace unittests	
+namespace hypertech::kaos::assetfoo::colors::tc1014::unittests	
 {
 
 	class tc1014_color_layout_fixture : public ::testing::Test
@@ -81,4 +81,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { n
 		}
 	}
 
-}}}}}}
+}

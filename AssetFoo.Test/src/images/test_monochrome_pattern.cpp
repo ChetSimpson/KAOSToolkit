@@ -8,7 +8,7 @@
 #include <gtest/gtest-typed-test.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace unittests
+namespace hypertech::kaos::assetfoo::images::unittests
 {
 
 	namespace
@@ -256,4 +256,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 
 	INSTANTIATE_TYPED_TEST_CASE_P(test_monochrome_pattern, test_monochrome_pattern, testing_types);
 
-}}}}}
+}

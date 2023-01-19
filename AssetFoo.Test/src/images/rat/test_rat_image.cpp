@@ -8,7 +8,7 @@
 #include <fstream>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace rat { namespace unittests
+namespace hypertech::kaos::assetfoo::images::rat::unittests
 {
 
 	namespace
@@ -202,5 +202,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		EXPECT_EQ(image.background_color(), defaults::background_color);
 	}
 
-}}}}}}
-
+}

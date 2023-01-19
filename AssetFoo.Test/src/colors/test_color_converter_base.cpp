@@ -13,9 +13,8 @@
 #include <gtest/gtest.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { namespace unittests
+namespace hypertech::kaos::assetfoo::colors::unittests
 {
-
 
 	class color_converter_common_test : public assetfoo::unittests::base_fixture
 	{
@@ -167,4 +166,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { n
 		}
 	}
 
-}}}}}
+}

@@ -6,7 +6,7 @@
 #include <memory>
 
 
-namespace hypertech { namespace kaos { namespace core
+namespace hypertech::kaos::core
 {
 
 	/// @brief Creates a new instance of std::unique_ptr whose stored pointer is obtained
@@ -41,4 +41,4 @@ namespace hypertech { namespace kaos { namespace core
 		return std::unique_ptr<ToType_, Deleter_>(ptr);
 	}
 
-}}}
+}

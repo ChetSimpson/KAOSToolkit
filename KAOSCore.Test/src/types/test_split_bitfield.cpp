@@ -7,7 +7,7 @@
 #include <gtest/gtest.h>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace types { namespace unittests
+namespace hypertech::kaos::core::types::unittests
 {
 
 	namespace
@@ -148,4 +148,4 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 		EXPECT_THROWS_MESSAGE(split_bitfield<uint8_t>(6, 1, 1, 0).set_in(0, 0b11111111), std::overflow_error, "value is too large to fit in the allocated split bitfields");
 	}
 
-}}}}}
+}
