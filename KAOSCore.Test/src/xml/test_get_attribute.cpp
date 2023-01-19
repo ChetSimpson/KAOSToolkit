@@ -389,7 +389,7 @@ namespace hypertech { namespace kaos { namespace core { namespace xml {  namespa
 		EXPECT_THROWS_MESSAGE(
 			DEBUG_DiscardResult(get_attribute_as<TypeParam>(node, this->attribute_name_)),
 			exceptions::attribute_conversion_error,
-			("unable to convert entire attribute `"
+			("partial conversion error encountered while converting attribute `"
 				+ this->attribute_name_ + "` to `" + typeid(TypeParam).name() + "`").c_str());
 	}
 
@@ -402,7 +402,7 @@ namespace hypertech { namespace kaos { namespace core { namespace xml {  namespa
 		EXPECT_THROWS_MESSAGE(
 			DEBUG_DiscardResult(get_attribute_as<TypeParam>(node, this->attribute_name_)),
 			exceptions::attribute_conversion_error,
-			("invalid input encountered converting attribute `"
+			("invalid input error encountered while converting attribute `"
 				+ this->attribute_name_ + "` to `" + typeid(TypeParam).name() + "`").c_str());
 	}
 
@@ -415,7 +415,7 @@ namespace hypertech { namespace kaos { namespace core { namespace xml {  namespa
 		EXPECT_THROWS_MESSAGE(
 			DEBUG_DiscardResult(get_attribute_as<TypeParam>(node, this->attribute_name_)),
 			exceptions::attribute_conversion_error,
-			("positive overflow error encountered converting attribute `"
+			("positive overflow error encountered while converting attribute `"
 				+ this->attribute_name_ + "` to `" + typeid(TypeParam).name() + "`").c_str());
 	}
 
@@ -430,7 +430,7 @@ namespace hypertech { namespace kaos { namespace core { namespace xml {  namespa
 			EXPECT_THROWS_MESSAGE(
 				DEBUG_DiscardResult(get_attribute_as<TypeParam>(node, this->attribute_name_)),
 				exceptions::attribute_conversion_error,
-				("negative overflow error encountered converting attribute `"
+				("negative overflow error encountered while converting attribute `"
 					+ this->attribute_name_ + "` to `" + typeid(TypeParam).name() + "`").c_str());
 		}
 		else
@@ -438,7 +438,7 @@ namespace hypertech { namespace kaos { namespace core { namespace xml {  namespa
 			EXPECT_THROWS_MESSAGE(
 				DEBUG_DiscardResult(get_attribute_as<TypeParam>(node, this->attribute_name_)),
 				exceptions::attribute_conversion_error,
-				("mismatched type error encountered converting attribute `"
+				("mismatched type error encountered while converting attribute `"
 					+ this->attribute_name_ + "` to `" + typeid(TypeParam).name() + "`").c_str());
 		}
 	}
