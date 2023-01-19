@@ -3,6 +3,8 @@
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
+///	@file
+///	@brief Provides element value conversion support to Pugi XML library
 #include <pugixml/pugixml.hpp>
 #include <kaos/core/exceptions.h>
 #include <kaos/core/type_traits.h>
@@ -20,6 +22,17 @@ namespace pugi
 
 		using ::hypertech::kaos::core::integral_not_bool_v;
 
+		/// @brief Converts a string of characters to a string value type.
+		/// 
+		/// Converts a string of characters to am string  value type.
+		/// 
+		/// @tparam Type_ The string type to convert it to (always `std::string`)
+		/// 
+		/// @param string_value The characters to convert
+		/// @param output The converted string value
+		/// 
+		/// @return An instance of `std::from_chars_result` contaning a pointer to
+		/// 1 past the last character converted and the status of the conversion.
 		template<class Type_, bool ThrowIfNotFound_>
 		[[nodiscard]] std::from_chars_result convert_from_chars(
 			const std::string& string_value,
@@ -31,6 +44,17 @@ namespace pugi
 		}
 
 
+		/// @brief Converts a string of characters to an integral or decimal value type.
+		/// 
+		/// Converts a string of characters to a non-boolean integral or decimal value type.
+		/// 
+		/// @tparam Type_ The value type to convert to
+		/// 
+		/// @param string_value The characters to convert
+		/// @param output The converted value
+		/// 
+		/// @return An instance of `std::from_chars_result` contaning a pointer to
+		/// 1 past the last character converted and the status of the conversion.
 		template<class Type_, bool ThrowIfNotFound_>
 		[[nodiscard]] std::from_chars_result convert_from_chars(
 			const std::string& string_value,
@@ -40,6 +64,20 @@ namespace pugi
 		}
 
 
+		/// @brief Converts a string of characters to a boolean value type.
+		/// 
+		/// Converts a string of characters to a boolean value type. If the
+		/// string of characters start with `true` or `false` or starts with
+		/// an integer value from -1 to 1 they are converted. Otherwise
+		/// an error is returned.
+		/// 
+		/// @tparam Type_ The value type to convert to (always `bool`)
+		/// 
+		/// @param string_value The characters to convert
+		/// @param output The converted boolean value
+		/// 
+		/// @return An instance of `std::from_chars_result` contaning a pointer to
+		/// 1 past the last character converted and the status of the conversion.
 		template<class Type_, bool ThrowIfNotFound_>
 		[[nodiscard]] std::from_chars_result convert_from_chars(
 			const std::string& string_value,
@@ -81,7 +119,34 @@ namespace pugi
 
 
 
-
+		/// @brief Gets an attribute value from a node and converts to a specific type
+		/// 
+		/// Attempts to retrieve an attribute from an XML node and convert it to a
+		/// specific value type. If the attribute exists and can be converted it is
+		/// returned in a `std::optional`. If the attribute does not exist an empty
+		/// `std::optional` is returned. If the attribute exists but an error occurs
+		/// converting it to the specified value type and \p throw_on_conversion_error 
+		/// is set to `true` the function will throw an exception otherwise it will
+		/// will return an empty `std::optional`.
+		/// 
+		/// @tparam Type_ The type to convert the attribute to.
+		/// @tparam ThrowIfNotFound_ If true the function will throw an exception if
+		/// the attribute does not exist; otherwise it returns an empty `std::optional`
+		/// if the attribute does not exist.
+		/// 
+		/// @param node The XML node containing the attribute.
+		/// @param name The name of the attribute to convert.
+		/// @param throw_on_conversion_error If true the function will throw an exception
+		/// if the attribute cannot be converted; if false the function will return an
+		/// empty value if the attribute cannot be converted.
+		/// 
+		/// @return If the attribute is converted a `std::optional` containing the value
+		/// otherwise an empty `std::optional`.
+		/// 
+		/// @throws hypertech::kaos::core::exceptions::attribute_not_found_error If the
+		/// attribute does not exist and \p ThrowIfNotFound_ is true.
+		/// @throws hypertech::kaos::core::exceptions::attribute_conversion_error If the
+		/// value cannot be converted and \p throw_on_conversion_error is `true`.
 		template<class Type_, bool ThrowIfNotFound_>
 		[[nodiscard]] std::optional<Type_> get_attribute_as(
 			const xml_node& node,
@@ -198,6 +263,29 @@ namespace pugi
 
 	}
 
+	/// @brief Gets an attribute value from a node and converts to a specific type
+	/// 
+	/// Attempts to retrieve an attribute from an XML node and convert it to a
+	/// specific value type. If the attribute exists and can be converted it is
+	/// returned in a `std::optional`. If the attribute does not exist an empty
+	/// `std::optional` is returned. If the attribute exists but an error occurs
+	/// converting it to the specified value type and \p throw_on_conversion_error 
+	/// is set to `true` the function will throw an exception otherwise it will
+	/// will return an empty `std::optional`.
+	/// 
+	/// @tparam Type_ The type to convert the attribute to.
+	/// 
+	/// @param node The XML node containing the attribute.
+	/// @param name The name of the attribute to convert.
+	/// @param throw_on_conversion_error If true the function will throw an exception
+	/// if the attribute cannot be converted; if false the function will return an
+	/// empty value if the attribute cannot be converted.
+	/// 
+	/// @return If the attribute is converted a `std::optional` containing the value
+	/// otherwise an empty `std::optional`.
+	/// 
+	/// @throws hypertech::kaos::core::exceptions::attribute_conversion_error If the
+	/// value cannot be converted.
 	template<class Type_>
 	[[nodiscard]] std::optional<Type_> try_get_attribute_as(
 		const xml_node& node,
@@ -207,6 +295,23 @@ namespace pugi
 		return details::get_attribute_as<Type_, false>(node, name, throw_on_conversion_error);
 	}
 
+	/// @brief Gets an attribute value from a node and converts to a specific type
+	/// 
+	/// Retrieve an attribute from an XML node and converts it to a specific value
+	/// type. If the attribute does not exist or an error occurs converting the
+	/// attribute to the specified value type an exception is thrown.
+	/// 
+	/// @tparam Type_ The type to convert the attribute to.
+	/// 
+	/// @param node The XML node containing the attribute.
+	/// @param name The name of the attribute to convert.
+	/// 
+	/// @return The converted attribute value.
+	/// 
+	/// @throws hypertech::kaos::core::exceptions::attribute_not_found_error If the
+	/// attribute does not exist.
+	/// @throws hypertech::kaos::core::exceptions::attribute_conversion_error If the
+	/// value cannot be converted.
 	template<class Type_>
 	[[nodiscard]] Type_ get_attribute_as(const xml_node& node, const std::string& name)
 	{

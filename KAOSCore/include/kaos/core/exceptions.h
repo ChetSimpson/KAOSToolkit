@@ -181,20 +181,33 @@ namespace hypertech { namespace kaos { namespace core { namespace exceptions
 	};
 
 
+	/// @brief Exception used to indicate the an attribute cannot
+	/// be found in a value container.
 	class attribute_not_found_error : public std::runtime_error
 	{
 	public:
 
+		/// @brief Create an attribute_not_found_error exception
+		/// 
+		/// @param attribute_name The name of the attribute that wasn't found
 		attribute_not_found_error(const std::string& attribute_name)
 			: std::runtime_error("attribute `" + attribute_name + "` not found")
 		{}
 
 	};
 
+	/// @brief Exception used to indicate the an attribute cannot
+	/// be converted from one value type to another.
 	class attribute_conversion_error : public std::runtime_error
 	{
 	public:
 
+		/// @brief Create an attribute_conversion_error exception
+		/// 
+		/// @param error_message A brief error message describing the conversion error
+		/// @param attribute_name The name of the attribute that couldn't be converted
+		/// @param target_type The type info of the target value type the attribute
+		/// could not be converted to.
 		attribute_conversion_error(
 			const std::string& error_message,
 			const std::string& attribute_name,
