@@ -7,7 +7,7 @@
 #include <gtest/gtest.h>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace utility { namespace unittests
+namespace hypertech::kaos::core::utility::unittests
 {
 
 	TEST(test_byteswap, wchar_t)
@@ -65,4 +65,4 @@ namespace hypertech { namespace kaos { namespace core { namespace utility { name
 		EXPECT_EQ(byteswap(uint64_t(0x0102030405060708)), 0x0807060504030201U);
 	}
 
-}}}}}
+}

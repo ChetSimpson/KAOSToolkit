@@ -7,7 +7,7 @@
 #include <typeinfo>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace exceptions
+namespace hypertech::kaos::core::exceptions
 {
 
 	/// @brief Exception thrown when an error occurs while reading from or
@@ -223,4 +223,4 @@ namespace hypertech { namespace kaos { namespace core { namespace exceptions
 
 	};
 
-}}}}
+}

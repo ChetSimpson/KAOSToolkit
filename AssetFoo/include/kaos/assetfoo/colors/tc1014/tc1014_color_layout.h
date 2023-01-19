@@ -8,7 +8,7 @@
 #include <kaos/core/types/empty_bitfield.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { namespace tc1014
+namespace hypertech::kaos::assetfoo::colors::tc1014
 {
 
 	/// @brief Provides details about the format of packed colors for the
@@ -59,4 +59,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { n
 		static const empty_bitfield_type alpha_component_bitfield_;
 	};
 
-}}}}}
+}

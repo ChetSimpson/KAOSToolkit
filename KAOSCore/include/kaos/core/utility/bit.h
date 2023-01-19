@@ -8,7 +8,7 @@
 #include <array>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace utility
+namespace hypertech::kaos::core::utility
 {
 
 	//	NOTE: Swap to std implementation when switched to C++23 (this was taken from cppreference.com)
@@ -36,4 +36,4 @@ namespace hypertech { namespace kaos { namespace core { namespace utility
 		return std::bit_cast<Type_>(value_representation);
 	}
 
-}}}}
+}

@@ -9,7 +9,7 @@
 #include <gtest/gtest.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace tc1014 { namespace unittests	
+namespace hypertech::kaos::assetfoo::images::tc1014::unittests	
 {
 
 	namespace
@@ -112,4 +112,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		}
 	}
 
-}}}}}}
+}

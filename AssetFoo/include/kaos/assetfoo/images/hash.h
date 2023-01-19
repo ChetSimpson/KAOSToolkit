@@ -6,7 +6,7 @@
 #include <array>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images
+namespace hypertech::kaos::assetfoo::images
 {
 
 	class image;
@@ -18,4 +18,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images
 	/// @return The hash value as 4 32 bit unsigned integers.
 	std::array<uint32_t, 4> calculate_md5_hash(const image& img);
 
-}}}}
+}

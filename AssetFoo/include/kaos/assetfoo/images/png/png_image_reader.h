@@ -6,7 +6,7 @@
 #include <kaos/assetfoo/asset_reader.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace png
+namespace hypertech::kaos::assetfoo::images::png
 {
 
 	/// @brief Loads a PNG image
@@ -69,4 +69,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		return static_cast<png_image_reader&&>(value);
 	}
 
-}}}}}
+}

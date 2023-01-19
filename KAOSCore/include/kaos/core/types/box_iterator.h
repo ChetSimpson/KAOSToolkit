@@ -7,7 +7,7 @@
 #include <span>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace types
+namespace hypertech::kaos::core::types
 {
 
 	/// @brief Sequential iterator with width and stride/pitch 
@@ -329,4 +329,4 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 	#endif
 	};
 
-}}}}
+}

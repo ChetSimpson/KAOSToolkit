@@ -6,7 +6,7 @@
 #include <string>
 
 
-namespace hypertech { namespace kaos { namespace core {  namespace console
+namespace hypertech::kaos::core::console
 {
 
 	/// @brief Basic console for event reporting
@@ -26,4 +26,4 @@ namespace hypertech { namespace kaos { namespace core {  namespace console
 		virtual void error(const string_type& message);
 	};
 
-}}}}
+}

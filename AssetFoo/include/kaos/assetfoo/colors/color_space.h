@@ -5,7 +5,7 @@
 #pragma once
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
+namespace hypertech::kaos::assetfoo::colors
 {
 
 	/// @brief Enumeration of available color spaces
@@ -16,4 +16,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
 		composite	//!<	Generic composite colorspace
 	};
 
-}}}}
+}

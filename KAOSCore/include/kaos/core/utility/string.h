@@ -9,7 +9,7 @@
 //	TODO: This is currently not used. Delete and switch to using boost::algorithm::trim* functions
 
 
-namespace hypertech { namespace kaos { namespace core { namespace utility { namespace strings
+namespace hypertech::kaos::core::utility::strings
 {
 
 	/// @brief Trim spaces from the beginning of a string
@@ -135,4 +135,4 @@ namespace hypertech { namespace kaos { namespace core { namespace utility { name
 		return trim(value);
 	}
 
-}}}}}
+}

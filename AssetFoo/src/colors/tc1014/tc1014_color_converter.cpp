@@ -6,7 +6,7 @@
 #include <algorithm>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { namespace tc1014
+namespace hypertech::kaos::assetfoo::colors::tc1014
 {
 
 	/// This table was extracted from the ColorMax Deluxe source code
@@ -110,4 +110,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { n
 		return colormap;
 	}
 
-}}}}}
+}

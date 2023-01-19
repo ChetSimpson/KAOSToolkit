@@ -5,7 +5,7 @@
 #include <kaos/assetfoo/images/image.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images
+namespace hypertech::kaos::assetfoo::images
 {
 
 	image::image(image&& other) noexcept
@@ -346,4 +346,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images
 		return ViewType_(data.data() + (y * width_) + x, view_width, view_height, width_);
 	}
 
-}}}}
+}

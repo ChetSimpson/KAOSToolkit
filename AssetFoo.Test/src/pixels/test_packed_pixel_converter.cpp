@@ -10,7 +10,7 @@
 #include <array>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace pixels { namespace unittests
+namespace hypertech::kaos::assetfoo::pixels::unittests
 {
 
 	class packed_pixel_converter_fixture : public assetfoo::unittests::base_fixture
@@ -1238,4 +1238,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace pixels { n
 	}
 #pragma endregion
 
-}}}}}
+}

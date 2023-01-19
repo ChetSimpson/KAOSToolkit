@@ -10,7 +10,7 @@
 #include <fstream>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace cm3 { namespace unittests
+namespace hypertech::kaos::assetfoo::images::cm3::unittests
 {
 	namespace
 	{
@@ -289,5 +289,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		EXPECT_EQ(image.patterns(), default_pattern_set);
 	}
 
-}}}}}}
-
+}

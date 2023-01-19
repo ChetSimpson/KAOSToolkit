@@ -11,7 +11,7 @@
 #include <kaos/core/io/binary_reader.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace tc1014
+namespace hypertech::kaos::assetfoo::images::tc1014
 {
 
 	/// @brief Image reader for TC1014 (Tandy Color Computer 3) based images
@@ -106,4 +106,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		return static_cast<tc1014_image_reader&&>(value);
 	}
 
-}}}}}
+}

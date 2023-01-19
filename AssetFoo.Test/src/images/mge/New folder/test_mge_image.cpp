@@ -8,7 +8,7 @@
 #include <fstream>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace mge { namespace unittests
+namespace hypertech::kaos::assetfoo::images::mge::unittests
 {
 
 	namespace
@@ -207,4 +207,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		EXPECT_EQ(image.title(), defaults::title);
 	}
 
-}}}}}}
+}

@@ -8,7 +8,7 @@
 #include <memory>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
+namespace hypertech::kaos::assetfoo::colors
 {
 
 	/// @brief Provides facilities for color conversion
@@ -198,4 +198,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
 		return static_cast<color_converter&&>(value);
 	}
 
-}}}}
+}

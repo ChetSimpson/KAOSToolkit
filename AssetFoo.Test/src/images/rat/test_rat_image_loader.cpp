@@ -60,7 +60,7 @@ namespace
 		title1_rat_expectations>;
 }
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace rat { namespace unittests
+namespace hypertech::kaos::assetfoo::images::rat::unittests
 {
 
 	TEST(test_rat_image_reader, load_file_not_found)
@@ -127,4 +127,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 	REGISTER_TYPED_TEST_CASE_P(test_rat_image_reader, load);
 	INSTANTIATE_TYPED_TEST_CASE_P(test_rat_image_reader, test_rat_image_reader, testing_types);
 
-}}}}}}
+}

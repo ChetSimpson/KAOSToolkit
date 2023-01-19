@@ -8,7 +8,7 @@
 #include <algorithm>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace tc1014
+namespace hypertech::kaos::assetfoo::images::tc1014
 {
 
 	void tc1014_image_reader::load_uncompressed_pixel_data(
@@ -34,4 +34,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 			+ source_name + "`");
 	}
 
-}}}}}
+}

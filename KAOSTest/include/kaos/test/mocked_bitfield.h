@@ -7,7 +7,7 @@
 #include <optional>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace types { namespace unittests { namespace mocks
+namespace hypertech::kaos::core::types::unittests::mocks
 {
 
 	template<class ValueType_>
@@ -99,4 +99,4 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 		std::optional<value_type> get_from_value_;
 	};
 
-}}}}}}
+}

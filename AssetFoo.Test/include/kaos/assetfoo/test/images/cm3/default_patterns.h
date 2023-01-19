@@ -7,7 +7,7 @@
 #include <kaos/assetfoo/images/cm3/cm3_image.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace cm3 { namespace unittests
+namespace hypertech::kaos::assetfoo::images::cm3::unittests
 {
 
 	struct pattern_details
@@ -70,4 +70,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 	using default_pattern_list_type = cm3_image::pattern_list_type;
 	extern const default_pattern_list_type default_pattern_set;
 
-}}}}}}
+}

@@ -134,7 +134,7 @@ namespace
 }
 
 
-namespace hypertech { namespace kaos { namespace core { namespace io {  namespace unittests
+namespace hypertech::kaos::core::io::unittests
 {
 
 #pragma region operator bool
@@ -766,5 +766,4 @@ namespace hypertech { namespace kaos { namespace core { namespace io {  namespac
 		ASSERT_FALSE(reader.eof());
 	}
 
-
-}}}}}
+}

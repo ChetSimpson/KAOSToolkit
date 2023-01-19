@@ -687,7 +687,7 @@ namespace
 	>;
 }
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace cm3 { namespace unittests
+namespace hypertech::kaos::assetfoo::images::cm3::unittests
 {
 
 	const auto single_page_exclude_patterns_header_data =
@@ -799,4 +799,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 	REGISTER_TYPED_TEST_CASE_P(test_cm3_image_reader, load);
 	INSTANTIATE_TYPED_TEST_CASE_P(test_cm3_image_reader, test_cm3_image_reader, testing_types);
 
-}}}}}}
+}

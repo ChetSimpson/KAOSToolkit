@@ -6,7 +6,7 @@
 #include <kaos/core/types/single_bitfield.h>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace types
+namespace hypertech::kaos::core::types
 {
 	
 	/// @brief An optionally named value with an explicit size in bits occupying two
@@ -260,4 +260,4 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		const bitfield_type	ls_bitfield_;
 	};
 
-}}}}
+}

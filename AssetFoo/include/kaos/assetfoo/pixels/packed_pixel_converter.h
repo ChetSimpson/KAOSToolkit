@@ -8,7 +8,7 @@
 #include <span>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace pixels
+namespace hypertech::kaos::assetfoo::pixels
 {
 
 	/// @brief Packed pixel converter.
@@ -195,4 +195,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace pixels
 		return static_cast<packed_pixel_converter&&>(value);
 	}
 
-}}}}
+}

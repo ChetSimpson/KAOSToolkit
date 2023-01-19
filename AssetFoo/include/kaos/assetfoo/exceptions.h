@@ -6,7 +6,7 @@
 #include <stdexcept>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace exceptions
+namespace hypertech::kaos::assetfoo::exceptions
 {
 
 	/// @brief Exception thrown when an error is encountered with a packed color
@@ -18,4 +18,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace exceptions
 		using std::runtime_error::runtime_error;
 	};
 
-}}}}
+}

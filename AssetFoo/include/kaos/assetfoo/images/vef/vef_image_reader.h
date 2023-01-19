@@ -9,7 +9,7 @@
 #include <array>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace vef
+namespace hypertech::kaos::assetfoo::images::vef
 {
 
 	/// @brief Loads a VEF image
@@ -125,4 +125,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		return static_cast<vef_image_reader&&>(value);
 	}
 
-}}}}}
+}

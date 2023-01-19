@@ -7,7 +7,7 @@
 #include <stdexcept>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace pixels
+namespace hypertech::kaos::assetfoo::pixels
 {
 
 	packed_pixel_converter::color_input_sequence_type packed_pixel_converter::pack(
@@ -295,4 +295,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace pixels
 		return packed_pixel_type((~(packed_pixels_max_value_ >> bits_per_pixel)));
 	}
 
-}}}}
+}

@@ -8,7 +8,7 @@
 #include <gtest/gtest-typed-test.h>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace types { namespace unittests
+namespace hypertech::kaos::core::types::unittests
 {
 
 	template<class TestType_>
@@ -241,4 +241,4 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 		EXPECT_THROW(vector2f(vector2d(-std::numeric_limits<vector2d::value_type>::max(), 77.5)), boost::numeric::negative_overflow);
 	}
 
-}}}}}
+}

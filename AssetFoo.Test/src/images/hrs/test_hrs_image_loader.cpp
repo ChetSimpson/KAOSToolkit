@@ -44,7 +44,7 @@ namespace
 	using testing_types = testing::Types<monalisa_hrs_expectations>;
 }
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace hrs { namespace unittests
+namespace hypertech::kaos::assetfoo::images::hrs::unittests
 {
 
 	TEST(test_hrs_image_reader, load_file_not_found)
@@ -107,4 +107,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 	REGISTER_TYPED_TEST_CASE_P(test_hrs_image_reader, load);
 	INSTANTIATE_TYPED_TEST_CASE_P(test_hrs_image_reader, test_hrs_image_reader, testing_types);
 
-}}}}}}
+}

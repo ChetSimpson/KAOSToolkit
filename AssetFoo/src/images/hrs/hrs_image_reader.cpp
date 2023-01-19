@@ -8,7 +8,7 @@
 #include <utility>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace hrs
+namespace hypertech::kaos::assetfoo::images::hrs
 {
 
 	using core::io::binary_reader;
@@ -39,4 +39,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 			"image file format error: attempt to read past end of file `" + source_name + "`");
 	}
 
-}}}}}
+}

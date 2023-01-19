@@ -5,7 +5,7 @@
 #include <kaos/assetfoo/images/mge/mge_image.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace mge
+namespace hypertech::kaos::assetfoo::images::mge
 {
 
 	mge_image::mge_image(
@@ -25,4 +25,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		return title_;
 	}
 
-}}}}}
+}

@@ -6,7 +6,7 @@
 #include <type_traits>
 
 
-namespace hypertech { namespace kaos { namespace core
+namespace hypertech::kaos::core
 {
 
 	template<class Type_>
@@ -15,4 +15,4 @@ namespace hypertech { namespace kaos { namespace core
 	template <class Type_>
 	struct integral_not_bool : std::bool_constant<integral_not_bool_v<Type_>> {};
 
-}}}
+}

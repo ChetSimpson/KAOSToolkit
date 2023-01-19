@@ -8,7 +8,7 @@
 #include <array>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace hrs
+namespace hypertech::kaos::assetfoo::images::hrs
 {
 
 	using hrs_image = tc1014::tc1014_image;
@@ -93,4 +93,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		return static_cast<hrs_image_reader&&>(value);
 	}
 
-}}}}}
+}

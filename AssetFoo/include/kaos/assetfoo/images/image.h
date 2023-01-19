@@ -11,7 +11,7 @@
 #include <vector>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images
+namespace hypertech::kaos::assetfoo::images
 {
 
 	/// @brief RGBA image
@@ -357,4 +357,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images
 		return static_cast<image&&>(img);
 	}
 
-}}}}
+}

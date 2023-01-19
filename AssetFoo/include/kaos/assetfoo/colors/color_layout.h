@@ -7,7 +7,7 @@
 #include <kaos/core/types/abstract_bitfield.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
+namespace hypertech::kaos::assetfoo::colors
 {
 
 	/// @brief Information about the layout of RGB and RGBA colors.
@@ -141,4 +141,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
 		const bitfield_type& alpha_component_bitfield_;
 	};
 
-}}}}
+}

@@ -9,7 +9,7 @@
 #include <istream>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace png
+namespace hypertech::kaos::assetfoo::images::png
 {
 
 	std::unique_ptr<asset> png_image_reader::load(
@@ -56,4 +56,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		return std::make_unique<image>(width, height, move(pixel_buffer));
 	}
 
-}}}}}
+}

@@ -8,7 +8,7 @@
 #include <string>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo
+namespace hypertech::kaos::assetfoo
 {
 
 	/// @brief Abstract class for loading media files as KAOS assets.
@@ -172,4 +172,4 @@ namespace hypertech { namespace kaos { namespace assetfoo
 		ascii_asset_reader(ascii_asset_reader&& other) = default;
 	};
 
-}}}
+}

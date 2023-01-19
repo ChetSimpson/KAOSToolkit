@@ -8,7 +8,7 @@
 #include <kaos/core/exceptions.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace mge
+namespace hypertech::kaos::assetfoo::images::mge
 {
 
 	using core::io::binary_reader;
@@ -87,4 +87,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 			+ source_name + "`");
 	}
 
-}}}}}
+}

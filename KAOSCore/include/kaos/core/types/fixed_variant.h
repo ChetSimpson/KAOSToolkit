@@ -12,7 +12,7 @@
 #include <filesystem>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace types
+namespace hypertech::kaos::core::types
 {
 
 	/// @brief A fixed type-safe variant with conversion between most supported
@@ -346,4 +346,4 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		storge_type	value_;
 	};
 
-}}}}
+}

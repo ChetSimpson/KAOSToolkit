@@ -7,7 +7,7 @@
 #include <memory>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo
+namespace hypertech::kaos::assetfoo
 {
 
 	/// @brief Base class for all asset types
@@ -56,4 +56,4 @@ namespace hypertech { namespace kaos { namespace assetfoo
 		return core::dynamic_pointer_cast<ToType_, asset, Deleter_>(move(from));
 	}
 
-}}}
+}

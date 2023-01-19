@@ -9,7 +9,7 @@
 #include <type_traits>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace types
+namespace hypertech::kaos::core::types
 {
 
 	/// @brief Vector containing two values x and y.
@@ -273,4 +273,4 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 	using vector2f_fast = vector2<float, true>;
 	using vector2d_fast = vector2<double, true>;
 
-}}}}
+}

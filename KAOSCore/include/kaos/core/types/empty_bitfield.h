@@ -6,7 +6,7 @@
 #include <kaos/core/types/abstract_bitfield.h>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace types
+namespace hypertech::kaos::core::types
 {
 
 	/// @brief An optionally named empty bitfield with a size of 0 bits.
@@ -131,4 +131,4 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		const string_type name_;
 	};
 
-}}}}
+}

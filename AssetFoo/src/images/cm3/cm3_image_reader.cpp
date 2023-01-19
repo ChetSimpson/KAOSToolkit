@@ -9,7 +9,7 @@
 #include <kaos/core/exceptions.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace cm3
+namespace hypertech::kaos::assetfoo::images::cm3
 {
 
 	using core::io::binary_reader;
@@ -207,4 +207,5 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 			+ std::to_string(page_index)
 			+ " of `" + source_name + "`");
 	}
-}}}}}
+
+}

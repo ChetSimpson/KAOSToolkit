@@ -9,7 +9,7 @@
 #include <gtest/gtest-typed-test.h>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace xml {  namespace unittests
+namespace hypertech::kaos::core::xml::unittests
 {
 
 	using pugi::xml_document;
@@ -474,6 +474,4 @@ namespace hypertech { namespace kaos { namespace core { namespace xml {  namespa
 		test_get_attribute_as,
 		get_attribute_as_testing_types);
 
-
-
-}}}}}
+}

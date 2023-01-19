@@ -5,7 +5,7 @@
 #include <kaos/assetfoo/images/cm3/cm3_image.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace images { namespace cm3
+namespace hypertech::kaos::assetfoo::images::cm3
 {
 
 	cm3_image::cm3_image(
@@ -86,4 +86,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace images { n
 		return patterns_;
 	}
 
-}}}}}
+}

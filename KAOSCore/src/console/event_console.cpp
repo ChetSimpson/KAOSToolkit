@@ -6,7 +6,7 @@
 #include <iostream>
 
 
-namespace hypertech { namespace kaos { namespace core { namespace console
+namespace hypertech::kaos::core::console
 {
 
 	void event_console::warning(const string_type& message)
@@ -19,4 +19,4 @@ namespace hypertech { namespace kaos { namespace core { namespace console
 		std::cerr << "Error: " << message << "\n";
 	}
 
-}}}}
+}

@@ -13,7 +13,7 @@
 //
 //	Format extracted from https://github.com/GNOME/gimp/blob/master/app/core/gimppalette-load.c
 //
-namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { namespace gimp
+namespace hypertech::kaos::assetfoo::colors::gimp
 {
 	namespace exceptions = core::exceptions;
 
@@ -113,4 +113,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors { n
 		return std::make_unique<color_map>(move(colors));
 	}
 
-}}}}}
+}

@@ -7,7 +7,7 @@
 #include <gtest/gtest.h>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace unittests
+namespace hypertech::kaos::assetfoo::unittests
 {
 
 	class base_fixture : public ::testing::Test
@@ -41,4 +41,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace unittests
 		};
 	};
 
-}}}}
+}

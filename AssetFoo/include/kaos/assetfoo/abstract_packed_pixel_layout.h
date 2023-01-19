@@ -7,7 +7,7 @@
 #include <vector>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo
+namespace hypertech::kaos::assetfoo
 {
 
 	/// @brief Provides the base interface for packed pixel formats.
@@ -83,4 +83,4 @@ namespace hypertech { namespace kaos { namespace assetfoo
 		virtual size_type calculate_pitch(size_type width_in_pixels, size_type alignment_in_bytes) const = 0;
 	};
 
-}}}
+}

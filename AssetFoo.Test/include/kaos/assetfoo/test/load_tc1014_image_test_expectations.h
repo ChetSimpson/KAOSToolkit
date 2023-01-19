@@ -9,7 +9,7 @@
 #include <iomanip>
 
 
-namespace hypertech { namespace kaos { namespace assetfoo { namespace unittests
+namespace hypertech::kaos::assetfoo::unittests
 {
 
 	template<
@@ -63,4 +63,4 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace unittests
 		}
 	};
 
-}}}}
+}
