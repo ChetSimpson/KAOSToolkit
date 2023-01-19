@@ -12,8 +12,6 @@
 namespace hypertech { namespace kaos { namespace core { namespace types { namespace unittests
 {
 
-	//	FIXME: rename interger to integer
-
 	namespace
 	{
 		constexpr auto integer_type_max(std::numeric_limits<fixed_variant::integer_type>::max());
@@ -78,7 +76,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 
 	TEST(fixed_variant, convert_empty_to_integer)
 	{
-		EXPECT_THROW(fixed_variant().as_interger(), exceptions::empty_cast_error);
+		EXPECT_THROW(fixed_variant().as_integer(), exceptions::empty_cast_error);
 	}
 
 	TEST(fixed_variant, convert_empty_to_integer_exception_typeinfo)
@@ -87,7 +85,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 
 		try
 		{
-			fixed_variant().as_interger();
+			fixed_variant().as_integer();
 		}
 		catch (exceptions::empty_cast_error& e)
 		{
@@ -309,8 +307,8 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 	TEST(fixed_variant, convert_boolean_to_integer)
 	{
 		//	bool -> int
-		EXPECT_EQ(fixed_variant(fixed_variant::boolean_type(false)).as_interger(), 0);
-		EXPECT_EQ(fixed_variant(fixed_variant::boolean_type(true)).as_interger(), 1);
+		EXPECT_EQ(fixed_variant(fixed_variant::boolean_type(false)).as_integer(), 0);
+		EXPECT_EQ(fixed_variant(fixed_variant::boolean_type(true)).as_integer(), 1);
 	}
 
 	TEST(fixed_variant, convert_boolean_to_unsigned)
@@ -415,10 +413,10 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 		EXPECT_EQ(value.type(), fixed_variant::tag_type::Empty);
 		value = 5LL;
 		EXPECT_EQ(value.type(), fixed_variant::tag_type::Integer);
-		EXPECT_EQ(value.as_interger(), 5);
+		EXPECT_EQ(value.as_integer(), 5);
 		value = 7LL;
 		EXPECT_EQ(value.type(), fixed_variant::tag_type::Integer);
-		EXPECT_EQ(value.as_interger(), 7);
+		EXPECT_EQ(value.as_integer(), 7);
 	}
 
 	TEST(fixed_variant, convert_integer_to_boolean)
@@ -469,11 +467,11 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 	TEST(fixed_variant, convert_integer_to_integer)
 	{
 		//	int -> int
-		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(0)).as_interger(), 0);
-		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(1)).as_interger(), 1);
-		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(2)).as_interger(), 2);
-		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(-1)).as_interger(), -1);
-		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(-2)).as_interger(), -2);
+		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(0)).as_integer(), 0);
+		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(1)).as_integer(), 1);
+		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(2)).as_integer(), 2);
+		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(-1)).as_integer(), -1);
+		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(-2)).as_integer(), -2);
 	}
 
 	TEST(fixed_variant, convert_integer_to_unsigned)
@@ -643,10 +641,10 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 	TEST(fixed_variant, convert_unsigned_to_integer)
 	{
 		//	unsigned -> int
-		EXPECT_EQ(fixed_variant(fixed_variant::unsigned_type(0)).as_interger(), 0);
-		EXPECT_EQ(fixed_variant(fixed_variant::unsigned_type(1)).as_interger(), 1);
-		EXPECT_EQ(fixed_variant(fixed_variant::unsigned_type(2)).as_interger(), 2);
-		EXPECT_THROW(fixed_variant(unsigned_type_max).as_interger(), exceptions::positive_overflow_error);
+		EXPECT_EQ(fixed_variant(fixed_variant::unsigned_type(0)).as_integer(), 0);
+		EXPECT_EQ(fixed_variant(fixed_variant::unsigned_type(1)).as_integer(), 1);
+		EXPECT_EQ(fixed_variant(fixed_variant::unsigned_type(2)).as_integer(), 2);
+		EXPECT_THROW(fixed_variant(unsigned_type_max).as_integer(), exceptions::positive_overflow_error);
 	}
 
 	TEST(fixed_variant, convert_unsigned_to_integer_exception_typeinfo)
@@ -655,7 +653,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 
 		try
 		{
-			fixed_variant(unsigned_type_max).as_interger();
+			fixed_variant(unsigned_type_max).as_integer();
 		}
 		catch (exceptions::positive_overflow_error& e)
 		{
@@ -829,12 +827,12 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 	TEST(fixed_variant, convert_float_to_integer)
 	{
 		//	float -> int
-		EXPECT_EQ(fixed_variant(fixed_variant::float_type(0.0f)).as_interger(), 0);
-		EXPECT_EQ(fixed_variant(fixed_variant::float_type(0.5f)).as_interger(), 0);
-		EXPECT_EQ(fixed_variant(fixed_variant::float_type(5.0f)).as_interger(), 5);
-		EXPECT_EQ(fixed_variant(fixed_variant::float_type(-5.0f)).as_interger(), -5);
-		EXPECT_THROW(fixed_variant(fixed_variant::float_type(float_type_max)).as_interger(), exceptions::positive_overflow_error);
-		EXPECT_THROW(fixed_variant(fixed_variant::float_type(-float_type_max)).as_interger(), exceptions::negative_overflow_error);
+		EXPECT_EQ(fixed_variant(fixed_variant::float_type(0.0f)).as_integer(), 0);
+		EXPECT_EQ(fixed_variant(fixed_variant::float_type(0.5f)).as_integer(), 0);
+		EXPECT_EQ(fixed_variant(fixed_variant::float_type(5.0f)).as_integer(), 5);
+		EXPECT_EQ(fixed_variant(fixed_variant::float_type(-5.0f)).as_integer(), -5);
+		EXPECT_THROW(fixed_variant(fixed_variant::float_type(float_type_max)).as_integer(), exceptions::positive_overflow_error);
+		EXPECT_THROW(fixed_variant(fixed_variant::float_type(-float_type_max)).as_integer(), exceptions::negative_overflow_error);
 	}
 
 	TEST(fixed_variant, convert_float_to_integer_exception_typeinfo)
@@ -843,7 +841,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 
 		try
 		{
-			fixed_variant(fixed_variant::float_type(float_type_max)).as_interger();
+			fixed_variant(fixed_variant::float_type(float_type_max)).as_integer();
 		}
 		catch (exceptions::positive_overflow_error& e)
 		{
@@ -859,7 +857,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 
 		try
 		{
-			fixed_variant(fixed_variant::float_type(-float_type_max)).as_interger();
+			fixed_variant(fixed_variant::float_type(-float_type_max)).as_integer();
 		}
 		catch (exceptions::negative_overflow_error& e)
 		{
@@ -1059,12 +1057,12 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 	TEST(fixed_variant, convert_double_to_integer)
 	{
 		//	double -> int
-		EXPECT_EQ(fixed_variant(fixed_variant::double_type(0.0)).as_interger(), 0);
-		EXPECT_EQ(fixed_variant(fixed_variant::double_type(0.5)).as_interger(), 0);
-		EXPECT_EQ(fixed_variant(fixed_variant::double_type(1.0)).as_interger(), 1);
-		EXPECT_EQ(fixed_variant(fixed_variant::double_type(2.0)).as_interger(), 2);
-		EXPECT_THROW(fixed_variant(fixed_variant::double_type(double_type_max)).as_interger(), exceptions::positive_overflow_error);
-		EXPECT_THROW(fixed_variant(fixed_variant::double_type(-double_type_max)).as_interger(), exceptions::negative_overflow_error);
+		EXPECT_EQ(fixed_variant(fixed_variant::double_type(0.0)).as_integer(), 0);
+		EXPECT_EQ(fixed_variant(fixed_variant::double_type(0.5)).as_integer(), 0);
+		EXPECT_EQ(fixed_variant(fixed_variant::double_type(1.0)).as_integer(), 1);
+		EXPECT_EQ(fixed_variant(fixed_variant::double_type(2.0)).as_integer(), 2);
+		EXPECT_THROW(fixed_variant(fixed_variant::double_type(double_type_max)).as_integer(), exceptions::positive_overflow_error);
+		EXPECT_THROW(fixed_variant(fixed_variant::double_type(-double_type_max)).as_integer(), exceptions::negative_overflow_error);
 	}
 
 	TEST(fixed_variant, convert_double_to_integer_exception_typeinfo)
@@ -1073,7 +1071,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 
 		try
 		{
-			fixed_variant(fixed_variant::double_type(double_type_max)).as_interger();
+			fixed_variant(fixed_variant::double_type(double_type_max)).as_integer();
 		}
 		catch (exceptions::positive_overflow_error& e)
 		{
@@ -1089,7 +1087,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 
 		try
 		{
-			fixed_variant(fixed_variant::double_type(-double_type_max)).as_interger();
+			fixed_variant(fixed_variant::double_type(-double_type_max)).as_integer();
 		}
 		catch (exceptions::negative_overflow_error& e)
 		{
@@ -1346,15 +1344,15 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 	TEST(fixed_variant, convert_string_to_integer)
 	{
 		//	string -> int
-		EXPECT_EQ(fixed_variant("0").as_interger(), 0);
-		EXPECT_EQ(fixed_variant("1").as_interger(), 1);
-		EXPECT_EQ(fixed_variant("2").as_interger(), 2);
-		EXPECT_EQ(fixed_variant("-1").as_interger(), -1);
-		EXPECT_THROW(fixed_variant(fixed_variant::string_type()).as_interger(), exceptions::lexical_error);
-		EXPECT_THROW(fixed_variant(std::to_string(integer_type_max) + "1").as_interger(), exceptions::lexical_error);
-		EXPECT_THROW(fixed_variant(std::to_string(integer_type_min) + "1").as_interger(), exceptions::lexical_error);
-		EXPECT_THROW(fixed_variant("false").as_interger(), exceptions::lexical_error);
-		EXPECT_THROW(fixed_variant("true").as_interger(), exceptions::lexical_error);
+		EXPECT_EQ(fixed_variant("0").as_integer(), 0);
+		EXPECT_EQ(fixed_variant("1").as_integer(), 1);
+		EXPECT_EQ(fixed_variant("2").as_integer(), 2);
+		EXPECT_EQ(fixed_variant("-1").as_integer(), -1);
+		EXPECT_THROW(fixed_variant(fixed_variant::string_type()).as_integer(), exceptions::lexical_error);
+		EXPECT_THROW(fixed_variant(std::to_string(integer_type_max) + "1").as_integer(), exceptions::lexical_error);
+		EXPECT_THROW(fixed_variant(std::to_string(integer_type_min) + "1").as_integer(), exceptions::lexical_error);
+		EXPECT_THROW(fixed_variant("false").as_integer(), exceptions::lexical_error);
+		EXPECT_THROW(fixed_variant("true").as_integer(), exceptions::lexical_error);
 	}
 
 	TEST(fixed_variant, convert_string_to_integer_exception_typeinfo)
@@ -1363,7 +1361,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 
 		try
 		{
-			fixed_variant(fixed_variant::string_type()).as_interger();
+			fixed_variant(fixed_variant::string_type()).as_integer();
 		}
 		catch (exceptions::lexical_error& e)
 		{
@@ -1379,7 +1377,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 
 		try
 		{
-			fixed_variant(std::to_string(integer_type_max) + "1").as_interger();
+			fixed_variant(std::to_string(integer_type_max) + "1").as_integer();
 		}
 		catch (exceptions::lexical_error& e)
 		{
@@ -1662,7 +1660,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 	TEST(fixed_variant, convert_path)
 	{
 		EXPECT_THROW(fixed_variant(fixed_variant::path_type()).as_boolean(), exceptions::incompatible_type_error);
-		EXPECT_THROW(fixed_variant(fixed_variant::path_type()).as_interger(), exceptions::incompatible_type_error);
+		EXPECT_THROW(fixed_variant(fixed_variant::path_type()).as_integer(), exceptions::incompatible_type_error);
 		EXPECT_THROW(fixed_variant(fixed_variant::path_type()).as_unsigned(), exceptions::incompatible_type_error);
 		EXPECT_THROW(fixed_variant(fixed_variant::path_type()).as_float(), exceptions::incompatible_type_error);
 		EXPECT_THROW(fixed_variant(fixed_variant::path_type()).as_double(), exceptions::incompatible_type_error);
@@ -1765,8 +1763,8 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 	TEST(fixed_variant, convert_color_to_integer)
 	{
 		//	color -> int
-		EXPECT_EQ(color1value.as_interger(), color1int);
-		EXPECT_EQ(color2value.as_interger(), color2int);
+		EXPECT_EQ(color1value.as_integer(), color1int);
+		EXPECT_EQ(color2value.as_integer(), color2int);
 	}
 
 	TEST(fixed_variant, convert_color_to_unsigned)
@@ -1900,7 +1898,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 	TEST(fixed_variant, convert_uuid_to_integer)
 	{
 		//	uuid -> integer
-		EXPECT_THROW(uuid_value.as_interger(), exceptions::incompatible_type_error);
+		EXPECT_THROW(uuid_value.as_integer(), exceptions::incompatible_type_error);
 	}
 
 	TEST(fixed_variant, convert_uuid_to_integer_exception_typeinfo)
@@ -1909,7 +1907,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 
 		try
 		{
-			uuid_value.as_interger();
+			uuid_value.as_integer();
 		}
 		catch (exceptions::incompatible_type_error& e)
 		{

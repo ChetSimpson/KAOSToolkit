@@ -259,7 +259,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		return convert_value_to_primitive<boolean_type>();
 	}
 
-	fixed_variant::integer_type fixed_variant::as_interger() const
+	fixed_variant::integer_type fixed_variant::as_integer() const
 	{
 		return convert_value_to_primitive<integer_type>();
 	}

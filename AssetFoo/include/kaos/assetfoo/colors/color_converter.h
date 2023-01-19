@@ -59,7 +59,7 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
 
 		/// @brief Converts a packed color to a common color type representation.
 		/// 
-		/// @param packed_color An interger value containing a packed color.
+		/// @param packed_color An integer value containing a packed color.
 		/// 
 		/// @return A common RGB representation of the packed color.
 		/// 
@@ -75,7 +75,7 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
 		/// 
 		/// @param color A reference to a common color instance to convert.
 		/// 
-		/// @return Returns an interger value containing a packed representation of the color
+		/// @return Returns an integer value containing a packed representation of the color
 		/// 
 		/// @exception std::range_error Thrown if the red, green, or blue component
 		/// values are not supported.
@@ -91,7 +91,7 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
 		/// @param g Green color component value.
 		/// @param b Blue color component value.
 		/// 
-		/// @return Returns an interger value containing a packed representation of the color
+		/// @return Returns an integer value containing a packed representation of the color
 		/// 
 		/// @exception std::range_error Thrown if the red, green, or blue component values
 		/// are not supported.
@@ -111,7 +111,7 @@ namespace hypertech { namespace kaos { namespace assetfoo { namespace colors
 		/// @param b Blue color component value.
 		/// @param a Alpha color component value.
 		/// 
-		/// @return Returns an interger value containing a packed representation of the color
+		/// @return Returns an integer value containing a packed representation of the color
 		/// 
 		/// @exception std::range_error Thrown if the red, green, blue, or alpha component values
 		/// are not supported.

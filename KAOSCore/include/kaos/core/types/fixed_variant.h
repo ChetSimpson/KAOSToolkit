@@ -37,14 +37,14 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		};
 
 		
-		using string_type = std::string;		//!< String type held by fixed_variant.
-		using boolean_type = bool;				//!< Boolean type held by fixed_variant.
-		using integer_type = std::int64_t;		//!< Signed interger type held by fixed_variant.
-		using unsigned_type = std::uint64_t;	//!< Unsigned interger type held by fixed_variant.
-		using float_type = float;				//!< Decimal number type held by fixed_variant.
-		using double_type = double;				//!< Double precision decimal number type held by fixed_variant.
-		using color_type = rgba_color;			//!< Color type held by fixed_variant.
-		using path_type = std::filesystem::path;	//!< Path type held by value.
+		using string_type = std::string;		//!< @brief String type held by fixed_variant.
+		using boolean_type = bool;				//!< @brief Boolean type held by fixed_variant.
+		using integer_type = std::int64_t;		//!< @brief Signed integer type held by fixed_variant.
+		using unsigned_type = std::uint64_t;	//!< @brief Unsigned integer type held by fixed_variant.
+		using float_type = float;				//!< @brief Decimal number type held by fixed_variant.
+		using double_type = double;				//!< @brief Double precision decimal number type held by fixed_variant.
+		using color_type = rgba_color;			//!< @brief Color type held by fixed_variant.
+		using path_type = std::filesystem::path;	//!< @brief Path type held by value.
 		using uuid_type = boost::uuids::uuid;	//!< UUID type
 
 		/// @brief Storage type used to hold values
@@ -225,7 +225,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		/// @exception positive_overflow_error The converted value is greater than 0 and does not fit in the signed value type.
 		/// @exception negative_overflow_error The converted value is less than 0 and does not fit in the signed value type.
 		/// @exception lexical_error The current string value cannot be converted.
-		integer_type as_interger() const;
+		integer_type as_integer() const;
 
 		/// @brief Gets the value as an unsigned integer.
 		/// 
