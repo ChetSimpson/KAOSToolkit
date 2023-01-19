@@ -429,7 +429,14 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 			throw exceptions::incompatible_type_error(typeid(double_type), typeid(uuid_type));
 
 		case tag_type::String:
-			return boost::lexical_cast<uuid_type>(std::get<string_type>(value_));	//	FIXME: Needs exception translation
+			try
+			{
+				return boost::lexical_cast<uuid_type>(std::get<string_type>(value_));
+			}
+			catch (::boost::bad_lexical_cast& e)
+			{
+				throw exceptions::lexical_error(e.source_type(), e.target_type());
+			}
 
 		case tag_type::Path:
 			throw exceptions::incompatible_type_error(typeid(path_type), typeid(uuid_type));

@@ -33,7 +33,7 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 			String,		//!<	String value
 			Path,		//!<	Path value
 			Color,		//!<	RGBA color value.
-			Uuid,
+			Uuid,		//!<	UUID value
 		};
 
 		
@@ -106,6 +106,8 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		/// @param value The value.
 		explicit fixed_variant(color_type value) noexcept;
 		
+		/// @brief Create a UUID value
+		/// @param value The uuid value
 		explicit fixed_variant(const uuid_type& value) noexcept;
 
 
@@ -187,6 +189,9 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		/// @param value The value.
 		fixed_variant& operator=(color_type value) noexcept;
 
+		/// @brief Assign a UUID value
+		/// @param value The value
+		/// @return *this
 		fixed_variant& operator=(const uuid_type& value) noexcept;
 
 		/// @brief Get the tag type of the value
@@ -310,7 +315,18 @@ namespace hypertech { namespace kaos { namespace core { namespace types
 		/// and cannot be converted.
 		color_type as_color() const;
 
+		/// @brief Gets the value as a RGBA color value.
+		/// 
+		/// Attempts to convert the current value to a UUID value and returns the
+		/// result. If the value cannot be converted an exception is thrown.
+		/// 
+		/// @return The value as a UUID.
+		/// 
+		/// @exception empty_cast_error The value is currently empty.
+		/// @exception lexical_error The current string value is not the correct format
+		/// and cannot be converted.
 		uuid_type as_uuid() const;
+
 
 	private:
 

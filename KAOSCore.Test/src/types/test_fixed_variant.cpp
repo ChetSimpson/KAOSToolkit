@@ -1634,6 +1634,33 @@ namespace hypertech { namespace kaos { namespace core { namespace types { namesp
 
 		EXPECT_TRUE(exception_caught);
 	}
+
+	TEST(fixed_variant, convert_string_to_uuid)
+	{
+		//	string -> color
+		EXPECT_EQ(fixed_variant("00010203-0405-0607-0809-0a0b0c0d0e0f").as_uuid(), raw_uuid);
+		EXPECT_THROW(fixed_variant("00010203-0405-0607").as_uuid(), exceptions::lexical_error);
+	}
+
+	TEST(fixed_variant, convert_string_to_uuid_exception_typeinfo)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant("00010203-0405-0607").as_uuid();
+		}
+		catch (exceptions::lexical_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::string_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
 #pragma endregion
 
 
