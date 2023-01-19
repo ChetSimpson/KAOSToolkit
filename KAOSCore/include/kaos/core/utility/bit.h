@@ -19,7 +19,7 @@ namespace hypertech { namespace kaos { namespace core { namespace utility
 	/// integral, i.e., Type_ is an integer type. The program is ill-formed
 	/// if Type_ has padding bits.
 	/// 
-	/// @param value interger value
+	/// @param value integer value
 	/// 
 	/// @return An integer value of type Type_ whose object representation
 	/// comprises the bytes of that of \p value in reversed order.
