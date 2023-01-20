@@ -4,6 +4,7 @@
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
 #include <kaos/core/types/rgba_color.h>
+#include <boost/uuid/uuid.hpp>
 #include <variant>
 #include <string>
 #include <stdexcept>
@@ -31,7 +32,8 @@ namespace hypertech::kaos::core::types
 			Double,		//!<	Double precision floating point value
 			String,		//!<	String value
 			Path,		//!<	Path value
-			Color		//!<	RGBA color value.
+			Color,		//!<	RGBA color value.
+			Uuid,		//!<	UUID value
 		};
 
 		
@@ -43,6 +45,7 @@ namespace hypertech::kaos::core::types
 		using double_type = double;				//!< @brief Double precision decimal number type held by fixed_variant.
 		using color_type = rgba_color;			//!< @brief Color type held by fixed_variant.
 		using path_type = std::filesystem::path;	//!< @brief Path type held by value.
+		using uuid_type = boost::uuids::uuid;	//!< UUID type
 
 		/// @brief Storage type used to hold values
 		using storge_type = std::variant<
@@ -54,7 +57,8 @@ namespace hypertech::kaos::core::types
 			double_type,
 			string_type,
 			path_type,
-			color_type>;
+			color_type,
+			uuid_type>;
 
 
 	public:
@@ -101,6 +105,10 @@ namespace hypertech::kaos::core::types
 		/// @brief Create a color value.
 		/// @param value The value.
 		explicit fixed_variant(color_type value) noexcept;
+		
+		/// @brief Create a UUID value
+		/// @param value The uuid value
+		explicit fixed_variant(const uuid_type& value) noexcept;
 
 
 		/// @brief Create a copy of another fixed_variant.
@@ -181,6 +189,10 @@ namespace hypertech::kaos::core::types
 		/// @param value The value.
 		fixed_variant& operator=(color_type value) noexcept;
 
+		/// @brief Assign a UUID value
+		/// @param value The value
+		/// @return *this
+		fixed_variant& operator=(const uuid_type& value) noexcept;
 
 		/// @brief Get the tag type of the value
 		/// @return The tag indicating the value type currently held by the value instance.
@@ -302,6 +314,18 @@ namespace hypertech::kaos::core::types
 		/// @exception lexical_error The current string value is not the correct format
 		/// and cannot be converted.
 		color_type as_color() const;
+
+		/// @brief Gets the value as a RGBA color value.
+		/// 
+		/// Attempts to convert the current value to a UUID value and returns the
+		/// result. If the value cannot be converted an exception is thrown.
+		/// 
+		/// @return The value as a UUID.
+		/// 
+		/// @exception empty_cast_error The value is currently empty.
+		/// @exception lexical_error The current string value is not the correct format
+		/// and cannot be converted.
+		uuid_type as_uuid() const;
 
 
 	private:

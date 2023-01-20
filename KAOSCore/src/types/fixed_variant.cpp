@@ -7,6 +7,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/uuid/uuid_io.hpp>
 #include <format>
 #include <stdexcept>
 #include <typeinfo>
@@ -149,6 +150,13 @@ namespace hypertech::kaos::core::types
 		type_(tag_type::Color),
 		value_(value)
 	{}
+
+	fixed_variant::fixed_variant(const uuid_type& value) noexcept
+		:
+		type_(tag_type::Uuid),
+		value_(value)
+	{}
+
 #pragma endregion
 
 
@@ -231,6 +239,15 @@ namespace hypertech::kaos::core::types
 
 		return *this;
 	}
+
+	fixed_variant& fixed_variant::operator=(const uuid_type& value) noexcept
+	{
+		value_ = value;
+		type_ = tag_type::Uuid;
+
+		return *this;
+	}
+
 #pragma endregion
 
 
@@ -292,6 +309,9 @@ namespace hypertech::kaos::core::types
 
 		case tag_type::Color:
 			return std::format("#{:08X}", std::get<color_type>(value_).to_unsigned());
+
+		case tag_type::Uuid:
+			return boost::uuids::to_string(std::get<uuid_type>(value_));
 		}
 
 		throw std::runtime_error("Unknown value type encountered in conversion to string");
@@ -327,6 +347,9 @@ namespace hypertech::kaos::core::types
 
 		case tag_type::Color:
 			throw exceptions::incompatible_type_error(typeid(color_type), typeid(path_type));
+
+		case tag_type::Uuid:
+			throw exceptions::incompatible_type_error(typeid(uuid_type), typeid(path_type));
 		}
 
 		throw std::runtime_error("Unknown value type encountered in conversion to string");
@@ -375,6 +398,54 @@ namespace hypertech::kaos::core::types
 
 		case tag_type::Color:
 			return std::get<color_type>(value_);
+
+		case tag_type::Uuid:
+			throw exceptions::incompatible_type_error(typeid(uuid_type), typeid(color_type));
+		}
+
+		throw std::runtime_error("Unknown value type encountered in conversion to color");
+	}
+
+	fixed_variant::uuid_type fixed_variant::as_uuid() const
+	{
+		switch (type_)
+		{
+		case tag_type::Empty:
+			throw exceptions::empty_cast_error(typeid(void), typeid(uuid_type));
+
+		case tag_type::Boolean:
+			throw exceptions::incompatible_type_error(typeid(boolean_type), typeid(uuid_type));
+
+		case tag_type::Integer:
+			throw exceptions::incompatible_type_error(typeid(integer_type), typeid(uuid_type));
+
+		case tag_type::Unsigned:
+			throw exceptions::incompatible_type_error(typeid(unsigned_type), typeid(uuid_type));
+
+		case tag_type::Float:
+			throw exceptions::incompatible_type_error(typeid(float_type), typeid(uuid_type));
+
+		case tag_type::Double:
+			throw exceptions::incompatible_type_error(typeid(double_type), typeid(uuid_type));
+
+		case tag_type::String:
+			try
+			{
+				return boost::lexical_cast<uuid_type>(std::get<string_type>(value_));
+			}
+			catch (::boost::bad_lexical_cast& e)
+			{
+				throw exceptions::lexical_error(e.source_type(), e.target_type());
+			}
+
+		case tag_type::Path:
+			throw exceptions::incompatible_type_error(typeid(path_type), typeid(uuid_type));
+
+		case tag_type::Color:
+			throw exceptions::incompatible_type_error(typeid(color_type), typeid(uuid_type));
+
+		case tag_type::Uuid:
+			return std::get<uuid_type>(value_);	//	FIXME: remove std::
 		}
 
 		throw std::runtime_error("Unknown value type encountered in conversion to color");
@@ -459,6 +530,9 @@ namespace hypertech::kaos::core::types
 			}
 
 			return extended_numeric_cast<OutputType_>(std::get<color_type>(value_).to_signed());
+
+		case tag_type::Uuid:
+			throw exceptions::incompatible_type_error(typeid(uuid_type), typeid(OutputType_));
 		}
 
 		throw std::runtime_error(std::string("Unknown type encountered in conversion to ") + typeid(OutputType_).name());
