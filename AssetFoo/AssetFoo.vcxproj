@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\asset.cpp" />
     <ClCompile Include="src\asset_reader.cpp" />
     <ClCompile Include="src\Colors\color_converter.cpp" />
     <ClCompile Include="src\Colors\color_layout.cpp" />

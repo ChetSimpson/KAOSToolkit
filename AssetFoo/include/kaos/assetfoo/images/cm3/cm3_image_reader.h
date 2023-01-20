@@ -56,8 +56,32 @@ namespace hypertech::kaos::assetfoo::images::cm3
 			static const size_type decompression_line_buffer_size = 160;
 			/// @brief Size of the horizontal bitstream used to decompress a single row/line of the image.
 			static const size_type horizontal_bitstream_size_in_bytes = 20;
+			/// @brief The color cycle index
+			static const size_type color_cycle_index = 10;
+			/// @brief The color first color index for color animation 
+			static const size_type color_animation_start_index = 11;
+			/// @brief The color last color index for color animation 
+			static const size_type color_animation_end_index = 14;
 		};
 
+		/// @brief List of properties supported by the image reader.
+		struct properties : tc1014_image_reader::properties
+		{
+			/// @brief Property definition for color animation rate
+			static const asset::property_def<size_type> color_animation_rate;
+			/// @brief Property definition for first palette index for color animation
+			static const asset::property_def<size_type> color_animation_start_index;
+			/// @brief Property definition for last palette index for color animation
+			static const asset::property_def<size_type> color_animation_end_index;
+			/// @brief Property definition for the color cycling rate
+			static const asset::property_def<size_type> color_cycle_rate;
+			/// @brief Property definition for the color cycle index
+			static const asset::property_def<size_type> color_cycle_index;
+			///	@brief Property definition for color cycling color list
+			static const asset::property_def<cycle_colors_list_type> color_cycle_colors;
+			///	@brief Property definition for embedded monochrome bitmap patterns
+			static const asset::property_def<pattern_list_type> patterns;
+		};
 
 	public:
 

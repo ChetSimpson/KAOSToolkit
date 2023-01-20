@@ -13,12 +13,14 @@ namespace hypertech::kaos::assetfoo::images::mge
 	using core::io::binary_reader;
 
 	
-	const mge_image_reader::string_type mge_image_reader::properties::title("title");
-	const mge_image_reader::string_type mge_image_reader::properties::native_color_space("native_color_space");
-	const mge_image_reader::string_type mge_image_reader::properties::native_color_map("native_color_map");
-	const mge_image_reader::string_type mge_image_reader::properties::cycle_cycle_rate("cycle_cycle_rate");
-	const mge_image_reader::string_type mge_image_reader::properties::cycle_cycle_start_index("cycle_cycle_start_index");
-	const mge_image_reader::string_type mge_image_reader::properties::cycle_cycle_end_index("cycle_cycle_end_index");
+	const asset::property_def<mge_image_reader::string_type>
+		mge_image_reader::properties::title("title");
+	const asset::property_def<mge_image_reader::size_type>
+		mge_image_reader::properties::color_animation_rate("color_animation_rate");
+	const asset::property_def<mge_image_reader::size_type>
+		mge_image_reader::properties::color_animation_start_index("color_animation_start_index");
+	const asset::property_def<mge_image_reader::size_type>
+		mge_image_reader::properties::color_animation_end_index("color_animation_end_index");
 
 
 	std::unique_ptr<asset> mge_image_reader::load(
@@ -37,8 +39,8 @@ namespace hypertech::kaos::assetfoo::images::mge
 		const auto native_color_space(reader.read<bool>() ? color_space_type::composite : color_space_type::rgb);
 		const auto is_compressed(!reader.read<bool>());
 		const auto title(reader.read_string(format_details::title_length, true));
-		const auto cycle_rate(reader.read<uint8_t>());
-		const auto cycle_indexes(reader.read<uint8_t>());
+		const auto animation_rate(reader.read<uint8_t>());
+		const auto animation_indexes(reader.read<uint8_t>());
 
 		auto colormap(color_converter().create_colormap(native_color_space, native_color_map));
 
@@ -57,9 +59,9 @@ namespace hypertech::kaos::assetfoo::images::mge
 		image->set_property(properties::title, title);
 		image->set_property(properties::native_color_space, native_color_space);
 		image->set_property(properties::native_color_map, native_color_map);
-		image->set_property(properties::cycle_cycle_rate, size_type(cycle_rate));
-		image->set_property(properties::cycle_cycle_start_index, size_type((cycle_indexes >> 4) & 0x0f));
-		image->set_property(properties::cycle_cycle_end_index, size_type(cycle_indexes & 0x0f));
+		image->set_property(properties::color_animation_rate, animation_rate);
+		image->set_property(properties::color_animation_start_index, (animation_indexes >> 4) & 0x0f);
+		image->set_property(properties::color_animation_end_index, animation_indexes & 0x0f);
 
 		return image;
 	}

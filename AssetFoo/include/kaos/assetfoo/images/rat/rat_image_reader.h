@@ -15,6 +15,9 @@ namespace hypertech::kaos::assetfoo::images::rat
 	{
 	public:
 
+		/// @brief The type of image created by the asset reader
+		using image_type = images::image;
+
 		/// @brief Specifies details of the image format
 		struct format_details
 		{
@@ -26,9 +29,13 @@ namespace hypertech::kaos::assetfoo::images::rat
 			static const inline pixels::packed_pixel_layout& pixel_layout{ pixels::packed_pixel_layout::BPP4 };
 		};
 
-		/// @brief The type of image created by the asset reader
-		using image_type = images::image;
-
+		/// @brief List of properties supported by the image reader.
+		struct properties : tc1014_image_reader::properties
+		{
+			/// @brief Property definition for image title
+			static const asset::property_def<color_type> background_color;
+		};
+		
 
 	public:
 

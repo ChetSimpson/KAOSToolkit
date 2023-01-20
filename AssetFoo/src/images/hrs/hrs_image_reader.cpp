@@ -20,13 +20,16 @@ namespace hypertech::kaos::assetfoo::images::hrs
 	{
 		binary_reader reader(input_stream, binary_reader::ordering_type::big);
 
-		const auto color_space(color_space_type::composite);
-		const auto native_colormap(reader.read_vector<native_packed_color_type>(format_details::colormap_length));
-		const auto colormap(color_converter().create_colormap(color_space, native_colormap));
+		const auto native_color_space(color_space_type::composite);
+		const auto native_color_map(reader.read_vector<native_packed_color_type>(format_details::colormap_length));
+		const auto colormap(color_converter().create_colormap(native_color_space, native_color_map));
 
 		auto image(std::make_unique<image_type>(format_details::dimensions));
 
 		load_uncompressed_pixel_data(reader, *image, *colormap, format_details::pixel_layout, source_name);
+
+		image->set_property(properties::native_color_space, native_color_space);
+		image->set_property(properties::native_color_map, native_color_map);
 
 		return image;
 	}

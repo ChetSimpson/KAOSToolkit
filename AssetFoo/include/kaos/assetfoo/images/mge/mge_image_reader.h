@@ -20,18 +20,23 @@ namespace hypertech::kaos::assetfoo::images::mge
 		/// @brief The type of image created by the asset reader
 		using image_type = images::image;
 
+		/// @brief String type used for storing the name
 		using string_type = std::string;
+		/// @brief Size type.
 		using size_type = size_t;
 
 
-		struct properties
+		/// @brief List of properties supported by the image reader.
+		struct properties : tc1014_image_reader::properties
 		{
-			static const string_type title;
-			static const string_type native_color_space;
-			static const string_type native_color_map;
-			static const string_type cycle_cycle_rate;
-			static const string_type cycle_cycle_start_index;
-			static const string_type cycle_cycle_end_index;
+			/// @brief Property definition for image title
+			static const asset::property_def<string_type> title;
+			/// @brief Property definition for color animation rate
+			static const asset::property_def<size_type> color_animation_rate;
+			/// @brief Property definition for first palette index for color animation
+			static const asset::property_def<size_type> color_animation_start_index;
+			/// @brief Property definition for last palette index for color animation
+			static const asset::property_def<size_type> color_animation_end_index;
 		};
 
 

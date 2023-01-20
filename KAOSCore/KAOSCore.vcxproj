@@ -164,6 +164,7 @@
     <ClInclude Include="include\kaos\core\types\dimension2.h" />
     <ClInclude Include="include\kaos\core\types\empty_bitfield.h" />
     <ClInclude Include="include\kaos\core\types\fixed_variant.h" />
+    <ClInclude Include="include\kaos\core\types\property_extension.h" />
     <ClInclude Include="include\kaos\core\types\rgba_color.h" />
     <ClInclude Include="include\kaos\core\types\single_bitfield.h" />
     <ClInclude Include="include\kaos\core\types\split_bitfield.h" />

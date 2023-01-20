@@ -17,9 +17,9 @@ namespace hypertech::kaos::assetfoo::images::mge::unittests
 	{
 		struct mge_image_reader_test_expectations : assetfoo::unittests::tc1014_image_reader_test_expectations<320, 200>
 		{
-			static const size_type cycle_cycle_rate = 10;
-			static const size_type cycle_cycle_start_index = 0;
-			static const size_type cycle_cycle_end_index = 0;
+			static const size_type color_animation_rate = 10;
+			static const size_type color_animation_start_index = 0;
+			static const size_type color_animation_end_index = 0;
 		};
 
 		struct test1_uncompressed_mge_expectations : mge_image_reader_test_expectations
@@ -59,7 +59,7 @@ namespace hypertech::kaos::assetfoo::images::mge::unittests
 				0xba812ac6, 0xc5a0389a, 0x74794674, 0x6ce3d1b2
 			};
 
-			static const size_type cycle_cycle_rate = 0;
+			static const size_type color_animation_rate = 0;
 		};
 
 
@@ -127,6 +127,8 @@ namespace hypertech::kaos::assetfoo::images::mge::unittests
 
 	TYPED_TEST_P(test_mge_image_reader, load)
 	{
+		using properties = mge_image_reader::properties;
+
 		TypeParam expectations;
 
 		auto image(mge_image_reader().load_as<mge_image_reader::image_type>(expectations.filename));
@@ -135,27 +137,12 @@ namespace hypertech::kaos::assetfoo::images::mge::unittests
 		EXPECT_FALSE(image->empty());
 		EXPECT_EQ(image->width(), expectations.width);
 		EXPECT_EQ(image->height(), expectations.height);
-
-		using properties = mge_image_reader::properties;
-
-		EXPECT_EQ(
-			image->get_property_as<mge_image_reader::string_type>(properties::title),
-			expectations.title);
-		EXPECT_EQ(
-			image->get_property_as<mge_image_reader::color_space_type>(properties::native_color_space),
-			expectations.colorspace);
-		EXPECT_EQ(
-			image->get_property_as<mge_image_reader::native_color_map_type>(properties::native_color_map),
-			expectations.native_colormap);
-		EXPECT_EQ(
-			image->get_property_as<mge_image_reader::size_type>(properties::cycle_cycle_rate),
-			expectations.cycle_cycle_rate);
-		EXPECT_EQ(
-			image->get_property_as<mge_image_reader::size_type>(properties::cycle_cycle_start_index),
-			expectations.cycle_cycle_start_index);
-		EXPECT_EQ(
-			image->get_property_as<mge_image_reader::size_type>(properties::cycle_cycle_end_index),
-			expectations.cycle_cycle_end_index);
+		EXPECT_EQ(image->get_property(properties::title), expectations.title);
+		EXPECT_EQ(image->get_property(properties::native_color_space), expectations.colorspace);
+		EXPECT_EQ(image->get_property(properties::native_color_map), expectations.native_colormap);
+		EXPECT_EQ(image->get_property(properties::color_animation_rate), expectations.color_animation_rate);
+		EXPECT_EQ(image->get_property(properties::color_animation_start_index), expectations.color_animation_start_index);
+		EXPECT_EQ(image->get_property(properties::color_animation_end_index), expectations.color_animation_end_index);
 
 		EXPECT_EQ(calculate_md5_hash(*image), expectations.hash);
 	}

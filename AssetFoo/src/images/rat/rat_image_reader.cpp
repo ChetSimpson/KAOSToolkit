@@ -13,6 +13,10 @@ namespace hypertech::kaos::assetfoo::images::rat
 
 	using core::io::binary_reader;
 
+	const asset::property_def<rat_image_reader::color_type>
+		rat_image_reader::properties::background_color("background_color");
+
+
 	std::unique_ptr<asset> rat_image_reader::load(
 		std::istream& input_stream,
 		const filename_type& source_name)
@@ -23,10 +27,10 @@ namespace hypertech::kaos::assetfoo::images::rat
 		const auto escape_value(reader.read<uint8_t>());
 		const auto is_compressed(reader.read<bool>());
 		const auto native_background_color(reader.read<uint8_t>());
-		const auto native_colormap(reader.read_vector<native_packed_color_type>(format_details::colormap_length));
-		const auto color_space(color_space_type::rgb);
+		const auto native_color_map(reader.read_vector<native_packed_color_type>(format_details::colormap_length));
+		const auto native_color_space(color_space_type::rgb);
 
-		auto colormap(color_converter().create_colormap(color_space, native_colormap));
+		auto colormap(color_converter().create_colormap(native_color_space, native_color_map));
 
 		auto image(std::make_unique<image_type>(format_details::dimensions));
 
@@ -39,6 +43,10 @@ namespace hypertech::kaos::assetfoo::images::rat
 		{
 			load_uncompressed_pixel_data(reader, *image, *colormap, layout, source_name);
 		}
+
+		image->set_property(properties::native_color_space, native_color_space);
+		image->set_property(properties::native_color_map, native_color_map);
+		image->set_property(properties::background_color, color_converter().to_color(native_background_color));
 
 		return image;
 	}

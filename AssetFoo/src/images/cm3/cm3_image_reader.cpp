@@ -14,6 +14,22 @@ namespace hypertech::kaos::assetfoo::images::cm3
 	using core::io::binary_reader;
 	using core::utility::bit_reader;
 
+	const asset::property_def<cm3_image_reader::size_type>
+		cm3_image_reader::properties::color_animation_rate("color_animation_rate");
+	const asset::property_def<cm3_image_reader::size_type>
+		cm3_image_reader::properties::color_animation_start_index("color_animation_start_index");
+	const asset::property_def<cm3_image_reader::size_type>
+		cm3_image_reader::properties::color_animation_end_index("color_animation_end_index");
+	const asset::property_def<cm3_image_reader::size_type>
+		cm3_image_reader::properties::color_cycle_rate("color_cycle_rate");
+	const asset::property_def<cm3_image_reader::size_type>
+		cm3_image_reader::properties::color_cycle_index("color_cycle_index");
+	const asset::property_def<cm3_image_reader::cycle_colors_list_type>
+		cm3_image_reader::properties::color_cycle_colors("color_cycle_colors");
+	const asset::property_def<cm3_image_reader::pattern_list_type>
+		cm3_image_reader::properties::patterns("patterns");
+
+
 	std::unique_ptr<asset> cm3_image_reader::load(
 		std::istream& input_stream,
 		const filename_type& source_name)
@@ -23,7 +39,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 
 		// First load the header
 		const auto image_flags(reader.read<uint8_t>());
-		const auto native_colormap(reader.read_vector<native_packed_color_type>(format_details::color_count));
+		const auto native_color_map(reader.read_vector<native_packed_color_type>(format_details::color_count));
 		const auto animation_rate(reader.read<uint8_t>());
 		const auto cycle_rate(reader.read<uint8_t>());
 		const auto cycle_colors(reader.read_vector<native_packed_color_type>(format_details::cycle_color_count));
@@ -31,13 +47,13 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		const auto cycling_flags(reader.read<uint8_t>());
 
 		//	Extract the details we need and create the colormap
-		const auto color_space(color_space_type::rgb);	//	Needs user supplied option
+		const auto native_color_space(color_space_type::rgb);	//	Needs user supplied option
 		const auto page_count((image_flags & format_details::double_page_flag_mask) == 0 ? 1 : 2);
 		const auto include_patterns((image_flags & format_details::exclude_patterns_flag_mask) == 0);
 
 		const auto dimensions(image_type::dimensions_type(format_details::page_width, format_details::page_height * page_count));
 
-		auto colormap(color_converter().create_colormap(color_space, native_colormap));
+		auto colormap(color_converter().create_colormap(native_color_space, native_color_map));
 		//	Load the patterns if they exist
 		pattern_list_type patterns;
 		if (include_patterns)
@@ -53,6 +69,16 @@ namespace hypertech::kaos::assetfoo::images::cm3
 			format_details::pixel_layout,
 			page_count,
 			source_name);
+
+		image->set_property(properties::native_color_space, native_color_space);
+		image->set_property(properties::native_color_map, native_color_map);
+		image->set_property(properties::color_animation_rate, animation_rate);
+		image->set_property(properties::color_animation_start_index, format_details::color_animation_start_index);
+		image->set_property(properties::color_animation_end_index, format_details::color_animation_end_index);
+		image->set_property(properties::color_cycle_rate, cycle_rate);
+		image->set_property(properties::color_cycle_index, format_details::color_cycle_index);
+		image->set_property(properties::color_cycle_colors, color_converter().convert_colors(native_color_space, cycle_colors));
+		image->set_property(properties::patterns, patterns);
 
 		return image;
 	}

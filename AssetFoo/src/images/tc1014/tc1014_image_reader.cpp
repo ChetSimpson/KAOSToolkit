@@ -11,6 +11,12 @@
 namespace hypertech::kaos::assetfoo::images::tc1014
 {
 
+	const asset::property_def<tc1014_image_reader::color_space_type>
+		tc1014_image_reader::properties::native_color_space("native_color_space");
+	const asset::property_def<tc1014_image_reader::native_color_map_type>
+		tc1014_image_reader::properties::native_color_map("native_color_map");
+
+
 	void tc1014_image_reader::load_uncompressed_pixel_data(
 		core::io::binary_reader& reader,
 		image& image,

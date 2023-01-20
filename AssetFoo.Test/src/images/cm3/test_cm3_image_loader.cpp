@@ -34,9 +34,12 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 		{
 			using cycle_colors_list_type = cm3_image_reader::cycle_colors_list_type;
 
-			static const size_t animation_rate = 3;
-			static const size_t cycle_rate = 4;
-			static const inline auto cycle_colors = default_cycle_colors1;
+			static const size_t color_animation_rate = 3;
+			static const size_t color_animation_start_index = 11;
+			static const size_t color_animation_end_index = 14;
+			static const size_t color_cycle_rate = 4;
+			static const size_t color_cycle_index = 10;
+			static const inline auto color_cycle_colors = default_cycle_colors1;
 			static const inline auto patterns = default_pattern_set;
 		};
 		
@@ -56,7 +59,7 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0x77428ab1, 0x68d9088d, 0x376eb646, 0x906a1e9b
 			};
 
-			static const inline auto cycle_colors = default_cycle_colors2;
+			static const inline auto color_cycle_colors = default_cycle_colors2;
 		};
 
 		struct default_composite_cm3_expectations : cm3_image_reader_test_expectations<>
@@ -74,7 +77,7 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0x77428ab1, 0x68d9088d, 0x376eb646, 0x906a1e9b
 			};
 
-			static const inline auto cycle_colors = default_cycle_colors2;
+			static const inline auto color_cycle_colors = default_cycle_colors2;
 		};
 
 		struct title_page_cm3_expectations : cm3_image_reader_test_expectations<>
@@ -92,7 +95,7 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0xDD7B1D9C, 0x6468BB76, 0x752B55B3, 0xFF5EBE5D
 			};
 
-			static const inline auto cycle_colors = default_cycle_colors2;
+			static const inline auto color_cycle_colors = default_cycle_colors2;
 		};
 
 		struct bluedrag_cm3_expectations : cm3_image_reader_test_expectations<>
@@ -110,9 +113,9 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0x9F08EC22, 0x6CD17DC2, 0xB85EF6CE, 0xF4DDBA7C
 			};
 
-			static const size_type animation_rate = 7;
-			static const size_type cycle_rate = 3;
-			static const inline cycle_colors_list_type cycle_colors =
+			static const size_type color_animation_rate = 7;
+			static const size_type color_cycle_rate = 3;
+			static const inline cycle_colors_list_type color_cycle_colors =
 			{ {
 				{ 0xFF, 0xFF, 0x00 },
 				{ 0xFF, 0x00, 0x00 },
@@ -168,8 +171,8 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0x69807182, 0x733EAE14, 0xDBE80C2D, 0x5A167AAA
 			};
 
-			static const size_type animation_rate = 7;
-			static const size_type cycle_rate = 7;
+			static const size_type color_animation_rate = 7;
+			static const size_type color_cycle_rate = 7;
 		};
 
 		struct bugsbull_cm3_expectations : cm3_image_reader_test_expectations<>
@@ -187,8 +190,8 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0x614D1205, 0x6B5B7097, 0x74373315, 0x677D0C0E
 			};
 
-			static const size_type animation_rate = 7;
-			static const size_type cycle_rate = 7;
+			static const size_type color_animation_rate = 7;
+			static const size_type color_cycle_rate = 7;
 		};
 
 		struct citidel_cm3_expectations : cm3_image_reader_test_expectations<>
@@ -206,10 +209,10 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0x600706D1, 0x5AA4311F, 0x2363C0BE, 0x264615FC
 			};
 
-			static const size_type animation_rate = 7;
-			static const size_type cycle_rate = 3;
+			static const size_type color_animation_rate = 7;
+			static const size_type color_cycle_rate = 3;
 
-			static const inline cycle_colors_list_type cycle_colors =
+			static const inline cycle_colors_list_type color_cycle_colors =
 			{ {
 				{ 0xFF, 0xFF, 0x00 },
 				{ 0xFF, 0x00, 0x00 },
@@ -265,8 +268,8 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0x83F17918, 0x95E94E32, 0xE9715DA2, 0xA4D20C47
 			};
 
-			static const size_type animation_rate = 7;
-			static const size_type cycle_rate = 7;
+			static const size_type color_animation_rate = 7;
+			static const size_type color_cycle_rate = 7;
 
 			const default_pattern_list_type patterns;
 		};
@@ -286,10 +289,10 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0x0DAEB7A3, 0x21BFFCFB, 0xCF1C87AB, 0x2F6740BF
 			};
 
-			static const size_type animation_rate = 1;
-			static const size_type cycle_rate = 2;
+			static const size_type color_animation_rate = 1;
+			static const size_type color_cycle_rate = 2;
 
-			static const inline cycle_colors_list_type cycle_colors =
+			static const inline cycle_colors_list_type color_cycle_colors =
 			{ {
 				{ 0xFF, 0xFF, 0xAA},
 				{ 0xFF, 0xFF, 0xAA},
@@ -345,8 +348,8 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0xC832D136, 0x6549AF2C, 0x299C2D7F, 0x2208DB45
 			};
 
-			static const size_type animation_rate = 7;
-			static const size_type cycle_rate = 7;
+			static const size_type color_animation_rate = 7;
+			static const size_type color_cycle_rate = 7;
 		};
 
 		struct match_composite_cm3_expectations : cm3_image_reader_test_expectations<>
@@ -364,10 +367,10 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0x7F674CEF, 0xDA5B3C79, 0x3B138337, 0xB6740EB4
 			};
 
-			static const size_type animation_rate = 5;
-			static const size_type cycle_rate = 5;
+			static const size_type color_animation_rate = 5;
+			static const size_type color_cycle_rate = 5;
 
-			static const inline cycle_colors_list_type cycle_colors =
+			static const inline cycle_colors_list_type color_cycle_colors =
 			{ {
 				{ 0x00, 0x00, 0x55 },
 				{ 0x00, 0x00, 0xAA },
@@ -423,8 +426,8 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0xB04D5983, 0xABA9249B, 0x8D42AB9A, 0xBDC41AD1
 			};
 
-			static const size_type animation_rate = 7;
-			static const size_type cycle_rate = 7;
+			static const size_type color_animation_rate = 7;
+			static const size_type color_cycle_rate = 7;
 		};
 
 		struct paincan_rgb_cm3_expectations : cm3_image_reader_test_expectations<>
@@ -442,8 +445,8 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0x92AA8AAB, 0xE2FCDA93, 0x94AE9B48, 0x5D931DD5
 			};
 
-			static const size_type animation_rate = 7;
-			static const size_type cycle_rate = 7;
+			static const size_type color_animation_rate = 7;
+			static const size_type color_cycle_rate = 7;
 		};
 
 		struct playboy_rgb_cm3_expectations : cm3_image_reader_test_expectations<>
@@ -461,8 +464,8 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0x91CC3AAA, 0xF2EAFBDE, 0x16407CCB, 0x667A8FD5
 			};
 
-			static const size_type animation_rate = 7;
-			static const size_type cycle_rate = 7;
+			static const size_type color_animation_rate = 7;
+			static const size_type color_cycle_rate = 7;
 		};
 
 		struct spaceman_rgb_cm3_expectations : cm3_image_reader_test_expectations<>
@@ -480,8 +483,8 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0xAC79223C, 0x118E1853, 0xA0BEBD44, 0x662E49A2
 			};
 
-			static const size_type animation_rate = 7;
-			static const size_type cycle_rate = 7;
+			static const size_type color_animation_rate = 7;
+			static const size_type color_cycle_rate = 7;
 		};
 
 		struct starflt_rgb_cm3_expectations : cm3_image_reader_test_expectations<>
@@ -499,8 +502,8 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0xCAA3FC45, 0x78D708A9, 0x6B9A599F, 0xC9EE2F5D
 			};
 
-			static const size_type animation_rate = 7;
-			static const size_type cycle_rate = 7;
+			static const size_type color_animation_rate = 7;
+			static const size_type color_cycle_rate = 7;
 		};
 
 		struct timextal_rgb_cm3_expectations : cm3_image_reader_test_expectations<>
@@ -518,8 +521,8 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0xF3BD5BA6, 0xD9A66761, 0x57E3AEB2, 0xF29C42C3
 			};
 
-			static const size_type animation_rate = 7;
-			static const size_type cycle_rate = 7;
+			static const size_type color_animation_rate = 7;
+			static const size_type color_cycle_rate = 7;
 		};
 
 		struct vigil_rgb_cm3_expectations : cm3_image_reader_test_expectations<>
@@ -537,10 +540,10 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0xC309D073, 0x0B82CA5D, 0x9F2650D1, 0xB8E856ED
 			};
 
-			static const size_type animation_rate = 120;
-			static const size_type cycle_rate = 120;
+			static const size_type color_animation_rate = 120;
+			static const size_type color_cycle_rate = 120;
 
-			static const inline cycle_colors_list_type cycle_colors =
+			static const inline cycle_colors_list_type color_cycle_colors =
 			{ {
 				{ 0xAA, 0xAA, 0xFF },
 				{ 0xAA, 0xAA, 0xFF },
@@ -596,8 +599,8 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 				0x42BB41BC, 0x510BDE17, 0xBF211047, 0x95EB4B0E
 			};
 
-			static const size_type animation_rate = 10;
-			static const size_type cycle_rate = 7;
+			static const size_type color_animation_rate = 10;
+			static const size_type color_cycle_rate = 7;
 		};
 
 
@@ -629,18 +632,18 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 		const auto single_page_exclude_patterns_header_data =
 			std::string("\x01")		//	image flags (single page, exclude patterns)
 			+ std::string(16, 0x3f)	//	colormap
-			+ std::string("\x01")	//	animation_rate
-			+ std::string("\x01")	//	cycle_rate
-			+ std::string(8, 0x3f)	//	cycle_colors
+			+ std::string("\x01")	//	color_animation_rate
+			+ std::string("\x01")	//	color_cycle_rate
+			+ std::string(8, 0x3f)	//	color_cycle_colors
 			+ std::string("\x01")	//	animation_flags
 			+ std::string("\x01")	//	cycling_flags
 			;
 		const auto single_page_include_patterns_header_data =
 			std::string("\x00", 1)	//	image flags (single page, include patterns)
 			+ std::string(16, 0x3f)	//	colormap
-			+ std::string("\x01")	//	animation_rate
-			+ std::string("\x01")	//	cycle_rate
-			+ std::string(8, 0x3f)	//	cycle_colors
+			+ std::string("\x01")	//	color_animation_rate
+			+ std::string("\x01")	//	color_cycle_rate
+			+ std::string(8, 0x3f)	//	color_cycle_colors
 			+ std::string("\x01")	//	animation_flags
 			+ std::string("\x01")	//	cycling_flags
 			;
@@ -710,6 +713,7 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 
 	TYPED_TEST_P(test_cm3_image_reader, load)
 	{
+		using properties = cm3_image_reader::properties;
 		TypeParam expectations;
 
 		auto image(cm3_image_reader().load_as<cm3_image_reader::image_type>(expectations.filename));
@@ -718,14 +722,15 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 		EXPECT_FALSE(image->empty());
 		EXPECT_EQ(image->width(), expectations.width);
 		EXPECT_EQ(image->height(), expectations.height);
-		//	FIXME: Add checks for properties when merged in
-		//EXPECT_EQ(image->native_color_space(), expectations.colorspace);
-		//EXPECT_EQ(image->native_colormap().size(), expectations.native_colormap.size());
-		//EXPECT_EQ(image->native_colormap(), expectations.native_colormap);
-		//EXPECT_EQ(image->animation_rate(), expectations.animation_rate);
-		//EXPECT_EQ(image->cycle_rate(), expectations.cycle_rate);
-		//EXPECT_EQ(image->cycle_colors(), expectations.cycle_colors);
-		//EXPECT_EQ(image->patterns(), expectations.patterns);
+		EXPECT_EQ(image->get_property(properties::native_color_space), expectations.colorspace);
+		EXPECT_EQ(image->get_property(properties::native_color_map), expectations.native_colormap);
+		EXPECT_EQ(image->get_property(properties::color_animation_rate), expectations.color_animation_rate);
+		EXPECT_EQ(image->get_property(properties::color_animation_start_index), expectations.color_animation_start_index);
+		EXPECT_EQ(image->get_property(properties::color_animation_end_index), expectations.color_animation_end_index);
+		EXPECT_EQ(image->get_property(properties::color_cycle_rate), expectations.color_cycle_rate);
+		EXPECT_EQ(image->get_property(properties::color_cycle_index), expectations.color_cycle_index);
+		EXPECT_EQ(image->get_property(properties::color_cycle_colors), expectations.color_cycle_colors);
+		EXPECT_EQ(image->get_property(properties::patterns), expectations.patterns);
 		EXPECT_EQ(calculate_md5_hash(*image), expectations.hash);
 	}
 

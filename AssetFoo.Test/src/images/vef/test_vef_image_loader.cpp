@@ -238,6 +238,7 @@ namespace hypertech::kaos::assetfoo::images::vef::unittests
 
 	TYPED_TEST_P(test_vef_image_reader, load)
 	{
+		using properties = vef_image_reader::properties;
 		TypeParam expectations;
 
 		auto image(vef_image_reader().load_as<vef_image_reader::image_type>(expectations.filename));
@@ -246,10 +247,8 @@ namespace hypertech::kaos::assetfoo::images::vef::unittests
 		EXPECT_FALSE(image->empty());
 		EXPECT_EQ(image->width(), expectations.width);
 		EXPECT_EQ(image->height(), expectations.height);
-		//	FIXME: Add checks for properties when merged in
-		//EXPECT_EQ(image->native_color_space(), expectations.colorspace);
-		//EXPECT_EQ(image->native_colormap().size(), expectations.native_colormap.size());
-		//EXPECT_EQ(image->native_colormap(), expectations.native_colormap);
+		EXPECT_EQ(image->get_property(properties::native_color_space), expectations.colorspace);
+		EXPECT_EQ(image->get_property(properties::native_color_map), expectations.native_colormap);
 		EXPECT_EQ(calculate_md5_hash(*image), expectations.hash);
 	}
 

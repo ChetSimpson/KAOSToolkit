@@ -36,12 +36,12 @@ namespace hypertech::kaos::assetfoo::images::vef
 			throw core::exceptions::file_format_error("invalid image type in `" + source_name + "`");
 		}
 		const auto& image_descriptor(image_type_descriptors[image_descriptor_id]);
-		const auto color_space(color_space_type::rgb);
+		const auto native_color_space(color_space_type::rgb);
 		const auto is_compressed((image_flags & format_details::compression_flag_mask) != 0);
 
-		auto native_colormap(reader.read_vector<native_packed_color_type>(format_details::colormap_length));
-		native_colormap.resize(image_descriptor.layout.max_colors_in_pixel());
-		auto colormap(color_converter().create_colormap(color_space, native_colormap));
+		auto native_color_map(reader.read_vector<native_packed_color_type>(format_details::colormap_length));
+		native_color_map.resize(image_descriptor.layout.max_colors_in_pixel());
+		auto colormap(color_converter().create_colormap(native_color_space, native_color_map));
 		auto image(std::make_unique<image_type>(image_descriptor.dimensions));
 
 		if (is_compressed)
@@ -52,6 +52,9 @@ namespace hypertech::kaos::assetfoo::images::vef
 		{
 			load_uncompressed_pixel_data(reader, *image, *colormap, image_descriptor.layout, source_name);
 		}
+
+		image->set_property(properties::native_color_space, native_color_space);
+		image->set_property(properties::native_color_map, native_color_map);
 
 		return image;
 	}
