@@ -159,53 +159,6 @@ namespace hypertech::kaos::assetfoo::images
 	}
 
 
-	bool image::has_property(const string_type& name) const
-	{
-		return properties_.contains(name);
-	}
-
-	void image::delete_property(const string_type& name)
-	{
-		properties_.erase(name);
-	}
-
-	image& image::set_property(const string_type& name, const property_type& value)
-	{
-		properties_[name] = value;
-
-		return *this;
-	}
-
-	image& image::set_property(const string_type& name, property_type&& value)
-	{
-		properties_[name] = move(value);
-
-		return *this;
-	}
-
-	const image::property_type& image::get_property(const string_type& name) const
-	{
-		auto property_ptr = properties_.find(name);
-		if (property_ptr == properties_.end())
-		{
-			throw core::exceptions::attribute_not_found_error(name);
-		}
-
-		return property_ptr->second;
-	}
-
-	const image::property_type& image::try_get_property(const string_type& name) const
-	{
-		static const property_type empty_property;
-
-		auto property_ptr = properties_.find(name);
-		if (property_ptr == properties_.end())
-		{
-			return empty_property;
-		}
-
-		return property_ptr->second;
-	}
 
 
 	image::sequence_type image::at(size_type index)

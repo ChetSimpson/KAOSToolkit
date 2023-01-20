@@ -8,11 +8,7 @@
 #include <kaos/core/types/dimension2.h>
 #include <kaos/core/types/rgba_color.h>
 #include <kaos/core/types/box_view.h>
-#include <kaos/core/exceptions.h>
-#include <any>
 #include <vector>
-#include <map>
-#include <optional>
 
 
 namespace hypertech::kaos::assetfoo::images
@@ -43,11 +39,6 @@ namespace hypertech::kaos::assetfoo::images
 		using const_view_type = core::types::box_view<const pixel_type>;
 		/// @brief Collection type used to manage the pixel data
 		using collection_type = std::vector<pixel_type>;
-
-		using string_type = std::string;
-		using property_type = std::any;
-		using property_map_type = std::map<string_type, property_type>;
-		//using optional_property_type = std::optional<std::reference_wrapper<const property_type>>;
 
 
 	public:
@@ -200,21 +191,6 @@ namespace hypertech::kaos::assetfoo::images
 		[[nodiscard]] const pixel_type* data() const noexcept;
 
 
-		bool has_property(const string_type& name) const;
-
-		void delete_property(const string_type & name);
-
-		image& set_property(const string_type& name, const property_type& value);
-
-		image& set_property(const string_type& name, property_type&& value);
-
-		[[nodiscard]] const property_type& get_property(const string_type & name) const;
-
-		template<class Type_>
-		[[nodiscard]] const Type_& get_property_as(const string_type & name) const;
-
-		const property_type& try_get_property(const string_type & name) const;
-
 		/// @brief Returns a sequence view to a specified row in the image
 		/// 
 		/// @param index The row to view
@@ -362,75 +338,8 @@ namespace hypertech::kaos::assetfoo::images
 		size_type		width_ = 0;
 		size_type		height_ = 0;
 		collection_type pixel_data_;
-		property_map_type	properties_;
 	};
 
-
-	template<class Type_>
-	inline const Type_& image::get_property_as(const string_type& name) const
-	{
-		try
-		{
-			return any_cast<const Type_&>(get_property(name));
-		}
-		catch (std::bad_any_cast&)
-		{
-			throw core::exceptions::attribute_conversion_error(
-				"bad any cast",
-				name,
-				typeid(Type_));
-		}
-	}
-
-
-
-	//template<class Type_>
-	//inline std::optional<std::reference_wrapper<const Type_>> image::try_get_property_as(const string_type& name) const
-	//{
-	//	try
-	//	{
-	//		auto property(try_get_property(name));
-	//		if (!property.has_value())
-	//		{
-	//			return {};
-	//		}
-
-	//		return any_cast<const Type_&>(property.value().get());
-	//	}
-	//	catch (std::bad_any_cast&)
-	//	{
-	//		throw core::exceptions::attribute_conversion_error(
-	//			"bad any cast",
-	//			name,
-	//			typeid(Type_));
-	//	}
-	//}
-
-	//template<class Type_>
-	//requires std::is_integral_v<Type_>
-	//	|| std::is_floating_point_v<Type_>
-	//	|| std::is_pointer_v<Type_>
-	//	|| std::negation_v<typename std::is_reference<Type_>>
-	//inline std::optional<Type_> image::try_get_property_as(const string_type& name) const
-	//{
-	//	try
-	//	{
-	//		auto property(try_get_property(name));
-	//		if (!property.has_value())
-	//		{
-	//			return {};
-	//		}
-
-	//		return any_cast<const Type_&>(property.value().get());
-	//	}
-	//	catch (std::bad_any_cast&)
-	//	{
-	//		throw core::exceptions::attribute_conversion_error(
-	//			"bad any cast",
-	//			name,
-	//			typeid(Type_));
-	//	}
-	//}
 
 	/// @brief Used to indicate that an image object may be "moved".
 	/// 

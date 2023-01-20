@@ -87,6 +87,7 @@ namespace hypertech::kaos::assetfoo::images::unittests
 
 
 
+
 #pragma region Construction
 	TEST(test_image, default_constructor)
 	{
@@ -456,103 +457,6 @@ namespace hypertech::kaos::assetfoo::images::unittests
 #pragma endregion
 
 
-#pragma region Properties
-	TEST(test_image, set_property)
-	{
-		image img;
-
-		img.set_property("property", {});
-		EXPECT_TRUE(img.has_property("property"));
-	}
-
-	TEST(test_image, has_property)
-	{
-		image img;
-
-		img.set_property("property", nullptr);
-		EXPECT_TRUE(img.has_property("property"));
-	}
-
-	TEST(test_image, delete_property)
-	{
-		image img;
-
-		img.set_property("property", {});
-		EXPECT_TRUE(img.has_property("property"));
-		img.delete_property("property");
-		EXPECT_FALSE(img.has_property("property"));
-	}
-
-	TEST(test_image, get_property)
-	{
-		image img;
-
-		img.set_property("property", nullptr);
-		EXPECT_EQ(any_cast<nullptr_t>(img.get_property("property")), nullptr);
-	}
-
-	TEST(test_image, get_property_no_exist)
-	{
-		EXPECT_THROWS_MESSAGE(
-			DEBUG_DiscardResult(image().get_property("property")),
-			core::exceptions::attribute_not_found_error,
-			"attribute `property` not found");
-	}
-
-	TEST(test_image, try_get_property)
-	{
-		image img;
-
-		img.set_property("property", nullptr);
-		EXPECT_EQ(any_cast<nullptr_t>(img.try_get_property("property")), nullptr);
-	}
-
-	TEST(test_image, try_get_property_no_exist)
-	{
-		EXPECT_FALSE(image().try_get_property("property").has_value());
-	}
-
-	TEST(test_image, get_property_as)
-	{
-		image img;
-
-		img.set_property("property", 100U);
-		EXPECT_EQ(img.get_property_as<unsigned>("property"), 100U);
-	}
-
-	TEST(test_image, get_property_as_no_exist)
-	{
-		EXPECT_THROWS_MESSAGE(
-			DEBUG_DiscardResult(image().get_property_as<int>("property")),
-			core::exceptions::attribute_not_found_error,
-			"attribute `property` not found");
-	}
-
-	TEST(test_image, get_property_as_type_mismatch)
-	{
-		image img;
-
-		img.set_property("property", 100U);
-
-		EXPECT_THROWS_MESSAGE(
-			DEBUG_DiscardResult(img.get_property_as<float>("property")),
-			core::exceptions::attribute_conversion_error,
-			"bad any cast error encountered while converting attribute `property` to `float`");
-	}
-
-	TEST(test_image, set_property_overrite)
-	{
-		const auto pixel_value(image::pixel_type(1, 2, 3, 4));
-
-		image img;
-
-		img.set_property("property", 100);
-		EXPECT_TRUE(img.has_property("property"));
-		EXPECT_EQ(img.get_property_as<int>("property"), 100);
-		img.set_property("property", pixel_value);
-		EXPECT_EQ(img.get_property_as<image::pixel_type>("property"), pixel_value);
-	}
-#pragma endregion
 
 
 #pragma region at and subscript

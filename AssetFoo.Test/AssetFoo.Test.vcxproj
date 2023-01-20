@@ -80,6 +80,7 @@
     <ClCompile Include="src\images\vef\test_vef_image_loader.cpp" />
     <ClCompile Include="src\Pixels\test_packed_pixel_converter.cpp" />
     <ClCompile Include="src\Pixels\test_packed_pixel_layout.cpp" />
+    <ClCompile Include="src\test_asset.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

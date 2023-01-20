@@ -143,6 +143,9 @@
     <ClCompile Include="src\colors\tc1014\tc1014_color_layout.cpp">
       <Filter>Source Files\colors\tc1014</Filter>
     </ClCompile>
+    <ClCompile Include="src\asset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="docs\images\cm3.dox">

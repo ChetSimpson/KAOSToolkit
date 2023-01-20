@@ -108,6 +108,9 @@
     <ClCompile Include="src\images\test_monochrome_pattern.cpp">
       <Filter>Source Files\images</Filter>
     </ClCompile>
+    <ClCompile Include="src\test_asset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -12,6 +12,15 @@ namespace hypertech::kaos::assetfoo::images::mge
 
 	using core::io::binary_reader;
 
+	
+	const mge_image_reader::string_type mge_image_reader::properties::title("title");
+	const mge_image_reader::string_type mge_image_reader::properties::native_color_space("native_color_space");
+	const mge_image_reader::string_type mge_image_reader::properties::native_color_map("native_color_map");
+	const mge_image_reader::string_type mge_image_reader::properties::cycle_cycle_rate("cycle_cycle_rate");
+	const mge_image_reader::string_type mge_image_reader::properties::cycle_cycle_start_index("cycle_cycle_start_index");
+	const mge_image_reader::string_type mge_image_reader::properties::cycle_cycle_end_index("cycle_cycle_end_index");
+
+
 	std::unique_ptr<asset> mge_image_reader::load(
 		std::istream& input_stream,
 		const filename_type& source_name)
@@ -24,14 +33,14 @@ namespace hypertech::kaos::assetfoo::images::mge
 			throw core::exceptions::file_format_error("unknown image type specified in " + source_name);
 		}
 
-		const auto native_colormap(reader.read_vector<native_packed_color_type>(format_details::colormap_length));
-		const auto color_space(reader.read<bool>() ? color_space_type::composite : color_space_type::rgb);
+		const auto native_color_map(reader.read_vector<native_packed_color_type>(format_details::colormap_length));
+		const auto native_color_space(reader.read<bool>() ? color_space_type::composite : color_space_type::rgb);
 		const auto is_compressed(!reader.read<bool>());
 		const auto title(reader.read_string(format_details::title_length, true));
-		const auto cycle_rate(reader.read<uint8_t>());		//	TODO: Not used
-		const auto cycle_indexes(reader.read<uint8_t>());	//	TODO: Not used
+		const auto cycle_rate(reader.read<uint8_t>());
+		const auto cycle_indexes(reader.read<uint8_t>());
 
-		auto colormap(color_converter().create_colormap(color_space, native_colormap));
+		auto colormap(color_converter().create_colormap(native_color_space, native_color_map));
 
 		auto image(std::make_unique<image_type>(format_details::dimensions));
 
@@ -44,6 +53,13 @@ namespace hypertech::kaos::assetfoo::images::mge
 		{
 			load_uncompressed_pixel_data(reader, *image, *colormap, layout, source_name);
 		}
+
+		image->set_property(properties::title, title);
+		image->set_property(properties::native_color_space, native_color_space);
+		image->set_property(properties::native_color_map, native_color_map);
+		image->set_property(properties::cycle_cycle_rate, size_type(cycle_rate));
+		image->set_property(properties::cycle_cycle_start_index, size_type((cycle_indexes >> 4) & 0x0f));
+		image->set_property(properties::cycle_cycle_end_index, size_type(cycle_indexes & 0x0f));
 
 		return image;
 	}

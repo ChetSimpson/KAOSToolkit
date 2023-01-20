@@ -17,6 +17,24 @@ namespace hypertech::kaos::assetfoo::images::mge
 	{
 	public:
 
+		/// @brief The type of image created by the asset reader
+		using image_type = images::image;
+
+		using string_type = std::string;
+		using size_type = size_t;
+
+
+		struct properties
+		{
+			static const string_type title;
+			static const string_type native_color_space;
+			static const string_type native_color_map;
+			static const string_type cycle_cycle_rate;
+			static const string_type cycle_cycle_start_index;
+			static const string_type cycle_cycle_end_index;
+		};
+
+
 		/// @brief Specifies details of the image format
 		struct format_details
 		{
@@ -39,9 +57,6 @@ namespace hypertech::kaos::assetfoo::images::mge
 			/// @brief Pixel layout of the image
 			static const inline pixels::packed_pixel_layout& pixel_layout{ pixels::packed_pixel_layout::BPP4 };
 		};
-
-		/// @brief The type of image created by the asset reader
-		using image_type = images::image;
 
 
 	public:
