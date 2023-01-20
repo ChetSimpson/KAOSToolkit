@@ -69,15 +69,11 @@
     <ClCompile Include="src\colors\test_color_converter_with_alpha.cpp" />
     <ClCompile Include="src\Colors\test_color_map.cpp" />
     <ClCompile Include="src\images\cm3\default_patterns.cpp" />
-    <ClCompile Include="src\images\cm3\test_cm3_image.cpp" />
     <ClCompile Include="src\images\cm3\test_cm3_image_loader.cpp" />
     <ClCompile Include="src\images\hrs\test_hrs_image_loader.cpp" />
-    <ClCompile Include="src\images\mge\New folder\test_mge_image.cpp" />
     <ClCompile Include="src\images\mge\test_mge_image_loader.cpp" />
     <ClCompile Include="src\images\png\test_png_image_loader.cpp" />
-    <ClCompile Include="src\images\rat\test_rat_image.cpp" />
     <ClCompile Include="src\images\rat\test_rat_image_loader.cpp" />
-    <ClCompile Include="src\images\tc1014\test_tc1014_image.cpp" />
     <ClCompile Include="src\images\tc1014\test_tc1014_image_loader.cpp" />
     <ClCompile Include="src\images\test_image.cpp" />
     <ClCompile Include="src\images\test_monochrome_pattern.cpp" />

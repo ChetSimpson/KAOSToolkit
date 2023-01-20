@@ -146,7 +146,6 @@ defined in `Colormap` indexes 11, 12, 13, and 14 are rotated. The speed of the
 rotation is specified in 60ths of a second by the `Animation Rate` field.
 
 
-\sa [CM3 Image Implementation Details](\ref hypertech::kaos::assetfoo::images::cm3::cm3_image).
 \sa [CM3 Image Loader Implementation Details](\ref hypertech::kaos::assetfoo::images::cm3::cm3_image_reader).
 \sa Getting The Picture With OS-9 - The Rainbow, Volume 10 Number 3 - October 1990.
 \sa Displaying Picture Files Using OS-9 Level II Graphics Part II - The Rainbow, Volume 10 Number 4 - November 1990.

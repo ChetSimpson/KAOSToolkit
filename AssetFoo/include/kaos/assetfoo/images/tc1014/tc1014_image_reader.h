@@ -4,7 +4,7 @@
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
 #include <kaos/assetfoo/asset_reader.h>
-#include <kaos/assetfoo/images/tc1014/tc1014_image.h>
+#include <kaos/assetfoo/images/image.h>
 #include <kaos/assetfoo/colors/tc1014/tc1014_color_converter.h>
 #include <kaos/assetfoo/pixels/packed_pixel_converter.h>
 #include <kaos/assetfoo/pixels/packed_pixel_layout.h>
@@ -54,9 +54,10 @@ namespace hypertech::kaos::assetfoo::images::tc1014
 
 		/// @brief Loads a uncompressed TC1014 based image
 		/// 
-		/// @param image The RGBA image to load the converted image data into
-		/// @param layout The pixel layout of the image data
 		/// @param reader The binary reader the image file is attached to.
+		/// @param image The RGBA image to load the converted image data into
+		/// @param colormap The colormap used to map color indexes to.
+		/// @param layout The pixel layout of the image data
 		/// @param source_name The name of the image file being loaded. This may be a filename or
 		/// another name describing the source of the image such as a network stream or a memory
 		/// buffer.
@@ -65,9 +66,10 @@ namespace hypertech::kaos::assetfoo::images::tc1014
 		/// is encountered while decoding the image or if the decoding attemps to read past
 		/// the end of the input stream.
 		virtual void load_uncompressed_pixel_data(
-			tc1014_image& image,
-			const pixels::packed_pixel_layout& layout,
 			core::io::binary_reader& reader,
+			image& image,
+			const color_map_type& colormap,
+			const pixels::packed_pixel_layout& layout,
 			const filename_type& source_name) const;
 
 		/// @brief Get a reference to the color converter

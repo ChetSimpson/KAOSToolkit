@@ -21,7 +21,6 @@ the image format and must be determined by other means.
 
 The image data is stored uncompressed in a 4 bits per pixel packed pixel format.
 
-\sa [HRS Image Implementation Details](\ref hypertech::kaos::assetfoo::images::tc1014::tc1014_image).
 \sa [HRS Image Loader Implementation Details](\ref hypertech::kaos::assetfoo::images::hrs::hrs_image_reader).
 
 */

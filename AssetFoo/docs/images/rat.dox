@@ -78,7 +78,6 @@ A pseudo code fragment to uncompress a compressed RAT image might look like this
 			Else copy n into the image
 		Endloop
 
-\sa [RAT Image Implementation Details](\ref hypertech::kaos::assetfoo::images::rat::rat_image).
 \sa [RAT Image Loader Implementation Details](\ref hypertech::kaos::assetfoo::images::rat::rat_image_reader).
 \sa Displaying Picture Files Using OS-9 Level II Graphics Part II - The Rainbow, Volume 10 Number 4 - November 1990.
 

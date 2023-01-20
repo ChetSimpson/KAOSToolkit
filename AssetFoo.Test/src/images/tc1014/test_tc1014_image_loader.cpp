@@ -29,12 +29,13 @@ namespace hypertech::kaos::assetfoo::images::tc1014::unittests
 		public:
 
 			void load_uncompressed_pixel_data(
-				tc1014_image& image,
-				const pixels::packed_pixel_layout& layout,
 				core::io::binary_reader& reader,
+				image& image,
+				const color_map_type& colormap,
+				const pixels::packed_pixel_layout& layout,
 				const filename_type& source_name) const override
 			{
-				return tc1014_image_reader::load_uncompressed_pixel_data(image, layout, reader, source_name);
+				return tc1014_image_reader::load_uncompressed_pixel_data(reader, image, colormap, layout, source_name);
 			}
 		};
 
@@ -71,38 +72,34 @@ namespace hypertech::kaos::assetfoo::images::tc1014::unittests
 
 	TEST(test_tc1014_image_reader, load_uncompressed_pixel_data_read_past_end_of_file)
 	{
+		const auto colormap(std::make_unique<tc1014_image_reader::color_map_type>(default_colormap_colors));
 		prot_tc1014_image_reader image_reader;
-		tc1014_image image(
-			{ 4, 4 },
-			std::make_unique<tc1014_image::color_map_type>(default_colormap_colors),
-			color_space_type::rgb,
-			default_native_colormap_colors);
+		images::image image(images::image::dimensions_type(4, 4));
 
 		std::istringstream input;
 		core::io::binary_reader reader(input);
 		const auto& layout(pixels::packed_pixel_layout::BPP4);
 		EXPECT_THROWS_MESSAGE(
-			image_reader.load_uncompressed_pixel_data(image, layout, reader, "<TEST>"),
+			image_reader.load_uncompressed_pixel_data(reader, image, *colormap, layout, "<TEST>"),
 			core::exceptions::file_format_error,
 			"image file format error: attempt to read past end of file while processing uncompressed image data of `<TEST>`");
 	}
 
 	TEST(test_tc1014_image_reader, load_uncompressed_pixel_data)
 	{
+		const auto colormap(std::make_unique<tc1014_image_reader::color_map_type>(default_colormap_colors));
+
 		prot_tc1014_image_reader image_reader;
-		tc1014_image image(
-			{ 4, 4 },
-			std::make_unique<tc1014_image::color_map_type>(default_colormap_colors),
-			color_space_type::rgb,
-			default_native_colormap_colors);
+		images::image image(images::image::dimensions_type(4, 4));
 
 		std::istringstream input("\x01\x23\x45\x67\x89\xab\xcd\xef");
 		core::io::binary_reader reader(input);
 
 		image_reader.load_uncompressed_pixel_data(
-			image,
-			pixels::packed_pixel_layout::BPP4,
 			reader,
+			image,
+			*colormap,
+			pixels::packed_pixel_layout::BPP4,
 			"<TEST>");
 
 		auto image_color_ptr(image.get_sequence().begin());

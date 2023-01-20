@@ -3,7 +3,6 @@
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #include <kaos/assetfoo/images/cm3/cm3_image_reader.h>
-#include <kaos/assetfoo/images/cm3/cm3_image.h>
 #include <kaos/assetfoo/pixels/packed_pixel_converter.h>
 #include <kaos/core/utility/bit_reader.h>
 #include <kaos/core/exceptions.h>
@@ -36,6 +35,8 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		const auto page_count((image_flags & format_details::double_page_flag_mask) == 0 ? 1 : 2);
 		const auto include_patterns((image_flags & format_details::exclude_patterns_flag_mask) == 0);
 
+		const auto dimensions(image_type::dimensions_type(format_details::page_width, format_details::page_height * page_count));
+
 		auto colormap(color_converter().create_colormap(color_space, native_colormap));
 		//	Load the patterns if they exist
 		pattern_list_type patterns;
@@ -44,21 +45,13 @@ namespace hypertech::kaos::assetfoo::images::cm3
 			patterns = load_patterns(*colormap, reader, source_name);
 		}
 
-		auto image(std::make_unique<cm3_image>(
-			cm3_image::dimensions_type(format_details::page_width, format_details::page_height * page_count),
-			move(colormap),
-			color_space,
-			native_colormap,
-			animation_rate,
-			cycle_rate,
-			color_converter().convert_colors(color_space, cycle_colors),
-			move(patterns)));
-
+		auto image(std::make_unique<image_type>(dimensions, color_type(255, 255, 255)));
 		load_compressed_pixel_data(
-			*image,
-			page_count,
-			format_details::pixel_layout,
 			reader,
+			*image,
+			*colormap,
+			format_details::pixel_layout,
+			page_count,
 			source_name);
 
 		return image;
@@ -77,7 +70,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 	{
 		reader.skip(format_details::pattern_section_header_length);
 
-		cm3_image::pattern_list_type patterns;
+		pattern_list_type patterns;
 		for(auto i(0U); i < format_details::pattern_count; ++i)
 		{
 			const auto background_color_index(reader.read<uint8_t>() & format_details::pattern_color_index_mask);
@@ -97,10 +90,11 @@ namespace hypertech::kaos::assetfoo::images::cm3
 	}
 
 	void cm3_image_reader::load_compressed_pixel_data(
-		cm3_image& image,
-		size_type page_count,
-		const pixels::packed_pixel_layout& layout,
 		core::io::binary_reader& reader,
+		image_type& image,
+		const color_map_type& colormap,
+		const pixels::packed_pixel_layout& layout,
+		size_type page_count,
 		const filename_type& source_name) const
 	{
 		auto page_size(image.height() / page_count);
@@ -109,10 +103,10 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		{
 			auto y_position(page_size * page);
 			load_page_compressed_pixel_data(
-				image.create_view(0, y_position, image.width(), page_size),
-				image.colormap(),
-				layout,
 				reader,
+				image.create_view(0, y_position, image.width(), page_size),
+				colormap,
+				layout,
 				page,
 				source_name);
 		}
@@ -120,10 +114,10 @@ namespace hypertech::kaos::assetfoo::images::cm3
 
 
 	void cm3_image_reader::load_page_compressed_pixel_data(
-		cm3_image::view_type page_view,
+		core::io::binary_reader& reader,
+		image_type::view_type page_view,
 		const color_map_type& colormap,
 		const pixels::packed_pixel_layout& layout,
-		core::io::binary_reader& reader,
 		size_type page_index,
 		const filename_type& source_name) const
 	try

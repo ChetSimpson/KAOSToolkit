@@ -11,16 +11,13 @@
 namespace hypertech::kaos::assetfoo::images::hrs
 {
 
-	using hrs_image = tc1014::tc1014_image;
-
-
 	/// @brief Loads a HRS image
 	///
 	/// This class loads an uncompressed 16 color HRS format image and converts it
 	/// to an RGBA image.
 	class hrs_image_reader : public tc1014::tc1014_image_reader
 	{
-	protected:
+	public:
 
 		/// @brief Specifies details of the image format
 		struct format_details
@@ -32,11 +29,14 @@ namespace hypertech::kaos::assetfoo::images::hrs
 			static const size_t colormap_length = 16;
 
 			/// @brief The width and height of the image
-			static inline const auto dimensions = hrs_image::dimensions_type(320, 192);
+			static inline const auto dimensions = image::dimensions_type(320, 192);
 
 			/// @brief Pixel layout of the image
 			static const inline pixels::packed_pixel_layout& pixel_layout{ pixels::packed_pixel_layout::BPP4 };
 		};
+
+		/// @brief The type of image created by the asset reader
+		using image_type = images::image;
 
 
 	public:

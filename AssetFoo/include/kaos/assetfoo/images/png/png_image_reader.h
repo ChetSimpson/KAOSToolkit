@@ -3,6 +3,7 @@
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
+#include <kaos/assetfoo/images/image.h>
 #include <kaos/assetfoo/asset_reader.h>
 
 
@@ -14,6 +15,12 @@ namespace hypertech::kaos::assetfoo::images::png
 	/// This class loads an PNG format image and converts it to an RGBA image.
 	class png_image_reader : public binary_asset_reader
 	{
+	public:
+
+		/// @brief The type of image created by the asset reader
+		using image_type = images::image;
+
+
 	public:
 
 		/// @brief Create a PNG image reader

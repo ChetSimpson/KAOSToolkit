@@ -100,7 +100,6 @@ these type of overruns when decompressing a packet otherwise the resulting
 image will be distorted.
 
 
-\sa [VEF Image Implementation Details](\ref hypertech::kaos::assetfoo::images::vef::vef_image).
 \sa [VEF Image Loader Implementation Details](\ref hypertech::kaos::assetfoo::images::vef::vef_image_reader).
 \sa [MVCanvas VEF documentation online](http://www.sdc.org/~goosey/os9/vef.format.txt).
 \sa Getting The Picture With OS-9 Part 1 - The Rainbow, Volume 10 Number 3 - October 1990.
