@@ -4,7 +4,7 @@
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
 #include <kaos/assetfoo/images/tc1014/tc1014_image_reader.h>
-#include <kaos/assetfoo/images/cm3/cm3_image.h>
+#include <kaos/assetfoo/images/monochrome_pattern.h>
 #include <kaos/assetfoo/pixels/packed_pixel_layout.h>
 
 
@@ -16,24 +16,26 @@ namespace hypertech::kaos::assetfoo::images::cm3
 	/// This class loads an CM3 format image and converts it to an RGBA image.
 	class cm3_image_reader : public tc1014::tc1014_image_reader
 	{
-	protected:
+	public:
 
 		/// @brief The size type
 		using size_type = size_t;
 		/// @brief The type of image created by the asset reader
-		using image_type = cm3_image;
-		/// @copydoc image_type::pattern_type
-		using pattern_type = image_type::pattern_type;
-		/// @copydoc image_type::pattern_list_type
-		using pattern_list_type = image_type::pattern_list_type;
+		using image_type = images::image;
+		/// @brief The monochroome pixelmap pattern type.
+		using pattern_type = monochrome_pattern<uint8_t, size_t>;
+		/// @brief The type use for maintaining a list of monochrome pixelmap patterns.
+		using pattern_list_type = std::vector<pattern_type>;
+		/// @brief List of colors to cycle.
+		using cycle_colors_list_type = std::vector<color_type>;
 
 		/// @brief The number of colors supported.
 		struct format_details
 		{
-			/// @copydoc cm3_image::feature_details::max_colormap_size
-			static const size_type color_count = cm3_image::feature_details::max_colormap_size;
-			/// @copydoc cm3_image::feature_details::fixed_cycle_color_count
-			static const size_type cycle_color_count = cm3_image::feature_details::fixed_cycle_color_count;
+			/// @brief The number of colors in the color map
+			static const size_type color_count = 16;
+			/// @brief The number of colors used for color cycling
+			static const size_type cycle_color_count = 8;
 			/// @brief The width of the image
 			static const size_type page_width = 320;
 			/// @brief The height of each image page. 
@@ -46,8 +48,8 @@ namespace hypertech::kaos::assetfoo::images::cm3
 			static const uint8_t exclude_patterns_flag_mask = 0x01;
 			/// @brief Size of the pattern section header
 			static const size_type pattern_section_header_length = 3;
-			/// @copydoc cm3_image::feature_details::max_pattern_count
-			static const size_type pattern_count = cm3_image::feature_details::max_pattern_count;
+			/// @brief The maximum number of patterns allowed in the image
+			static const size_type pattern_count = 24;
 			/// @brief Mask to isolate only the bits in pattern color index that are valid.
 			static const uint8_t pattern_color_index_mask = 0x0f;
 			/// @brief Size of the buffer used to decompress a single row/line of the image.
@@ -110,10 +112,11 @@ namespace hypertech::kaos::assetfoo::images::cm3
 
 		/// @brief Loads a compressed CM3 image
 		/// 
-		/// @param image The RGBA image to load the converted CM3 image data into
-		/// @param page_count The number of pages to load.
-		/// @param layout The pixel layout of the image data
 		/// @param reader The binary reader the image file is attached to.
+		/// @param image The RGBA image to load the converted CM3 image data into
+		/// @param colormap The colormap used to map color indexes to.
+		/// @param layout The pixel layout of the image data
+		/// @param page_count The number of pages to load.
 		/// @param source_name The name of the image file being loaded. This may be a filename or
 		/// another name describing the source of the image such as a network stream or a memory
 		/// buffer.
@@ -122,27 +125,28 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		/// is encountered while decoding the image or if the decoding attemps to read past
 		/// the end of the input stream.
 		void load_compressed_pixel_data(
-			cm3_image& image,
-			size_type page_count,
-			const pixels::packed_pixel_layout& layout,
 			core::io::binary_reader& reader,
+			image_type& image,
+			const color_map_type& colormap,
+			const pixels::packed_pixel_layout& layout,
+			size_type page_count,
 			const filename_type& source_name) const;
 
 		/// @brief Loads a single compressed CM3 image page.
 		/// 
+		/// @param reader The binary reader the image file is attached to.
 		/// @param page_view The view of the image to load the page into
 		/// @param colormap The colormap used to map color indexes to.
 		/// @param layout The layout of the pixelmap data
-		/// @param reader The binary reader the image file is attached to.
 		/// @param page_index The index of the paage being loaded
 		/// @param source_name The name of the image file being loaded. This may be a filename or
 		/// another name describing the source of the image such as a network stream or a memory
 		/// buffer.
 		void load_page_compressed_pixel_data(
-			cm3_image::view_type page_view,
+			core::io::binary_reader& reader,
+			image_type::view_type page_view,
 			const color_map_type& colormap,
 			const pixels::packed_pixel_layout& layout,
-			core::io::binary_reader& reader,
 			size_type page_index,
 			const filename_type& source_name) const;
 	};

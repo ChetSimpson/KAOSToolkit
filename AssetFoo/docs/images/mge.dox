@@ -97,7 +97,6 @@ A pseudo code fragment to uncompress a compressed MGE image might look like this
 		Endloop
 
 
-\sa [MGE Image Implementation Details](\ref hypertech::kaos::assetfoo::images::mge::mge_image).
 \sa [MGE Image Loader Implementation Details](\ref hypertech::kaos::assetfoo::images::mge::mge_image_reader).
 \sa Getting The Picture With OS-9 Part 1 - The Rainbow, Volume 10 Number 3 - October 1990.
 \sa Displaying Picture Files Using OS-9 Level II Graphics Part II - The Rainbow, Volume 10 Number 4 - November 1990.

@@ -3,7 +3,6 @@
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #include <kaos/assetfoo/images/mge/mge_image_reader.h>
-#include <kaos/assetfoo/images/mge/mge_image.h>
 #include <kaos/assetfoo/pixels/packed_pixel_converter.h>
 #include <kaos/core/exceptions.h>
 
@@ -32,21 +31,18 @@ namespace hypertech::kaos::assetfoo::images::mge
 		const auto cycle_rate(reader.read<uint8_t>());		//	TODO: Not used
 		const auto cycle_indexes(reader.read<uint8_t>());	//	TODO: Not used
 
-		auto image(std::make_unique<mge_image>(
-			format_details::dimensions,
-			color_converter().create_colormap(color_space, native_colormap),
-			color_space,
-			native_colormap,
-			title));
+		auto colormap(color_converter().create_colormap(color_space, native_colormap));
+
+		auto image(std::make_unique<image_type>(format_details::dimensions));
 
 		const auto& layout(pixels::packed_pixel_layout::BPP4);
 		if (is_compressed)
 		{
-			load_compressed_pixel_data(*image, layout, reader, source_name);
+			load_compressed_pixel_data(reader, *image, *colormap, layout, source_name);
 		}
 		else
 		{
-			load_uncompressed_pixel_data(*image, layout, reader, source_name);
+			load_uncompressed_pixel_data(reader, *image, *colormap, layout, source_name);
 		}
 
 		return image;
@@ -59,14 +55,14 @@ namespace hypertech::kaos::assetfoo::images::mge
 
 
 	void mge_image_reader::load_compressed_pixel_data(
-		mge_image& image,
-		const pixels::packed_pixel_layout& layout,
 		core::io::binary_reader& reader,
+		image_type& image,
+		const color_map_type& colormap,
+		const pixels::packed_pixel_layout& layout,
 		const filename_type& source_name) const
 	try
 	{
 		const auto bpp(layout.bits_per_pixel());
-		const auto& colormap(image.colormap());
 		const pixels::packed_pixel_converter converter;
 
 		for (auto sequence(image.get_sequence()); !sequence.empty(); )

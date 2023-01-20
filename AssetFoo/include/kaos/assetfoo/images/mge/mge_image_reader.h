@@ -4,7 +4,6 @@
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
 #include <kaos/assetfoo/images/tc1014/tc1014_image_reader.h>
-#include <kaos/assetfoo/images/mge/mge_image.h>
 #include <kaos/assetfoo/pixels/packed_pixel_layout.h>
 
 
@@ -16,7 +15,7 @@ namespace hypertech::kaos::assetfoo::images::mge
 	/// This class loads an MGE format image and converts it to an RGBA image.
 	class mge_image_reader : public tc1014::tc1014_image_reader
 	{
-	protected:
+	public:
 
 		/// @brief Specifies details of the image format
 		struct format_details
@@ -27,15 +26,23 @@ namespace hypertech::kaos::assetfoo::images::mge
 				color_320x200_4bpp = 0	//!<	Specifies a 320x200 16 color (4bpp) image.
 			};
 
-			/// @brief The length of the title stored in the MGE file
-			static const size_t title_length = mge_image::feature_details::max_title_length;
+			/// @copydoc image::size_type
+			using size_type = image::size_type;
+			/// @brief Number of colors expected in the colormap
+			static const size_type colormap_size = 16;
+			/// @brief Maximum length of the title property
+			static const size_type title_length = 30;
 			/// @brief The number of colors supported.
 			static const size_t colormap_length = 16;
 			/// @brief The width and height of the image
-			static inline const auto dimensions = mge_image::dimensions_type(320, 200);
+			static inline const auto dimensions = image::dimensions_type(320, 200);
 			/// @brief Pixel layout of the image
 			static const inline pixels::packed_pixel_layout& pixel_layout{ pixels::packed_pixel_layout::BPP4 };
 		};
+
+		/// @brief The type of image created by the asset reader
+		using image_type = images::image;
+
 
 	public:
 
@@ -76,9 +83,10 @@ namespace hypertech::kaos::assetfoo::images::mge
 
 		/// @brief Loads a compressed MGE image
 		/// 
-		/// @param image The RGBA image to load the converted MGE image data into
-		/// @param layout The pixel layout of the image data
 		/// @param reader The binary reader the image file is attached to.
+		/// @param image The RGBA image to load the converted MGE image data into
+		/// @param colormap The colormap used to map color indexes to.
+		/// @param layout The pixel layout of the image data
 		/// @param source_name The name of the image file being loaded. This may be a filename or
 		/// another name describing the source of the image such as a network stream or a memory
 		/// buffer.
@@ -87,9 +95,10 @@ namespace hypertech::kaos::assetfoo::images::mge
 		/// is encountered while decoding the image or if the decoding attemps to read past
 		/// the end of the input stream.
 		void load_compressed_pixel_data(
-			mge_image& image,
-			const pixels::packed_pixel_layout& layout,
 			core::io::binary_reader& reader,
+			image_type& image,
+			const color_map_type& colormap,
+			const pixels::packed_pixel_layout& layout,
 			const filename_type& source_name) const;
 	};
 

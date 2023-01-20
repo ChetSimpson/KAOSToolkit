@@ -14,6 +14,8 @@
 namespace hypertech::kaos::assetfoo::images
 {
 
+	//	FIXME: rename to rgba_image
+
 	/// @brief RGBA image
 	class image : public asset
 	{

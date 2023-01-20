@@ -12,14 +12,14 @@ namespace hypertech::kaos::assetfoo::images::tc1014
 {
 
 	void tc1014_image_reader::load_uncompressed_pixel_data(
-		tc1014_image& image,
-		const pixels::packed_pixel_layout& layout,
 		core::io::binary_reader& reader,
+		image& image,
+		const color_map_type& colormap,
+		const pixels::packed_pixel_layout& layout,
 		const filename_type& source_name) const
 	try
 	{
 		const auto bpp(layout.bits_per_pixel());
-		const auto& colormap(image.colormap());
 		const pixels::packed_pixel_converter converter;
 
 		for (auto sequence(image.get_sequence()); !sequence.empty(); )

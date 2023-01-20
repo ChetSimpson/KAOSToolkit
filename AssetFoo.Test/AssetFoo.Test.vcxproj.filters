@@ -84,17 +84,8 @@
     <ClCompile Include="src\images\rat\test_rat_image_loader.cpp">
       <Filter>Source Files\images\rat</Filter>
     </ClCompile>
-    <ClCompile Include="src\images\rat\test_rat_image.cpp">
-      <Filter>Source Files\images\rat</Filter>
-    </ClCompile>
-    <ClCompile Include="src\images\tc1014\test_tc1014_image.cpp">
-      <Filter>Source Files\images\tc1014</Filter>
-    </ClCompile>
     <ClCompile Include="src\images\hrs\test_hrs_image_loader.cpp">
       <Filter>Source Files\images\hrs</Filter>
-    </ClCompile>
-    <ClCompile Include="src\images\cm3\test_cm3_image.cpp">
-      <Filter>Source Files\images\cm3</Filter>
     </ClCompile>
     <ClCompile Include="src\images\cm3\test_cm3_image_loader.cpp">
       <Filter>Source Files\images\cm3</Filter>
@@ -113,9 +104,6 @@
     </ClCompile>
     <ClCompile Include="src\colors\tc1014\test_tc1014_color_layout.cpp">
       <Filter>Source Files\colors\tc1014</Filter>
-    </ClCompile>
-    <ClCompile Include="src\images\mge\New folder\test_mge_image.cpp">
-      <Filter>Source Files\images\mge</Filter>
     </ClCompile>
     <ClCompile Include="src\images\test_monochrome_pattern.cpp">
       <Filter>Source Files\images</Filter>

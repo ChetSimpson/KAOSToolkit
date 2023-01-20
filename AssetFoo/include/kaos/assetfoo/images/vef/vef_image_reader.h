@@ -3,7 +3,6 @@
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
-#include <kaos/assetfoo/images/vef/vef_image.h>
 #include <kaos/assetfoo/images/tc1014/tc1014_image_reader.h>
 #include <kaos/assetfoo/pixels/packed_pixel_layout.h>
 #include <array>
@@ -18,13 +17,13 @@ namespace hypertech::kaos::assetfoo::images::vef
 	/// converts it to an RGBA image.
 	class vef_image_reader : public tc1014::tc1014_image_reader
 	{
-	protected:
+	public:
 
 		/// @brief Describes details of a VEF image type
-		struct image_type_details
+		struct image_descriptor
 		{
 			/// @brief The width and eight in pixels of the image
-			const vef_image::dimensions_type dimensions;
+			const image::dimensions_type dimensions;
 			/// @brief The packed pixel layout of the image
 			const pixels::packed_pixel_layout& layout;
 		};
@@ -46,8 +45,11 @@ namespace hypertech::kaos::assetfoo::images::vef
 			static const size_t packet_length_mask = 0x7f;
 		};
 
+		/// @brief The type of image created by the asset reader
+		using image_type = images::image;
+
 		/// @brief List of image types supported by the VEF format
-		static const std::array<image_type_details, 5> image_type_descriptors;
+		static const std::array<image_descriptor, 5> image_type_descriptors;
 
 
 	public:
@@ -89,9 +91,10 @@ namespace hypertech::kaos::assetfoo::images::vef
 
 		/// @brief Loads a compressed VEF image
 		/// 
-		/// @param image The RGBA image to load the converted VEF image data into
-		/// @param layout The pixel layout of the image data
 		/// @param reader The binary reader the image file is attached to.
+		/// @param image The RGBA image to load the converted VEF image data into
+		/// @param colormap The colormap used to map color indexes to.
+		/// @param layout The pixel layout of the image data
 		/// @param source_name The name of the image file being loaded. This may be a filename or
 		/// another name describing the source of the image such as a network stream or a memory
 		/// buffer.
@@ -100,9 +103,10 @@ namespace hypertech::kaos::assetfoo::images::vef
 		/// is encountered while decoding the image or if the decoding attemps to read past
 		/// the end of the input stream.
 		void load_compressed_pixel_data(
-			vef_image& image,
-			const pixels::packed_pixel_layout& layout,
 			core::io::binary_reader& reader,
+			image_type& image,
+			const color_map_type& colormap,
+			const pixels::packed_pixel_layout& layout,
 			const filename_type& source_name) const;
 	};
 

@@ -13,7 +13,7 @@ namespace hypertech::kaos::assetfoo::images::vef
 
 	using core::io::binary_reader;
 
-	const std::array<vef_image_reader::image_type_details, 5> vef_image_reader::image_type_descriptors
+	const std::array<vef_image_reader::image_descriptor, 5> vef_image_reader::image_type_descriptors
 	{{
 		{ { 320, 200 }, pixels::packed_pixel_layout::BPP4},
 		{ { 640, 200 }, pixels::packed_pixel_layout::BPP2},
@@ -30,31 +30,27 @@ namespace hypertech::kaos::assetfoo::images::vef
 		binary_reader reader(input_stream, binary_reader::ordering_type::big);
 
 		const auto image_flags(reader.read<uint8_t>());
-		const auto image_type(reader.read<uint8_t>());
-		if (image_type >= image_type_descriptors.size())
+		const auto image_descriptor_id(reader.read<uint8_t>());
+		if (image_descriptor_id >= image_type_descriptors.size())
 		{
 			throw core::exceptions::file_format_error("invalid image type in `" + source_name + "`");
 		}
-		const auto& image_descriptor(image_type_descriptors[image_type]);
+		const auto& image_descriptor(image_type_descriptors[image_descriptor_id]);
 		const auto color_space(color_space_type::rgb);
 		const auto is_compressed((image_flags & format_details::compression_flag_mask) != 0);
 
 		auto native_colormap(reader.read_vector<native_packed_color_type>(format_details::colormap_length));
 		native_colormap.resize(image_descriptor.layout.max_colors_in_pixel());
-
-		auto image(std::make_unique<vef_image>(
-			image_descriptor.dimensions,
-			color_converter().create_colormap(color_space, native_colormap),
-			color_space,
-			native_colormap));
+		auto colormap(color_converter().create_colormap(color_space, native_colormap));
+		auto image(std::make_unique<image_type>(image_descriptor.dimensions));
 
 		if (is_compressed)
 		{
-			load_compressed_pixel_data(*image, image_descriptor.layout, reader, source_name);
+			load_compressed_pixel_data(reader, *image, *colormap, image_descriptor.layout, source_name);
 		}
 		else
 		{
-			load_uncompressed_pixel_data(*image, image_descriptor.layout, reader, source_name);
+			load_uncompressed_pixel_data(reader, *image, *colormap, image_descriptor.layout, source_name);
 		}
 
 		return image;
@@ -67,15 +63,15 @@ namespace hypertech::kaos::assetfoo::images::vef
 
 
 	void vef_image_reader::load_compressed_pixel_data(
-		vef_image& image,
-		const pixels::packed_pixel_layout& layout,
 		core::io::binary_reader& reader,
+		image_type& image,
+		const color_map_type& colormap,
+		const pixels::packed_pixel_layout& layout,
 		const filename_type& source_name) const
 	try
 	{
 		const auto bpp(layout.bits_per_pixel());
 		const auto pixels_per_byte(layout.pixels_per_packed_value());
-		const auto& colormap(image.colormap());
 
 		const pixels::packed_pixel_converter converter;
 		for (auto row : image.create_view(image.width() / 2))
