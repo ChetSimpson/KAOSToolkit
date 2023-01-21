@@ -11,32 +11,12 @@ namespace hypertech::kaos::core::io
 
 	binary_reader::binary_reader(stream_type& input, ordering_type ordering)
 		:
-		input_(input),
-		swap_bytes_(ordering != ordering_type::native)
+		binary_ios(input, ordering),
+		input_(input)
 	{}
 
 
-	binary_reader::operator bool() const
-	{
-		return input_.operator bool();
-	}
-
-	bool binary_reader::operator!() const
-	{
-		return input_.operator!();
-	}
-
-
-	binary_reader::iostate_type binary_reader::exceptions() const
-	{
-		return input_.exceptions();
-	}
-
-	void binary_reader::exceptions(iostate_type except)
-	{
-		input_.exceptions(except);
-	}
-
+	//	FIXME: Trap and convert exceptions to exceptions::file_error
 	binary_reader::pos_type binary_reader::tellg()
 	{
 		return input_.tellg();
@@ -56,35 +36,7 @@ namespace hypertech::kaos::core::io
 		return *this;
 	}
 
-
-	bool binary_reader::eof() const
-	{
-		return input_.eof();
-	}
-
-	void binary_reader::clear(iostate_type state)
-	{
-		return input_.clear(state);
-	}
-
-	bool binary_reader::good() const
-	{
-		return input_.good();
-	}
-
-	bool binary_reader::fail() const
-	{
-		return input_.fail();
-	}
-
-	bool binary_reader::bad() const
-	{
-		return input_.bad();
-	}
-
-	
-	
-	binary_reader& binary_reader::skip(size_t length)
+	binary_reader& binary_reader::skipg(size_t length)
 	{
 		if (!seekg(length, std::ios::cur))
 		{
@@ -107,10 +59,9 @@ namespace hypertech::kaos::core::io
 		return *this;
 	}
 
-
-	binary_reader::string_type binary_reader::read_string(size_type size, bool null_truncate)
+	binary_reader::string_type binary_reader::read_string(size_type length, bool null_truncate)
 	{
-		string_type value(size, 0);
+		string_type value(length, 0);
 		if (!read(span_type<string_type::value_type>(value)))
 		{
 			throw_on_error();
