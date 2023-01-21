@@ -127,7 +127,7 @@ namespace hypertech::kaos::assetfoo::images::mge::unittests
 
 	TYPED_TEST_P(test_mge_image_reader, load)
 	{
-		using properties = mge_image_reader::properties;
+		using attributes = mge_image_reader::attributes;
 
 		TypeParam expectations;
 
@@ -137,12 +137,12 @@ namespace hypertech::kaos::assetfoo::images::mge::unittests
 		EXPECT_FALSE(image->empty());
 		EXPECT_EQ(image->width(), expectations.width);
 		EXPECT_EQ(image->height(), expectations.height);
-		EXPECT_EQ(image->get_property(properties::title), expectations.title);
-		EXPECT_EQ(image->get_property(properties::native_color_space), expectations.colorspace);
-		EXPECT_EQ(image->get_property(properties::native_color_map), expectations.native_colormap);
-		EXPECT_EQ(image->get_property(properties::color_animation_rate), expectations.color_animation_rate);
-		EXPECT_EQ(image->get_property(properties::color_animation_start_index), expectations.color_animation_start_index);
-		EXPECT_EQ(image->get_property(properties::color_animation_end_index), expectations.color_animation_end_index);
+		EXPECT_EQ(image->get_attribute(attributes::title), expectations.title);
+		EXPECT_EQ(image->get_attribute(attributes::native_color_space), expectations.colorspace);
+		EXPECT_EQ(image->get_attribute(attributes::native_color_map), expectations.native_colormap);
+		EXPECT_EQ(image->get_attribute(attributes::color_animation_rate), expectations.color_animation_rate);
+		EXPECT_EQ(image->get_attribute(attributes::color_animation_start_index), expectations.color_animation_start_index);
+		EXPECT_EQ(image->get_attribute(attributes::color_animation_end_index), expectations.color_animation_end_index);
 
 		EXPECT_EQ(calculate_md5_hash(*image), expectations.hash);
 	}

@@ -28,8 +28,8 @@ namespace hypertech::kaos::assetfoo::images::hrs
 
 		load_uncompressed_pixel_data(reader, *image, *colormap, format_details::pixel_layout, source_name);
 
-		image->set_property(properties::native_color_space, native_color_space);
-		image->set_property(properties::native_color_map, native_color_map);
+		image->set_attribute(attributes::native_color_space, native_color_space);
+		image->set_attribute(attributes::native_color_map, native_color_map);
 
 		return image;
 	}

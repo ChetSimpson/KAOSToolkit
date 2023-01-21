@@ -13,14 +13,14 @@ namespace hypertech::kaos::assetfoo::images::mge
 	using core::io::binary_reader;
 
 	
-	const asset::property_def<mge_image_reader::string_type>
-		mge_image_reader::properties::title("title");
-	const asset::property_def<mge_image_reader::size_type>
-		mge_image_reader::properties::color_animation_rate("color_animation_rate");
-	const asset::property_def<mge_image_reader::size_type>
-		mge_image_reader::properties::color_animation_start_index("color_animation_start_index");
-	const asset::property_def<mge_image_reader::size_type>
-		mge_image_reader::properties::color_animation_end_index("color_animation_end_index");
+	const asset::attribute_def<mge_image_reader::string_type>
+		mge_image_reader::attributes::title("title");
+	const asset::attribute_def<mge_image_reader::size_type>
+		mge_image_reader::attributes::color_animation_rate("color_animation_rate");
+	const asset::attribute_def<mge_image_reader::size_type>
+		mge_image_reader::attributes::color_animation_start_index("color_animation_start_index");
+	const asset::attribute_def<mge_image_reader::size_type>
+		mge_image_reader::attributes::color_animation_end_index("color_animation_end_index");
 
 
 	std::unique_ptr<asset> mge_image_reader::load(
@@ -56,12 +56,12 @@ namespace hypertech::kaos::assetfoo::images::mge
 			load_uncompressed_pixel_data(reader, *image, *colormap, layout, source_name);
 		}
 
-		image->set_property(properties::title, title);
-		image->set_property(properties::native_color_space, native_color_space);
-		image->set_property(properties::native_color_map, native_color_map);
-		image->set_property(properties::color_animation_rate, animation_rate);
-		image->set_property(properties::color_animation_start_index, (animation_indexes >> 4) & 0x0f);
-		image->set_property(properties::color_animation_end_index, animation_indexes & 0x0f);
+		image->set_attribute(attributes::title, title);
+		image->set_attribute(attributes::native_color_space, native_color_space);
+		image->set_attribute(attributes::native_color_map, native_color_map);
+		image->set_attribute(attributes::color_animation_rate, animation_rate);
+		image->set_attribute(attributes::color_animation_start_index, (animation_indexes >> 4) & 0x0f);
+		image->set_attribute(attributes::color_animation_end_index, animation_indexes & 0x0f);
 
 		return image;
 	}

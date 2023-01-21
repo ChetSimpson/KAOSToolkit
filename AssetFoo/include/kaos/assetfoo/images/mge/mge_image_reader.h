@@ -26,17 +26,17 @@ namespace hypertech::kaos::assetfoo::images::mge
 		using size_type = size_t;
 
 
-		/// @brief List of properties supported by the image reader.
-		struct properties : tc1014_image_reader::properties
+		/// @brief List of attributes supported by the image reader.
+		struct attributes : tc1014_image_reader::attributes
 		{
-			/// @brief Property definition for image title
-			static const asset::property_def<string_type> title;
-			/// @brief Property definition for color animation rate
-			static const asset::property_def<size_type> color_animation_rate;
-			/// @brief Property definition for first palette index for color animation
-			static const asset::property_def<size_type> color_animation_start_index;
-			/// @brief Property definition for last palette index for color animation
-			static const asset::property_def<size_type> color_animation_end_index;
+			/// @brief Attribute definition for image title
+			static const asset::attribute_def<string_type> title;
+			/// @brief Attribute definition for color animation rate
+			static const asset::attribute_def<size_type> color_animation_rate;
+			/// @brief Attribute definition for first palette index for color animation
+			static const asset::attribute_def<size_type> color_animation_start_index;
+			/// @brief Attribute definition for last palette index for color animation
+			static const asset::attribute_def<size_type> color_animation_end_index;
 		};
 
 
@@ -53,7 +53,7 @@ namespace hypertech::kaos::assetfoo::images::mge
 			using size_type = image::size_type;
 			/// @brief Number of colors expected in the colormap
 			static const size_type colormap_size = 16;
-			/// @brief Maximum length of the title property
+			/// @brief Maximum length of the title attribute
 			static const size_type title_length = 30;
 			/// @brief The number of colors supported.
 			static const size_t colormap_length = 16;

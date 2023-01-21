@@ -159,12 +159,12 @@
     <ClInclude Include="include\kaos\core\io\binary_reader.h" />
     <ClInclude Include="include\kaos\core\memory.h" />
     <ClInclude Include="include\kaos\core\types\abstract_bitfield.h" />
+    <ClInclude Include="include\kaos\core\types\attribute_extension.h" />
     <ClInclude Include="include\kaos\core\types\box_iterator.h" />
     <ClInclude Include="include\kaos\core\types\box_view.h" />
     <ClInclude Include="include\kaos\core\types\dimension2.h" />
     <ClInclude Include="include\kaos\core\types\empty_bitfield.h" />
     <ClInclude Include="include\kaos\core\types\fixed_variant.h" />
-    <ClInclude Include="include\kaos\core\types\property_extension.h" />
     <ClInclude Include="include\kaos\core\types\rgba_color.h" />
     <ClInclude Include="include\kaos\core\types\single_bitfield.h" />
     <ClInclude Include="include\kaos\core\types\split_bitfield.h" />

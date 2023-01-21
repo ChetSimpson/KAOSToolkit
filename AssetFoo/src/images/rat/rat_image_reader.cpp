@@ -13,8 +13,8 @@ namespace hypertech::kaos::assetfoo::images::rat
 
 	using core::io::binary_reader;
 
-	const asset::property_def<rat_image_reader::color_type>
-		rat_image_reader::properties::background_color("background_color");
+	const asset::attribute_def<rat_image_reader::color_type>
+		rat_image_reader::attributes::background_color("background_color");
 
 
 	std::unique_ptr<asset> rat_image_reader::load(
@@ -44,9 +44,9 @@ namespace hypertech::kaos::assetfoo::images::rat
 			load_uncompressed_pixel_data(reader, *image, *colormap, layout, source_name);
 		}
 
-		image->set_property(properties::native_color_space, native_color_space);
-		image->set_property(properties::native_color_map, native_color_map);
-		image->set_property(properties::background_color, color_converter().to_color(native_background_color));
+		image->set_attribute(attributes::native_color_space, native_color_space);
+		image->set_attribute(attributes::native_color_map, native_color_map);
+		image->set_attribute(attributes::background_color, color_converter().to_color(native_background_color));
 
 		return image;
 	}

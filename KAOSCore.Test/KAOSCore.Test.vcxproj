@@ -53,12 +53,12 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="src\io\test_binary_reader.cpp" />
+    <ClCompile Include="src\types\test_attribute_extension.cpp" />
     <ClCompile Include="src\Types\test_box_iterator.cpp" />
     <ClCompile Include="src\types\test_box_view.cpp" />
     <ClCompile Include="src\types\test_dimension2d.cpp" />
     <ClCompile Include="src\Types\test_empty_bitfield.cpp" />
     <ClCompile Include="src\Types\test_fixed_variant.cpp" />
-    <ClCompile Include="src\types\test_property_extension.cpp" />
     <ClCompile Include="src\Types\test_rgba_color.cpp" />
     <ClCompile Include="src\Types\test_single_bitfield.cpp" />
     <ClCompile Include="src\Types\test_split_bitfield.cpp" />

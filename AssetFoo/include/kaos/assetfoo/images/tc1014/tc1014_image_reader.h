@@ -30,13 +30,13 @@ namespace hypertech::kaos::assetfoo::images::tc1014
 		/// @copydoc colors::tc1014::tc1014_color_converter::native_color_map_type
 		using native_color_map_type = colors::tc1014::tc1014_color_converter::native_color_map_type;
 
-		/// @brief List of properties supported by the image reader.
-		struct properties
+		/// @brief List of attributes supported by the image reader.
+		struct attributes
 		{
-			/// @brief Property definition for native color space of image
-			static const asset::property_def<color_space_type> native_color_space;
-			/// @brief Property definition for native color map of image
-			static const asset::property_def<native_color_map_type> native_color_map;
+			/// @brief Attribute definition for native color space of image
+			static const asset::attribute_def<color_space_type> native_color_space;
+			/// @brief Attribute definition for native color map of image
+			static const asset::attribute_def<native_color_map_type> native_color_map;
 		};
 
 

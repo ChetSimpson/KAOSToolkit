@@ -109,7 +109,7 @@
     <ClInclude Include="include\kaos\core\type_traits.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\kaos\core\types\property_extension.h">
+    <ClInclude Include="include\kaos\core\types\attribute_extension.h">
       <Filter>Header Files\types</Filter>
     </ClInclude>
   </ItemGroup>

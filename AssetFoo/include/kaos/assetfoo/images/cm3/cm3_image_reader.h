@@ -64,23 +64,23 @@ namespace hypertech::kaos::assetfoo::images::cm3
 			static const size_type color_animation_end_index = 14;
 		};
 
-		/// @brief List of properties supported by the image reader.
-		struct properties : tc1014_image_reader::properties
+		/// @brief List of attributes supported by the image reader.
+		struct attributes : tc1014_image_reader::attributes
 		{
-			/// @brief Property definition for color animation rate
-			static const asset::property_def<size_type> color_animation_rate;
-			/// @brief Property definition for first palette index for color animation
-			static const asset::property_def<size_type> color_animation_start_index;
-			/// @brief Property definition for last palette index for color animation
-			static const asset::property_def<size_type> color_animation_end_index;
-			/// @brief Property definition for the color cycling rate
-			static const asset::property_def<size_type> color_cycle_rate;
-			/// @brief Property definition for the color cycle index
-			static const asset::property_def<size_type> color_cycle_index;
-			///	@brief Property definition for color cycling color list
-			static const asset::property_def<cycle_colors_list_type> color_cycle_colors;
-			///	@brief Property definition for embedded monochrome bitmap patterns
-			static const asset::property_def<pattern_list_type> patterns;
+			/// @brief Attribute definition for color animation rate
+			static const asset::attribute_def<size_type> color_animation_rate;
+			/// @brief Attribute definition for first palette index for color animation
+			static const asset::attribute_def<size_type> color_animation_start_index;
+			/// @brief Attribute definition for last palette index for color animation
+			static const asset::attribute_def<size_type> color_animation_end_index;
+			/// @brief Attribute definition for the color cycling rate
+			static const asset::attribute_def<size_type> color_cycle_rate;
+			/// @brief Attribute definition for the color cycle index
+			static const asset::attribute_def<size_type> color_cycle_index;
+			///	@brief Attribute definition for color cycling color list
+			static const asset::attribute_def<cycle_colors_list_type> color_cycle_colors;
+			///	@brief Attribute definition for embedded monochrome bitmap patterns
+			static const asset::attribute_def<pattern_list_type> patterns;
 		};
 
 	public:

@@ -29,11 +29,11 @@ namespace hypertech::kaos::assetfoo::images::rat
 			static const inline pixels::packed_pixel_layout& pixel_layout{ pixels::packed_pixel_layout::BPP4 };
 		};
 
-		/// @brief List of properties supported by the image reader.
-		struct properties : tc1014_image_reader::properties
+		/// @brief List of attributes supported by the image reader.
+		struct attributes : tc1014_image_reader::attributes
 		{
-			/// @brief Property definition for image title
-			static const asset::property_def<color_type> background_color;
+			/// @brief Attribute definition for image title
+			static const asset::attribute_def<color_type> background_color;
 		};
 		
 
