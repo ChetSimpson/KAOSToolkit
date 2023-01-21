@@ -8,6 +8,7 @@
 #include <kaos/core/types/dimension2.h>
 #include <kaos/core/types/rgba_color.h>
 #include <kaos/core/types/box_view.h>
+#include <kaos/core/types/attribute_extension.h>
 #include <vector>
 
 
@@ -17,7 +18,10 @@ namespace hypertech::kaos::assetfoo::images
 	//	FIXME: rename to rgba_image
 
 	/// @brief RGBA image
-	class image : public asset
+	class image
+		:
+		public asset,
+		public core::types::attribute_extension
 	{
 	public:
 

@@ -13,13 +13,13 @@ namespace hypertech::kaos::assetfoo::images::mge
 	using core::io::binary_reader;
 
 	
-	const asset::attribute_def<mge_image_reader::string_type>
+	const mge_image_reader::attribute_definition<mge_image_reader::string_type>
 		mge_image_reader::attributes::title("title");
-	const asset::attribute_def<mge_image_reader::size_type>
+	const mge_image_reader::attribute_definition<mge_image_reader::size_type>
 		mge_image_reader::attributes::color_animation_rate("color_animation_rate");
-	const asset::attribute_def<mge_image_reader::size_type>
+	const mge_image_reader::attribute_definition<mge_image_reader::size_type>
 		mge_image_reader::attributes::color_animation_start_index("color_animation_start_index");
-	const asset::attribute_def<mge_image_reader::size_type>
+	const mge_image_reader::attribute_definition<mge_image_reader::size_type>
 		mge_image_reader::attributes::color_animation_end_index("color_animation_end_index");
 
 

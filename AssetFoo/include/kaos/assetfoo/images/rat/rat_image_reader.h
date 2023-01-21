@@ -33,7 +33,7 @@ namespace hypertech::kaos::assetfoo::images::rat
 		struct attributes : tc1014_image_reader::attributes
 		{
 			/// @brief Attribute definition for image title
-			static const asset::attribute_def<color_type> background_color;
+			static const attribute_definition<color_type> background_color;
 		};
 		
 

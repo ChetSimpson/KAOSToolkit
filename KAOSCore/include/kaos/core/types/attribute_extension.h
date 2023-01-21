@@ -31,7 +31,7 @@ namespace hypertech::kaos::core::types
 		/// 
 		/// @tparam Type_ The underlying type of the attribute.
 		template<class Type_>
-		struct attribute_def
+		struct attribute_definition
 		{
 			/// @brief The value type of the attribute.
 			using value_type = Type_;
@@ -39,7 +39,7 @@ namespace hypertech::kaos::core::types
 			/// @brief Creates a attribute definition
 			///
 			/// @param name The name of the attribute being defined.
-			explicit attribute_def(string_type name)
+			explicit attribute_definition(string_type name)
 				: name(move(name))
 			{}
 
@@ -66,7 +66,7 @@ namespace hypertech::kaos::core::types
 		/// 
 		/// @tparam Type_ The underlying type of the attribute.
 		template<class Type_>
-		bool has_attribute(const attribute_def<Type_>& def) const noexcept;
+		bool has_attribute(const attribute_definition<Type_>& def) const noexcept;
 
 		/// @brief Adds a new attribute or replaces an existing one
 		/// 
@@ -84,7 +84,7 @@ namespace hypertech::kaos::core::types
 		/// @return *this
 		template<class Type_, class ValueType_ = Type_>
 		requires std::is_convertible_v<ValueType_, Type_>
-			attribute_extension& set_attribute(const attribute_def<Type_>& def, const ValueType_& value);
+			attribute_extension& set_attribute(const attribute_definition<Type_>& def, const ValueType_& value);
 
 		/// @brief Adds a new attribute or replaces an existing one
 		/// 
@@ -102,7 +102,7 @@ namespace hypertech::kaos::core::types
 		/// @return *this
 		template<class Type_, class ValueType_ = Type_>
 		requires std::is_convertible_v<ValueType_, Type_>
-			attribute_extension& set_attribute(const attribute_def<Type_>& def, ValueType_&& value);
+			attribute_extension& set_attribute(const attribute_definition<Type_>& def, ValueType_&& value);
 
 		/// @brief Gets a attribute.
 		/// 
@@ -117,7 +117,7 @@ namespace hypertech::kaos::core::types
 		/// @exception hypertech::kaos::core::exceptions::attribute_conversion_error If the type of
 		/// the attribute does not match the type specified in the attribute definition \p def.
 		template<class Type_>
-		[[nodiscard]] const Type_& get_attribute(const attribute_def<Type_>& def) const;
+		[[nodiscard]] const Type_& get_attribute(const attribute_definition<Type_>& def) const;
 
 		/// @brief Gets a attribute.
 		/// 
@@ -129,7 +129,7 @@ namespace hypertech::kaos::core::types
 		/// @return If the attribute exists and the type of the attribute matches the one specified
 		/// in \p Type_ a `const` pointer to the attribute value otherwise an empty `std::optional`.
 		template<class Type_>
-		[[nodiscard]] std::optional<const Type_*> try_get_attribute(const attribute_def<Type_>& def) const;
+		[[nodiscard]] std::optional<const Type_*> try_get_attribute(const attribute_definition<Type_>& def) const;
 
 		/// @brief Deletes a attribute
 		/// 
@@ -160,7 +160,7 @@ namespace hypertech::kaos::core::types
 
 
 	template<class Type_>
-	bool attribute_extension::has_attribute(const attribute_def<Type_>& def) const noexcept
+	bool attribute_extension::has_attribute(const attribute_definition<Type_>& def) const noexcept
 	{
 		auto attribute_ptr = attributes_.find(def.name);
 		if (attribute_ptr == attributes_.end())
@@ -173,7 +173,9 @@ namespace hypertech::kaos::core::types
 
 	template<class Type_, class ValueType_>
 	requires std::is_convertible_v<ValueType_, Type_>
-		attribute_extension& attribute_extension::set_attribute(const attribute_def<Type_>& def, const ValueType_& value)
+		attribute_extension& attribute_extension::set_attribute(
+			const attribute_definition<Type_>& def,
+			const ValueType_& value)
 	{
 		attributes_[def.name] = Type_(value);
 
@@ -182,7 +184,9 @@ namespace hypertech::kaos::core::types
 
 	template<class Type_, class ValueType_>
 	requires std::is_convertible_v<ValueType_, Type_>
-		attribute_extension& attribute_extension::set_attribute(const attribute_def<Type_>& def, ValueType_&& value)
+		attribute_extension& attribute_extension::set_attribute(
+			const attribute_definition<Type_>& def,
+			ValueType_&& value)
 	{
 		attributes_[def.name] = std::move<>(Type_(value));
 
@@ -190,7 +194,7 @@ namespace hypertech::kaos::core::types
 	}
 
 	template<class Type_>
-	inline const Type_& attribute_extension::get_attribute(const attribute_def<Type_>& def) const
+	inline const Type_& attribute_extension::get_attribute(const attribute_definition<Type_>& def) const
 	{
 		try
 		{
@@ -213,7 +217,7 @@ namespace hypertech::kaos::core::types
 
 
 	template<class Type_>
-	inline std::optional<const Type_*> attribute_extension::try_get_attribute(const attribute_def<Type_>& def) const
+	inline std::optional<const Type_*> attribute_extension::try_get_attribute(const attribute_definition<Type_>& def) const
 	{
 		try
 		{

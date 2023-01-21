@@ -11,9 +11,9 @@
 namespace hypertech::kaos::assetfoo::images::tc1014
 {
 
-	const asset::attribute_def<tc1014_image_reader::color_space_type>
+	const tc1014_image_reader::attribute_definition<tc1014_image_reader::color_space_type>
 		tc1014_image_reader::attributes::native_color_space("native_color_space");
-	const asset::attribute_def<tc1014_image_reader::native_color_map_type>
+	const tc1014_image_reader::attribute_definition<tc1014_image_reader::native_color_map_type>
 		tc1014_image_reader::attributes::native_color_map("native_color_map");
 
 

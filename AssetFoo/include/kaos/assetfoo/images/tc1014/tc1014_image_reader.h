@@ -8,6 +8,7 @@
 #include <kaos/assetfoo/colors/tc1014/tc1014_color_converter.h>
 #include <kaos/assetfoo/pixels/packed_pixel_converter.h>
 #include <kaos/assetfoo/pixels/packed_pixel_layout.h>
+#include <kaos/core/types/attribute_extension.h>
 #include <kaos/core/io/binary_reader.h>
 
 
@@ -30,13 +31,16 @@ namespace hypertech::kaos::assetfoo::images::tc1014
 		/// @copydoc colors::tc1014::tc1014_color_converter::native_color_map_type
 		using native_color_map_type = colors::tc1014::tc1014_color_converter::native_color_map_type;
 
+		template<class Type_>
+		using attribute_definition = core::types::attribute_extension::attribute_definition<Type_>;
+
 		/// @brief List of attributes supported by the image reader.
 		struct attributes
 		{
 			/// @brief Attribute definition for native color space of image
-			static const asset::attribute_def<color_space_type> native_color_space;
+			static const attribute_definition<color_space_type> native_color_space;
 			/// @brief Attribute definition for native color map of image
-			static const asset::attribute_def<native_color_map_type> native_color_map;
+			static const attribute_definition<native_color_map_type> native_color_map;
 		};
 
 

@@ -14,11 +14,11 @@ namespace hypertech::kaos::core::types::unittests
 
 	namespace
 	{
-		const attribute_extension::attribute_def<nullptr_t> nullptr_attribute_def("attribute");
-		const attribute_extension::attribute_def<double> double_attribute_def("attribute");
-		const attribute_extension::attribute_def<unsigned> unsigned_attribute_def("attribute");
-		const attribute_extension::attribute_def<int> integer_attribute_def("attribute");
-		const attribute_extension::attribute_def<core::types::rgba_color> color_attribute_def("attribute");
+		const attribute_extension::attribute_definition<nullptr_t> nullptr_attribute_def("attribute");
+		const attribute_extension::attribute_definition<double> double_attribute_def("attribute");
+		const attribute_extension::attribute_definition<unsigned> unsigned_attribute_def("attribute");
+		const attribute_extension::attribute_definition<int> integer_attribute_def("attribute");
+		const attribute_extension::attribute_definition<core::types::rgba_color> color_attribute_def("attribute");
 
 	}
 	TEST(test_attribute_extension, set_attribute)
