@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\asset_reader.cpp" />
+    <ClCompile Include="src\asset_writer.cpp" />
     <ClCompile Include="src\Colors\color_converter.cpp" />
     <ClCompile Include="src\Colors\color_layout.cpp" />
     <ClCompile Include="src\Colors\color_map.cpp" />
@@ -51,6 +52,7 @@
     <ClInclude Include="include\kaos\assetfoo\abstract_packed_pixel_layout.h" />
     <ClInclude Include="include\kaos\assetfoo\asset.h" />
     <ClInclude Include="include\kaos\assetfoo\asset_reader.h" />
+    <ClInclude Include="include\kaos\assetfoo\asset_writer.h" />
     <ClInclude Include="include\kaos\assetfoo\colors\color_converter.h" />
     <ClInclude Include="include\kaos\assetfoo\colors\color_layout.h" />
     <ClInclude Include="include\kaos\assetfoo\colors\color_map.h" />
