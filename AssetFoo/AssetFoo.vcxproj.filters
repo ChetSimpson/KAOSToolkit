@@ -146,6 +146,12 @@
     <ClCompile Include="src\asset_writer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\images\mge\mge_image_attributes.cpp">
+      <Filter>Source Files\images\mge</Filter>
+    </ClCompile>
+    <ClCompile Include="src\images\tc1014\tc1014_image_attributes.cpp">
+      <Filter>Source Files\images\tc1014</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="docs\images\cm3.dox">
@@ -238,8 +244,35 @@
     <ClInclude Include="include\kaos\assetfoo\colors\tc1014\tc1014_color_layout.h">
       <Filter>Header Files\colors\tc1014</Filter>
     </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\mge\mge_image_attributes.h">
+      <Filter>Header Files\images\mge</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\mge\mge_image_format_details.h">
+      <Filter>Header Files\images\mge</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\tc1014\tc1014_image_attributes.h">
+      <Filter>Header Files\images\tc1014</Filter>
+    </ClInclude>
     <ClInclude Include="include\kaos\assetfoo\asset_writer.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\cm3\cm3_image_attributes.h">
+      <Filter>Header Files\images\cm3</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\cm3\cm3_image_format_details.h">
+      <Filter>Header Files\images\cm3</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\hrs\hrs_image_format_details.h">
+      <Filter>Header Files\images\hrs</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\rat\rat_image_format_details.h">
+      <Filter>Header Files\images\rat</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\rat\rat_image_attributes.h">
+      <Filter>Header Files\images\rat</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\vef\vef_image_format_details.h">
+      <Filter>Header Files\images\vef</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

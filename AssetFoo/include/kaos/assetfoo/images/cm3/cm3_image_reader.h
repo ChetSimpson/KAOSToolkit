@@ -3,6 +3,8 @@
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
+#include <kaos/assetfoo/images/cm3/cm3_image_attributes.h>
+#include <kaos/assetfoo/images/cm3/cm3_image_format_details.h>
 #include <kaos/assetfoo/images/tc1014/tc1014_image_reader.h>
 #include <kaos/assetfoo/images/monochrome_pattern.h>
 #include <kaos/assetfoo/pixels/packed_pixel_layout.h>
@@ -18,70 +20,21 @@ namespace hypertech::kaos::assetfoo::images::cm3
 	{
 	public:
 
-		/// @brief The size type
-		using size_type = size_t;
 		/// @brief The type of image created by the asset reader
 		using image_type = images::image;
-		/// @brief The monochroome pixelmap pattern type.
-		using pattern_type = monochrome_pattern<uint8_t, size_t>;
-		/// @brief The type use for maintaining a list of monochrome pixelmap patterns.
-		using pattern_list_type = std::vector<pattern_type>;
-		/// @brief List of colors to cycle.
-		using cycle_colors_list_type = std::vector<color_type>;
+		/// @copydoc cm3_image_attributes::size_type
+		using size_type = cm3_image_attributes::size_type;
+		/// @copydoc cm3_image_attributes::pattern_type
+		using pattern_type = cm3_image_attributes::pattern_type;
+		/// @copydoc cm3_image_attributes::pattern_list_type
+		using pattern_list_type = cm3_image_attributes::pattern_list_type;
+		/// @copydoc cm3_image_attributes::cycle_colors_list_type
+		using cycle_colors_list_type = cm3_image_attributes::cycle_colors_list_type;
+		/// @copydoc cm3_image_format_details
+		using format_details = cm3_image_format_details;
+		/// @copydoc cm3_image_attributes
+		using attributes = cm3_image_attributes;
 
-		/// @brief The number of colors supported.
-		struct format_details
-		{
-			/// @brief The number of colors in the color map
-			static const size_type color_count = 16;
-			/// @brief The number of colors used for color cycling
-			static const size_type cycle_color_count = 8;
-			/// @brief The width of the image
-			static const size_type page_width = 320;
-			/// @brief The height of each image page. 
-			static const size_type page_height = 192;
-			/// @brief Pixel layout of the image
-			static const inline pixels::packed_pixel_layout& pixel_layout{ pixels::packed_pixel_layout::BPP4 };
-			/// @brief The mask for accessing the flag determining if the image is one or two pages in length
-			static const uint8_t double_page_flag_mask = 0x80;
-			/// @brief The mask for accessing the flag determining if the image contains editor patterns.
-			static const uint8_t exclude_patterns_flag_mask = 0x01;
-			/// @brief Size of the pattern section header
-			static const size_type pattern_section_header_length = 3;
-			/// @brief The maximum number of patterns allowed in the image
-			static const size_type pattern_count = 24;
-			/// @brief Mask to isolate only the bits in pattern color index that are valid.
-			static const uint8_t pattern_color_index_mask = 0x0f;
-			/// @brief Size of the buffer used to decompress a single row/line of the image.
-			static const size_type decompression_line_buffer_size = 160;
-			/// @brief Size of the horizontal bitstream used to decompress a single row/line of the image.
-			static const size_type horizontal_bitstream_size_in_bytes = 20;
-			/// @brief The color cycle index
-			static const size_type color_cycle_index = 10;
-			/// @brief The color first color index for color animation 
-			static const size_type color_animation_start_index = 11;
-			/// @brief The color last color index for color animation 
-			static const size_type color_animation_end_index = 14;
-		};
-
-		/// @brief List of attributes supported by the image reader.
-		struct attributes : tc1014_image_reader::attributes
-		{
-			/// @brief Attribute definition for color animation rate
-			static const asset::attribute_def<size_type> color_animation_rate;
-			/// @brief Attribute definition for first palette index for color animation
-			static const asset::attribute_def<size_type> color_animation_start_index;
-			/// @brief Attribute definition for last palette index for color animation
-			static const asset::attribute_def<size_type> color_animation_end_index;
-			/// @brief Attribute definition for the color cycling rate
-			static const asset::attribute_def<size_type> color_cycle_rate;
-			/// @brief Attribute definition for the color cycle index
-			static const asset::attribute_def<size_type> color_cycle_index;
-			///	@brief Attribute definition for color cycling color list
-			static const asset::attribute_def<cycle_colors_list_type> color_cycle_colors;
-			///	@brief Attribute definition for embedded monochrome bitmap patterns
-			static const asset::attribute_def<pattern_list_type> patterns;
-		};
 
 	public:
 

@@ -5,6 +5,7 @@
 #pragma once
 #include <kaos/assetfoo/asset_reader.h>
 #include <kaos/assetfoo/images/image.h>
+#include <kaos/assetfoo/images/tc1014/tc1014_image_attributes.h>
 #include <kaos/assetfoo/colors/tc1014/tc1014_color_converter.h>
 #include <kaos/assetfoo/pixels/packed_pixel_converter.h>
 #include <kaos/assetfoo/pixels/packed_pixel_layout.h>
@@ -29,15 +30,8 @@ namespace hypertech::kaos::assetfoo::images::tc1014
 		using native_packed_color_type = colors::tc1014::tc1014_color_converter::native_packed_color_type;
 		/// @copydoc colors::tc1014::tc1014_color_converter::native_color_map_type
 		using native_color_map_type = colors::tc1014::tc1014_color_converter::native_color_map_type;
-
 		/// @brief List of attributes supported by the image reader.
-		struct attributes
-		{
-			/// @brief Attribute definition for native color space of image
-			static const asset::attribute_def<color_space_type> native_color_space;
-			/// @brief Attribute definition for native color map of image
-			static const asset::attribute_def<native_color_map_type> native_color_map;
-		};
+		using attributes = tc1014_image_attributes;
 
 
 	public:

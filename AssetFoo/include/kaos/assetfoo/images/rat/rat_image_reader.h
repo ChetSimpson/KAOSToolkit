@@ -3,6 +3,8 @@
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
+#include <kaos/assetfoo/images/rat/rat_image_format_details.h>
+#include <kaos/assetfoo/images/rat/rat_image_attributes.h>
 #include <kaos/assetfoo/images/tc1014/tc1014_image_reader.h>
 #include <kaos/assetfoo/pixels/packed_pixel_layout.h>
 
@@ -18,23 +20,11 @@ namespace hypertech::kaos::assetfoo::images::rat
 		/// @brief The type of image created by the asset reader
 		using image_type = images::image;
 
-		/// @brief Specifies details of the image format
-		struct format_details
-		{
-			/// @brief The number of colors supported.
-			static const size_t colormap_length = 16;
-			/// @brief The width and height of the image
-			static inline const auto dimensions = image::dimensions_type(320, 199);
-			/// @brief Pixel layout of the image
-			static const inline pixels::packed_pixel_layout& pixel_layout{ pixels::packed_pixel_layout::BPP4 };
-		};
+		/// @copydoc rat_image_format_details
+		using format_details = rat_image_format_details;
 
-		/// @brief List of attributes supported by the image reader.
-		struct attributes : tc1014_image_reader::attributes
-		{
-			/// @brief Attribute definition for image title
-			static const asset::attribute_def<color_type> background_color;
-		};
+		/// @copydoc rat_image_attributes
+		using attributes = rat_image_attributes;
 		
 
 	public:
