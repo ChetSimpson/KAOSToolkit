@@ -8,7 +8,7 @@
 #include <boost/numeric/conversion/cast.hpp>
 #include <gtest/gtest.h>
 #include <gtest/gtest-typed-test.h>
-#include <fstream>
+//#include <fstream>
 
 
 // FIXME: This set of tests do not cover the reader.bad() flag
@@ -18,8 +18,6 @@ namespace hypertech::kaos::core::io::unittests
 
 	namespace
 	{
-
-		using binary_reader = hypertech::kaos::core::io::binary_reader;
 
 		struct big_endian_ordering
 		{
@@ -167,6 +165,7 @@ namespace hypertech::kaos::core::io::unittests
 
 
 #pragma region good_bad_fail_eof
+	//	FIXME: Move into test_binary_ios
 	TEST(test_binary_reader, status_flags_defaults)
 	{
 		std::istringstream input;
@@ -195,7 +194,7 @@ namespace hypertech::kaos::core::io::unittests
 
 	TEST(test_binary_reader, status_flags_on_closed_stream)
 	{
-		std::ifstream input;
+		std::istringstream input;
 		binary_reader reader(input);
 
 		uint8_t value;
@@ -213,7 +212,7 @@ namespace hypertech::kaos::core::io::unittests
 		binary_reader reader(input);
 
 		//	Beyond upper bounds
-		ASSERT_FALSE(reader.seekg(general_test_data.size() + 1));
+		ASSERT_FALSE(reader.seekg(string_test_data.size() + 1));
 		ASSERT_FALSE(reader.good());
 		ASSERT_FALSE(reader.bad());
 		ASSERT_TRUE(reader.fail());
@@ -524,9 +523,9 @@ namespace hypertech::kaos::core::io::unittests
 		std::istringstream input("hello there fine world");
 		binary_reader reader(input);
 
-		ASSERT_TRUE(reader.skip(6));
+		ASSERT_TRUE(reader.skipg(6));
 		EXPECT_EQ(reader.read_string(5), "there");
-		ASSERT_TRUE(reader.skip(6));
+		ASSERT_TRUE(reader.skipg(6));
 		EXPECT_EQ(reader.read_string(5), "world");
 	}
 
@@ -536,10 +535,10 @@ namespace hypertech::kaos::core::io::unittests
 		std::istringstream input(test_string);
 		binary_reader reader(input);
 
-		ASSERT_TRUE(reader.skip(6));	//	Skip past "hello "
+		ASSERT_TRUE(reader.skipg(6));	//	Skip past "hello "
 		EXPECT_EQ(reader.read_string(5), "there");
 		EXPECT_EQ(reader.tellg(), 11);
-		ASSERT_THROWS_MESSAGE(reader.skip(16), exceptions::file_error, "file error: attempt to read past end of file");
+		ASSERT_THROWS_MESSAGE(reader.skipg(16), exceptions::file_error, "file error: attempt to read past end of file");
 		EXPECT_EQ(reader.tellg(), -1);
 	}
 
@@ -686,6 +685,7 @@ namespace hypertech::kaos::core::io::unittests
 
 
 #pragma region exceptions
+	//	FIXME: Move into test_binary_ios
 	TEST(test_binary_reader, general_get_set_exceptions)
 	{
 		std::istringstream input;

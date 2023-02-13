@@ -53,6 +53,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="src\io\test_binary_reader.cpp" />
+    <ClCompile Include="src\io\test_binary_writer.cpp" />
     <ClCompile Include="src\types\test_attribute_extension.cpp" />
     <ClCompile Include="src\Types\test_box_iterator.cpp" />
     <ClCompile Include="src\types\test_box_view.cpp" />

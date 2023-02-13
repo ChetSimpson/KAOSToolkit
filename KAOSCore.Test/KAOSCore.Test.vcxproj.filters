@@ -57,6 +57,9 @@
     <ClCompile Include="src\types\test_attribute_extension.cpp">
       <Filter>types</Filter>
     </ClCompile>
+    <ClCompile Include="src\io\test_binary_writer.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

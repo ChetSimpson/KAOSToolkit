@@ -15,6 +15,8 @@ namespace hypertech::kaos::core::types
 	/// This class allows iteration over rows of sequential data and is primarily
 	/// intended for use with \ref box_view
 	/// 
+	///	\todo Add operator[]
+	/// 
 	/// @tparam Type_ Element type to iterate over
 	template<class Type_>
 	class box_iterator
@@ -22,7 +24,6 @@ namespace hypertech::kaos::core::types
 	public:
 
 		//using iterator_concept  = std::contiguous_iterator_tag;
-		//	TODO: Needs operator[]
 		//using iterator_category = std::random_access_iterator_tag;
 
 		/// @brief The sequence type

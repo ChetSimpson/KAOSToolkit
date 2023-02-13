@@ -148,7 +148,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Console\event_console.cpp" />
+    <ClCompile Include="src\io\binary_ios.cpp" />
     <ClCompile Include="src\io\binary_reader.cpp" />
+    <ClCompile Include="src\io\binary_writer.cpp" />
     <ClCompile Include="src\Types\fixed_variant.cpp" />
     <ClCompile Include="src\Types\rgba_color.cpp" />
   </ItemGroup>
@@ -156,7 +158,9 @@
     <ClInclude Include="include\kaos\core\console\event_console.h" />
     <ClInclude Include="include\kaos\core\debug.h" />
     <ClInclude Include="include\kaos\core\exceptions.h" />
+    <ClInclude Include="include\kaos\core\io\binary_ios.h" />
     <ClInclude Include="include\kaos\core\io\binary_reader.h" />
+    <ClInclude Include="include\kaos\core\io\binary_writer.h" />
     <ClInclude Include="include\kaos\core\memory.h" />
     <ClInclude Include="include\kaos\core\types\abstract_bitfield.h" />
     <ClInclude Include="include\kaos\core\types\attribute_extension.h" />

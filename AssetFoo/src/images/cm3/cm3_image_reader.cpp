@@ -94,7 +94,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		const filename_type& source_name) const
 	try
 	{
-		reader.skip(format_details::pattern_section_header_length);
+		reader.skipg(format_details::pattern_section_header_length);
 
 		pattern_list_type patterns;
 		for(auto i(0U); i < format_details::pattern_count; ++i)

@@ -3,6 +3,9 @@
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
+///	\file
+///	@brief Binary stream reader
+#include <kaos/core/io/binary_ios.h>
 #include <kaos/core/utility/bit.h>
 #include <kaos/core/type_traits.h>
 #include <istream>
@@ -20,37 +23,16 @@ namespace hypertech::kaos::core::io
 	/// support for reading into std::vector, std::array, and std::pair. It reads the data
 	/// in binary form from input stream with automatic conversion between big and little
 	/// endian ordering. It provides an extractor-based interface similar to istream.
-	class binary_reader
+	class binary_reader : public binary_ios
 	{
 	public:
 
 		/// @brief The stream type
 		using stream_type = std::istream;
-		/// @brief Size type
-		using size_type = size_t;
-		/// @brief Stream position type
-		using pos_type = stream_type::pos_type;
-		/// @brief Stream offset type
-		using off_type = stream_type::off_type;
-		/// @brief Stream state type
-		using iostate_type = std::ios_base::iostate;
 		/// @brief Span type
 		template<class Type_> using span_type = std::span<Type_>;
-		/// @brief Indicates the endianness of the integral types extracted by the reader.
-		using ordering_type = std::endian;
 		/// @brief String type
 		using string_type = std::string;
-
-		///	brief IO state bit indicating no error
-		static constexpr iostate_type goodbit = std::ios_base::goodbit;
-		///	brief IO state bit indicating associated input sequence has reached end-of-file
-		static constexpr iostate_type eofbit = std::ios_base::eofbit;
-		///	brief IO state bit indicating input/output operation failed (formatting or extraction error)
-		static constexpr iostate_type failbit = std::ios_base::failbit;
-		///	brief IO state bit indicating irrecoverable stream error
-		static constexpr iostate_type badbit = std::ios_base::badbit;
-		///	brief All state bits indicating stream errors
-		static constexpr iostate_type allbits = eofbit | failbit | badbit;
 
 
 	public:
@@ -61,35 +43,6 @@ namespace hypertech::kaos::core::io
 		binary_reader(stream_type& input, ordering_type ordering = ordering_type::native);
 
 
-		/// @brief Checks whether the stream has no errors.
-		///
-		/// @return Returns true if the stream has no errors and is
-		/// ready for I/O operations. Specifically, returns !fail().
-		[[nodiscard]] explicit operator bool() const;
-
-		/// @brief Checks whether the stream has no errors.
-		///
-		/// @return Returns a null pointer if fail() returns true, otherwise returns a
-		/// non-null pointer. This pointer is implicitly convertible to bool and may
-		/// be used in boolean contexts.
-		[[nodiscard]] bool operator!() const;
-
-		/// @brief Gets the exception mask
-		/// 
-		/// Gets the exception mask of the stream. The exception mask determines
-		/// which error states trigger exceptions of type failure.
-		/// 
-		/// @return The current exception mask
-		[[nodiscard]] iostate_type exceptions() const;
-
-		/// @brief Sets the exception mask
-		/// 
-		/// Sets the exception mask of the stream. The exception mask determines
-		/// which error states trigger exceptions of type failure.
-		/// 
-		/// @param except exception mask
-		void exceptions(iostate_type except);
-
 		/// @brief Skip over bytes
 		/// 
 		/// Skips past \p length number of bytes in the input stream.
@@ -97,7 +50,44 @@ namespace hypertech::kaos::core::io
 		/// @param length Number of bytes to skip
 		/// 
 		/// @return *this
-		binary_reader& skip(size_t length);
+		binary_reader& skipg(size_t length);
+
+		/// @brief returns the input position indicator
+		/// 
+		/// Returns input position indicator of the current associated streambuf object.
+		/// 
+		/// Behaves as UnformattedInputFunction, except that gcount() is not affected.
+		/// After constructing and checking the sentry object.
+		/// 
+		/// @return The current position of the get pointer on success, pos_type(-1) on failure
+		[[nodiscard]] pos_type tellg();
+
+		/// @brief sets the input position indicator
+		/// 
+		/// Sets input position indicator of the current associated streambuf object.
+		/// 
+		/// @param pos absolute position to set the input position indicator to.
+		/// @return *this
+		binary_reader& seekg( pos_type pos );
+
+		/// @brief sets the input position indicator
+		/// 
+		/// Sets input position indicator of the current associated streambuf object.
+		/// 
+		/// @param off relative position (positive or negative) to set the input
+		/// position indicator to.
+		/// @param dir defines base position to apply the relative offset to. It can
+		/// be one of the following constants:
+		/// 
+		///		Constant | Explanation
+		///		-------- | -----------
+		///		beg		 | the beginning of a stream
+		///		end		 | the ending of a stream
+		///		cur		 | the current position of stream position indicator
+		/// 
+		/// @return *this
+		binary_reader& seekg(off_type off, std::ios_base::seekdir dir);
+
 
 		/// @brief extracts boolean value from the stream
 		/// 
@@ -213,7 +203,9 @@ namespace hypertech::kaos::core::io
 		/// than 8 bits and the selected byte ordering of the reader is not the same as the
 		/// native ordering the bytes in each value will be reversed from LSB to MSB.
 		/// 
-		/// @param size The number of bytes to extract from the stream.
+		///	\todo Possibly add specialization for vector<bool>
+		/// 
+		/// @param length The number of bytes to extract from the stream.
 		/// 
 		/// @tparam Type_ The value type contained in the vector 
 		/// 
@@ -221,7 +213,7 @@ namespace hypertech::kaos::core::io
 		/// 
 		/// @exception hypertech::kaos::core::exceptions::file_error If an error occurs while extracting the values.
 		template<integral_not_bool_v Type_>
-		[[nodiscard]] std::vector<Type_> read_vector(size_type size);
+		[[nodiscard]] std::vector<Type_> read_vector(size_type length);
 
 		/// @brief extracts a multiple byte values from the stream and stores them in
 		/// a std::string.
@@ -230,82 +222,15 @@ namespace hypertech::kaos::core::io
 		/// truncation at the furst null terminator. Otherwise it sets failbit and eofbit
 		/// and throws an exception. 
 		/// 
-		/// @param size The number of characters to extract from the stream.
+		/// @param length The number of characters to extract from the stream.
 		/// @param null_truncate if true truncates the string at the first null terminator otherwise
 		/// the string is left unmodified.
 		/// 
+		/// @todo Add support for wstring
 		/// @return A string
 		/// 
 		/// @exception hypertech::kaos::core::exceptions::file_error If an error occurs while extracting the string.
-		[[nodiscard]] string_type read_string(size_type size, bool null_truncate = true);
-
-
-		/// @brief returns the input position indicator
-		/// 
-		/// Returns input position indicator of the current associated streambuf object.
-		/// 
-		/// Behaves as UnformattedInputFunction, except that gcount() is not affected.
-		/// After constructing and checking the sentry object,
-		/// if fail() == true, returns pos_type(-1).
-		/// Otherwise, returns rdbuf()->pubseekoff(0, std::ios_base::cur, std::ios_base::in).
-		/// 
-		/// @return The current position of the get pointer on success, pos_type(-1) on failure
-		[[nodiscard]] pos_type tellg();
-
-		/// @brief sets the input position indicator
-		/// 
-		/// Sets input position indicator of the current associated streambuf object.
-		/// 
-		/// @param pos absolute position to set the input position indicator to.
-		/// @return *this
-		binary_reader& seekg( pos_type pos );
-
-		/// @brief sets the input position indicator
-		/// 
-		/// Sets input position indicator of the current associated streambuf object.
-		/// 
-		/// @param off relative position (positive or negative) to set the input
-		/// position indicator to.
-		/// @param dir defines base position to apply the relative offset to. It can
-		/// be one of the following constants:
-		/// 
-		///		Constant | Explanation
-		///		-------- | -----------
-		///		beg		 | the beginning of a stream
-		///		end		 | the ending of a stream
-		///		cur		 | the current position of stream position indicator
-		/// 
-		/// @return *this
-		binary_reader& seekg(off_type off, std::ios_base::seekdir dir);
-
-		
-		/// @brief checks if no error has occurred i.e. I/O operations are available
-		/// @return true if the stream error flags are all false, false otherwise.
-		[[nodiscard]] bool good() const;
-		/// @brief checks if end-of-file has been reached
-		/// @return true if an end-of-file has occurred, false otherwise.
-		[[nodiscard]] bool eof() const;
-		/// @brief checks if an error has occurred
-		/// @return true if an error has occurred, false otherwise.
-		[[nodiscard]] bool fail() const;
-		/// @brief checks if a non-recoverable error has occurred
-		/// @return true if a non-recoverable error has occurred, false otherwise.
-		[[nodiscard]] bool bad() const;
-
-		/// @brief modifies state flags
-		/// 
-		/// Sets the stream error state flags by assigning them the value of state.
-		/// By default, assigns std::ios_base::goodbit which has the effect of clearing
-		/// all error state flags.
-		/// 
-		/// @param state new error state flags setting. It can be a combination of the
-		/// following constants:
-		/// 
-		///		goodbit	| no error
-		///		badbit	| irrecoverable stream error
-		///		failbit	| input/output operation failed (formatting or extraction error)
-		///		eofbit	| associated input sequence has reached end-of-file
-		void clear( iostate_type state = goodbit );
+		[[nodiscard]] string_type read_string(size_type length, bool null_truncate = true);
 
 
 	private:
@@ -316,7 +241,6 @@ namespace hypertech::kaos::core::io
 	private:
 
 		stream_type& input_;
-		bool swap_bytes_;
 	};
 
 
@@ -405,11 +329,10 @@ namespace hypertech::kaos::core::io
 		return value;
 	}
 
-	//	TODO: Possibly add specialization for vector<bool>
 	template<integral_not_bool_v Type_>
-	std::vector<Type_> binary_reader::read_vector(size_type size)
+	std::vector<Type_> binary_reader::read_vector(size_type length)
 	{
-		std::vector<Type_> value(size, 0);
+		std::vector<Type_> value(length, 0);
 		if (!read(span_type<Type_>(value)))
 		{
 			throw_on_error();
@@ -423,11 +346,13 @@ namespace hypertech::kaos::core::io
 	/// 
 	/// Reads one integral value and stores it to \p output if available.
 	/// Otherwise, leaves \p output unmodified and sets failbit and eofbit.
+	/// 
 	/// If the value is greater than 8 bits and the selected byte ordering of
 	/// the reader is not the same as the native ordering the bytes in the
 	/// value will be reversed from LSB to MSB.
 	/// 
-	/// @param output reference to the variable to write the result to
+	/// @param reader reference to the binary_reader to read data from.
+	/// @param value reference to the variable to sture the value read to
 	/// 
 	/// @return The binary_reader on the left hand of the expression
 	template<std::integral Type_>
@@ -441,11 +366,13 @@ namespace hypertech::kaos::core::io
 	/// Reads multiple integral values if available and stores them to the
 	/// span referenced by \p output. Otherwise, leaves \p output unmodified
 	/// and sets failbit and eofbit.
+	/// 
 	/// If the value type is greater than 8 bits and the selected byte ordering of
 	/// the reader is not the same as the native ordering the bytes in each value
 	/// extracted will be reversed from LSB to MSB.
 	/// 
-	/// @param output reference to the variable to write the result to
+	/// @param reader reference to the binary_reader to read data from.
+	/// @param value reference to the variable to sture the value read to
 	/// 
 	/// @return The binary_reader on the left hand of the expression
 	template<std::integral Type_>
