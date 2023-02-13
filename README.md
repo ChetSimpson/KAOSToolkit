@@ -15,14 +15,16 @@ General work for this milestone
 
 The following component work has been done on the Core library
 
-* Added endian aware binary writer
-* Added UUID type support to fixed variant
-* Added XML auxiliary support for retrieving attributes from XML nodes
+* Added endian aware binary writer.
+* Added UUID type support to fixed variant.
+* Added vector type support to fixed variant (vector of fixed variants).
+* Added map type support to fixed variant (map with string as key and fixed variant as value).
+* Added XML auxiliary support for retrieving attributes from XML nodes.
+* Added attribute_extension to provide attribute support to classes to hold named values of (almost) any type.
 
 The following component work has been done on the AssetFoo library
 
 * Removed custom image types for CM3, HRS, MGE, RAT, and VEF
-* Added attribute support to hold named values of (almost) any type.
 * Updated assetfoo::asset to include attribute support
 * Updated image readers for CM3, HRS, MGE, RAT, and VEF to save information about the images as attributes in assetfoo::images::image
 
@@ -39,8 +41,6 @@ General work for this milestone
 The following components will be added to the Core library
 
 * Add std::any type support to fixed variant
-* Add vector type support to fixed variant (vector of fixed variants)
-* Add map type support to fixed variant (map with string as key and fixed variant as value)
 
 The following components will be added to the AssetFoo library
 

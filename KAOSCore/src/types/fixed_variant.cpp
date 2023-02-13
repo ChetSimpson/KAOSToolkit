@@ -129,6 +129,57 @@ namespace hypertech::kaos::core::types
 
 			case tag_type::Vector:
 				return get<vector_type>(variant);
+
+			case tag_type::Map:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::map_type), typeid(vector_type));
+			}
+
+			throw std::runtime_error("Unknown value type encountered in conversion to vector");
+		}
+
+		template<class ReturnType_, class VariantType_>
+		ReturnType_ as_map_impl(VariantType_& variant, fixed_variant::tag_type source_type)
+		{
+			using tag_type = fixed_variant::tag_type;
+			using map_type = fixed_variant::map_type;
+
+			switch (source_type)
+			{
+			case tag_type::Empty:
+				throw exceptions::empty_cast_error(typeid(void), typeid(map_type));
+
+			case tag_type::Boolean:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::boolean_type), typeid(map_type));
+
+			case tag_type::Integer:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::integer_type), typeid(map_type));
+
+			case tag_type::Unsigned:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::unsigned_type), typeid(map_type));
+
+			case tag_type::Float:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::float_type), typeid(map_type));
+
+			case tag_type::Double:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::double_type), typeid(map_type));
+
+			case tag_type::String:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::string_type), typeid(map_type));
+
+			case tag_type::Path:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::path_type), typeid(map_type));
+
+			case tag_type::Color:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::color_type), typeid(map_type));
+
+			case tag_type::Uuid:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::uuid_type), typeid(map_type));
+
+			case tag_type::Vector:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::vector_type), typeid(map_type));
+
+			case tag_type::Map:
+				return get<map_type>(variant);
 			}
 
 			throw std::runtime_error("Unknown value type encountered in conversion to vector");
@@ -211,6 +262,18 @@ namespace hypertech::kaos::core::types
 	fixed_variant::fixed_variant(const vector_type &value) noexcept
 		:
 		type_(tag_type::Vector),
+		value_(value)
+	{}
+
+	fixed_variant::fixed_variant(map_type&& value) noexcept
+		:
+		type_(tag_type::Map),
+		value_(move(value))
+	{}
+
+	fixed_variant::fixed_variant(const map_type &value) noexcept
+		:
+		type_(tag_type::Map),
 		value_(value)
 	{}
 
@@ -305,9 +368,9 @@ namespace hypertech::kaos::core::types
 		return *this;
 	}
 
-	fixed_variant& fixed_variant::operator=(const vector_type& value) noexcept
+	fixed_variant& fixed_variant::operator=(const vector_type& value)
 	{
-		value_ = move(value);
+		value_ = value;
 		type_ = tag_type::Vector;
 
 		return *this;
@@ -321,6 +384,21 @@ namespace hypertech::kaos::core::types
 		return *this;
 	}
 
+	fixed_variant& fixed_variant::operator=(const map_type& value)
+	{
+		value_ = value;
+		type_ = tag_type::Map;
+
+		return *this;
+	}
+
+	fixed_variant& fixed_variant::operator=(map_type&& value) noexcept
+	{
+		value_ = move(value);
+		type_ = tag_type::Map;
+
+		return *this;
+	}
 #pragma endregion
 
 
@@ -388,6 +466,9 @@ namespace hypertech::kaos::core::types
 
 		case tag_type::Vector:
 			throw exceptions::incompatible_type_error(typeid(vector_type), typeid(string_type));
+
+		case tag_type::Map:
+			throw exceptions::incompatible_type_error(typeid(map_type), typeid(string_type));
 		}
 
 		throw std::runtime_error("Unknown value type encountered in conversion to string");
@@ -429,6 +510,9 @@ namespace hypertech::kaos::core::types
 
 		case tag_type::Vector:
 			throw exceptions::incompatible_type_error(typeid(vector_type), typeid(path_type));
+
+		case tag_type::Map:
+			throw exceptions::incompatible_type_error(typeid(map_type), typeid(path_type));
 		}
 
 		throw std::runtime_error("Unknown value type encountered in conversion to string");
@@ -483,6 +567,9 @@ namespace hypertech::kaos::core::types
 
 		case tag_type::Vector:
 			throw exceptions::incompatible_type_error(typeid(vector_type), typeid(color_type));
+
+		case tag_type::Map:
+			throw exceptions::incompatible_type_error(typeid(map_type), typeid(color_type));
 		}
 
 		throw std::runtime_error("Unknown value type encountered in conversion to color");
@@ -531,11 +618,13 @@ namespace hypertech::kaos::core::types
 
 		case tag_type::Vector:
 			throw exceptions::incompatible_type_error(typeid(vector_type), typeid(uuid_type));
+
+		case tag_type::Map:
+			throw exceptions::incompatible_type_error(typeid(map_type), typeid(uuid_type));
 		}
 
 		throw std::runtime_error("Unknown value type encountered in conversion to uuid");
 	}
-
 
 	fixed_variant::vector_type& fixed_variant::as_vector()
 	{
@@ -550,6 +639,21 @@ namespace hypertech::kaos::core::types
 	fixed_variant::vector_type fixed_variant::as_vector_copy() const
 	{
 		return as_vector_impl<fixed_variant::vector_type>(value_, type());
+	}
+
+	fixed_variant::map_type& fixed_variant::as_map()
+	{
+		return as_map_impl<fixed_variant::map_type&>(value_, type());
+	}
+
+	const fixed_variant::map_type& fixed_variant::as_map() const
+	{
+		return as_map_impl<const fixed_variant::map_type&>(value_, type());
+	}
+
+	fixed_variant::map_type fixed_variant::as_map_copy() const
+	{
+		return as_map_impl<fixed_variant::map_type>(value_, type());
 	}
 
 
@@ -634,6 +738,9 @@ namespace hypertech::kaos::core::types
 
 		case tag_type::Vector:
 			throw exceptions::incompatible_type_error(typeid(vector_type), typeid(OutputType_));
+
+		case tag_type::Map:
+			throw exceptions::incompatible_type_error(typeid(map_type), typeid(OutputType_));
 		}
 
 		throw std::runtime_error(std::string("Unknown type encountered in conversion to ") + typeid(OutputType_).name());
