@@ -88,6 +88,51 @@ namespace hypertech::kaos::core::types
 				return in;
 			}
 		};
+
+		template<class ReturnType_, class VariantType_>
+		ReturnType_ as_vector_impl(VariantType_& variant, fixed_variant::tag_type source_type)
+		{
+			using tag_type = fixed_variant::tag_type;
+			using vector_type = fixed_variant::vector_type;
+
+			switch (source_type)
+			{
+			case tag_type::Empty:
+				throw exceptions::empty_cast_error(typeid(void), typeid(vector_type));
+
+			case tag_type::Boolean:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::boolean_type), typeid(vector_type));
+
+			case tag_type::Integer:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::integer_type), typeid(vector_type));
+
+			case tag_type::Unsigned:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::unsigned_type), typeid(vector_type));
+
+			case tag_type::Float:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::float_type), typeid(vector_type));
+
+			case tag_type::Double:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::double_type), typeid(vector_type));
+
+			case tag_type::String:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::string_type), typeid(vector_type));
+
+			case tag_type::Path:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::path_type), typeid(vector_type));
+
+			case tag_type::Color:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::color_type), typeid(vector_type));
+
+			case tag_type::Uuid:
+				throw exceptions::incompatible_type_error(typeid(fixed_variant::uuid_type), typeid(vector_type));
+
+			case tag_type::Vector:
+				return get<vector_type>(variant);
+			}
+
+			throw std::runtime_error("Unknown value type encountered in conversion to vector");
+		}
 	}
 #pragma endregion
 
@@ -154,6 +199,18 @@ namespace hypertech::kaos::core::types
 	fixed_variant::fixed_variant(const uuid_type& value) noexcept
 		:
 		type_(tag_type::Uuid),
+		value_(value)
+	{}
+
+	fixed_variant::fixed_variant(vector_type&& value) noexcept
+		:
+		type_(tag_type::Vector),
+		value_(move(value))
+	{}
+
+	fixed_variant::fixed_variant(const vector_type &value) noexcept
+		:
+		type_(tag_type::Vector),
 		value_(value)
 	{}
 
@@ -248,6 +305,22 @@ namespace hypertech::kaos::core::types
 		return *this;
 	}
 
+	fixed_variant& fixed_variant::operator=(const vector_type& value) noexcept
+	{
+		value_ = move(value);
+		type_ = tag_type::Vector;
+
+		return *this;
+	}
+
+	fixed_variant& fixed_variant::operator=(vector_type&& value) noexcept
+	{
+		value_ = move(value);
+		type_ = tag_type::Vector;
+
+		return *this;
+	}
+
 #pragma endregion
 
 
@@ -312,6 +385,9 @@ namespace hypertech::kaos::core::types
 
 		case tag_type::Uuid:
 			return boost::uuids::to_string(std::get<uuid_type>(value_));
+
+		case tag_type::Vector:
+			throw exceptions::incompatible_type_error(typeid(vector_type), typeid(string_type));
 		}
 
 		throw std::runtime_error("Unknown value type encountered in conversion to string");
@@ -350,6 +426,9 @@ namespace hypertech::kaos::core::types
 
 		case tag_type::Uuid:
 			throw exceptions::incompatible_type_error(typeid(uuid_type), typeid(path_type));
+
+		case tag_type::Vector:
+			throw exceptions::incompatible_type_error(typeid(vector_type), typeid(path_type));
 		}
 
 		throw std::runtime_error("Unknown value type encountered in conversion to string");
@@ -401,6 +480,9 @@ namespace hypertech::kaos::core::types
 
 		case tag_type::Uuid:
 			throw exceptions::incompatible_type_error(typeid(uuid_type), typeid(color_type));
+
+		case tag_type::Vector:
+			throw exceptions::incompatible_type_error(typeid(vector_type), typeid(color_type));
 		}
 
 		throw std::runtime_error("Unknown value type encountered in conversion to color");
@@ -446,13 +528,29 @@ namespace hypertech::kaos::core::types
 
 		case tag_type::Uuid:
 			return std::get<uuid_type>(value_);	//	FIXME: remove std::
+
+		case tag_type::Vector:
+			throw exceptions::incompatible_type_error(typeid(vector_type), typeid(uuid_type));
 		}
 
-		throw std::runtime_error("Unknown value type encountered in conversion to color");
+		throw std::runtime_error("Unknown value type encountered in conversion to uuid");
 	}
 
 
+	fixed_variant::vector_type& fixed_variant::as_vector()
+	{
+		return as_vector_impl<fixed_variant::vector_type&>(value_, type());
+	}
 
+	const fixed_variant::vector_type& fixed_variant::as_vector() const
+	{
+		return as_vector_impl<const fixed_variant::vector_type&>(value_, type());
+	}
+
+	fixed_variant::vector_type fixed_variant::as_vector_copy() const
+	{
+		return as_vector_impl<fixed_variant::vector_type>(value_, type());
+	}
 
 
 	template<class OutputType_>
@@ -533,6 +631,9 @@ namespace hypertech::kaos::core::types
 
 		case tag_type::Uuid:
 			throw exceptions::incompatible_type_error(typeid(uuid_type), typeid(OutputType_));
+
+		case tag_type::Vector:
+			throw exceptions::incompatible_type_error(typeid(vector_type), typeid(OutputType_));
 		}
 
 		throw std::runtime_error(std::string("Unknown type encountered in conversion to ") + typeid(OutputType_).name());
