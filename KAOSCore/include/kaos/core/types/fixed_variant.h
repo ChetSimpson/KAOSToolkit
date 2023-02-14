@@ -72,7 +72,7 @@ namespace hypertech::kaos::core::types
 	public:
 
 		/// @brief Create an empty value.
-		fixed_variant() noexcept;
+		fixed_variant() noexcept = default;
 
 		/// @brief Create a boolean value.
 		/// @param value The value.
@@ -248,7 +248,7 @@ namespace hypertech::kaos::core::types
 		/// @return The tag indicating the value type currently held by the value instance.
 		tag_type type() const noexcept
 		{
-			return type_;
+			return static_cast<tag_type>(value_.index());
 		}
 
 
@@ -397,9 +397,6 @@ namespace hypertech::kaos::core::types
 
 		static const string_type false_string_;
 		static const string_type true_string_;
-
-		/// @brief The tag indicating the type of value currently held in value_.
-		tag_type type_ = tag_type::Empty;
 
 		/// @brief The value.
 		storge_type	value_;
