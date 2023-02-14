@@ -189,9 +189,6 @@ namespace hypertech::kaos::core::types
 
 
 #pragma region Construction
-	fixed_variant::fixed_variant() noexcept
-	{}
-
 	fixed_variant::fixed_variant(const boolean_type& value) noexcept
 		: value_(value)
 	{}

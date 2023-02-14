@@ -67,6 +67,84 @@ namespace hypertech::kaos::core::types::unittests
 			{ "8", fixed_variant(fixed_variant::uuid_type(raw_uuid)) },
 			{ "9", fixed_variant(fixed_variant::vector_type(vector1vector)) }
 		};
+
+		struct fixed_variant_test_visitor
+		{
+			void operator()(const fixed_variant::empty_type& value)
+			{
+				empty_value_ = value;
+			}
+
+			void operator()(const fixed_variant::boolean_type& value)
+			{
+				boolean_value_ = value;
+			}
+
+			void operator()(const fixed_variant::integer_type& value)
+			{
+				integer_value_ = value;
+			}
+
+			void operator()(const fixed_variant::unsigned_type& value)
+			{
+				unsigned_value_ = value;
+			}
+
+			void operator()(const fixed_variant::float_type& value)
+			{
+				float_value_ = value;
+			}
+
+			void operator()(const fixed_variant::double_type& value)
+			{
+				double_value_ = value;
+			}
+
+			void operator()(const fixed_variant::string_type& value)
+			{
+				string_value_ = value;
+			}
+
+			void operator()(const fixed_variant::path_type& value)
+			{
+				path_value_ = value;
+			}
+
+			void operator()(const fixed_variant::color_type& value)
+			{
+				color_value_ = value;
+			}
+
+			void operator()(const fixed_variant::uuid_type& value)
+			{
+				uuid_value_ = value;
+			}
+
+			void operator()(const fixed_variant::vector_type& value)
+			{
+				vector_value_ = value;
+			}
+
+			void operator()(const fixed_variant::map_type& value)
+			{
+				map_value_ = value;
+			}
+
+
+			std::optional<fixed_variant::empty_type> empty_value_;
+			std::optional<fixed_variant::boolean_type> boolean_value_;
+			std::optional<fixed_variant::integer_type> integer_value_;
+			std::optional<fixed_variant::unsigned_type> unsigned_value_;
+			std::optional<fixed_variant::float_type> float_value_;
+			std::optional<fixed_variant::double_type> double_value_;
+			std::optional<fixed_variant::string_type> string_value_;
+			std::optional<fixed_variant::path_type> path_value_;
+			std::optional<fixed_variant::color_type> color_value_;
+			std::optional<fixed_variant::uuid_type> uuid_value_;
+			std::optional<fixed_variant::vector_type> vector_value_;
+			std::optional<fixed_variant::map_type> map_value_;
+		};
+
 	}
 
 
@@ -75,6 +153,14 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, create_empty)
 	{
 		EXPECT_EQ(fixed_variant().type(), fixed_variant::tag_type::Empty);
+	}
+
+	TEST(fixed_variant, visit_empty)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant().accept(visitor);
+		EXPECT_TRUE(visitor.empty_value_.has_value());
 	}
 
 	TEST(fixed_variant, convert_empty_to_boolean)
@@ -317,6 +403,14 @@ namespace hypertech::kaos::core::types::unittests
 		EXPECT_FALSE(value.as_boolean());
 	}
 
+	TEST(fixed_variant, visit_boolean)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(true).accept(visitor);
+		EXPECT_TRUE(visitor.boolean_value_.has_value());
+	}
+
 	TEST(fixed_variant, convert_boolean_to_boolean)
 	{
 		//	bool -> bool
@@ -466,6 +560,14 @@ namespace hypertech::kaos::core::types::unittests
 		value = 7LL;
 		EXPECT_EQ(value.type(), fixed_variant::tag_type::Integer);
 		EXPECT_EQ(value.as_integer(), 7);
+	}
+
+	TEST(fixed_variant, visit_integer)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(100LL).accept(visitor);
+		EXPECT_TRUE(visitor.integer_value_.has_value());
 	}
 
 	TEST(fixed_variant, convert_integer_to_boolean)
@@ -690,6 +792,14 @@ namespace hypertech::kaos::core::types::unittests
 		EXPECT_EQ(value.as_unsigned(), 7);
 	}
 
+	TEST(fixed_variant, visit_unsigned)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(100ULL).accept(visitor);
+		EXPECT_TRUE(visitor.unsigned_value_.has_value());
+	}
+
 	TEST(fixed_variant, convert_unsigned_to_boolean)
 	{
 		//	unsigned -> bool
@@ -884,6 +994,14 @@ namespace hypertech::kaos::core::types::unittests
 		value = 7.f;
 		EXPECT_EQ(value.type(), fixed_variant::tag_type::Float);
 		EXPECT_EQ(value.as_float(), 7.f);
+	}
+
+	TEST(fixed_variant, visit_float)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(100.0f).accept(visitor);
+		EXPECT_TRUE(visitor.float_value_.has_value());
 	}
 
 	TEST(fixed_variant, convert_float_to_boolean)
@@ -1144,6 +1262,14 @@ namespace hypertech::kaos::core::types::unittests
 		value = 7.0;
 		EXPECT_EQ(value.type(), fixed_variant::tag_type::Double);
 		EXPECT_EQ(value.as_double(), 7.f);
+	}
+
+	TEST(fixed_variant, visit_double)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(100.0).accept(visitor);
+		EXPECT_TRUE(visitor.double_value_.has_value());
 	}
 
 	TEST(fixed_variant, convert_double_to_boolean)
@@ -1459,6 +1585,14 @@ namespace hypertech::kaos::core::types::unittests
 		value = "world";
 		EXPECT_EQ(value.type(), fixed_variant::tag_type::String);
 		EXPECT_EQ(value.as_string(), "world");
+	}
+
+	TEST(fixed_variant, visit_string)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant("hello world!").accept(visitor);
+		EXPECT_TRUE(visitor.string_value_.has_value());
 	}
 
 	TEST(fixed_variant, convert_string_to_boolean)
@@ -1889,6 +2023,14 @@ namespace hypertech::kaos::core::types::unittests
 		EXPECT_EQ(value.as_path(), "world");
 	}
 
+	TEST(fixed_variant, visit_path)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(fixed_variant::path_type("/path")).accept(visitor);
+		EXPECT_TRUE(visitor.path_value_.has_value());
+	}
+
 	//	FIXME: Need exception checks for types other than color
 	TEST(fixed_variant, convert_path)
 	{
@@ -1993,6 +2135,14 @@ namespace hypertech::kaos::core::types::unittests
 		v = color1color;
 		EXPECT_EQ(v.type(), fixed_variant::tag_type::Color);
 		EXPECT_EQ(v.as_color(), color1color);
+	}
+
+	TEST(fixed_variant, visit_color)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(fixed_variant::color_type(63, 127, 191, 255)).accept(visitor);
+		EXPECT_TRUE(visitor.color_value_.has_value());
 	}
 
 	TEST(fixed_variant, convert_color_to_boolean)
@@ -2158,6 +2308,14 @@ namespace hypertech::kaos::core::types::unittests
 		v = raw_uuid;
 		EXPECT_EQ(v.type(), fixed_variant::tag_type::Uuid);
 		EXPECT_EQ(v.as_uuid(), raw_uuid);
+	}
+
+	TEST(fixed_variant, visit_uuid)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(fixed_variant::uuid_type()).accept(visitor);
+		EXPECT_TRUE(visitor.uuid_value_.has_value());
 	}
 
 	TEST(fixed_variant, convert_uuid_to_boolean)
@@ -2411,6 +2569,14 @@ namespace hypertech::kaos::core::types::unittests
 		EXPECT_EQ(vector.type(), fixed_variant::tag_type::Vector);
 		EXPECT_TRUE(tmp2_vector.empty());
 		EXPECT_EQ(vector.as_vector(), tmp1_vector);
+	}
+
+	TEST(fixed_variant, visit_vector)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(fixed_variant::vector_type()).accept(visitor);
+		EXPECT_TRUE(visitor.vector_value_.has_value());
 	}
 
 	TEST(fixed_variant, convert_vector_to_boolean)
@@ -2690,6 +2856,14 @@ namespace hypertech::kaos::core::types::unittests
 		EXPECT_EQ(map.type(), fixed_variant::tag_type::Map);
 		EXPECT_TRUE(tmp2_map.empty());
 		EXPECT_EQ(map.as_map(), tmp1_map);
+	}
+
+	TEST(fixed_variant, visit_map)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(fixed_variant::map_type()).accept(visitor);
+		EXPECT_TRUE(visitor.map_value_.has_value());
 	}
 
 	TEST(fixed_variant, convert_map_to_boolean)

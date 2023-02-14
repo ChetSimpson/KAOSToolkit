@@ -41,6 +41,7 @@ namespace hypertech::kaos::core::types
 		};
 
 		
+		using empty_type = std::monostate;		//!< @brief Type held by an empty fixed_variant.
 		using string_type = std::string;		//!< @brief String type held by fixed_variant.
 		using boolean_type = bool;				//!< @brief Boolean type held by fixed_variant.
 		using integer_type = std::int64_t;		//!< @brief Signed integer type held by fixed_variant.
@@ -55,7 +56,7 @@ namespace hypertech::kaos::core::types
 
 		/// @brief Storage type used to hold values
 		using storge_type = std::variant<
-			std::monostate,
+			empty_type,
 			boolean_type,
 			integer_type,
 			unsigned_type,
@@ -249,6 +250,18 @@ namespace hypertech::kaos::core::types
 		tag_type type() const noexcept
 		{
 			return static_cast<tag_type>(value_.index());
+		}
+
+		template<class VisitorType_>
+		void accept(VisitorType_& visitor)
+		{
+			std::visit(visitor, value_);
+		}
+
+		template<class VisitorType_>
+		void accept(VisitorType_& visitor) const
+		{
+			std::visit(visitor, value_);
 		}
 
 
