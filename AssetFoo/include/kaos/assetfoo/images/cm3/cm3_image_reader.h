@@ -106,16 +106,11 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		/// Loads a CoCoMax III CM3 format image from the stream specified in \p input_stream.
 		/// 
 		/// @param input_stream The stream to load the image from.
-		/// @param source_name The name of the image file being loaded. This may be a filename or
-		/// another name describing the source of the image such as a network stream or a memory
-		/// buffer.
 		/// 
 		/// @return A pointer to the loaded image.
 		/// 
 		/// @exception hypertech::kaos::core::exceptions::file_format_error Thrown if an error is detected in the format of the asset file.
-		std::unique_ptr<asset> load(
-			std::istream& input_stream,
-			const filename_type& source_name) override;
+		std::unique_ptr<asset> load(std::istream& input_stream) override;
 
 
 	protected:
@@ -124,15 +119,9 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		/// 
 		/// @param colormap Colormap containing the colors the image was create with.
 		/// @param reader Binary reader to read the patterns from
-		/// @param source_name The name of the image file being loaded. This may be a filename or
-		/// another name describing the source of the image such as a network stream or a memory
-		/// buffer.
 		/// 
 		/// @return A list of patterns.
-		pattern_list_type load_patterns(
-			color_map_type colormap,
-			core::io::binary_reader& reader,
-			const filename_type& source_name) const;
+		pattern_list_type load_patterns(color_map_type colormap, core::io::binary_reader& reader) const;
 
 		/// @brief Loads a compressed CM3 image
 		/// 
@@ -141,9 +130,6 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		/// @param colormap The colormap used to map color indexes to.
 		/// @param layout The pixel layout of the image data
 		/// @param page_count The number of pages to load.
-		/// @param source_name The name of the image file being loaded. This may be a filename or
-		/// another name describing the source of the image such as a network stream or a memory
-		/// buffer.
 		/// 
 		/// @exception hypertech::kaos::core::exceptions::file_format_error Thrown if invalid data
 		/// is encountered while decoding the image or if the decoding attemps to read past
@@ -153,8 +139,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 			image_type& image,
 			const color_map_type& colormap,
 			const pixels::packed_pixel_layout& layout,
-			size_type page_count,
-			const filename_type& source_name) const;
+			size_type page_count) const;
 
 		/// @brief Loads a single compressed CM3 image page.
 		/// 
@@ -163,16 +148,12 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		/// @param colormap The colormap used to map color indexes to.
 		/// @param layout The layout of the pixelmap data
 		/// @param page_index The index of the paage being loaded
-		/// @param source_name The name of the image file being loaded. This may be a filename or
-		/// another name describing the source of the image such as a network stream or a memory
-		/// buffer.
 		void load_page_compressed_pixel_data(
 			core::io::binary_reader& reader,
 			image_type::view_type page_view,
 			const color_map_type& colormap,
 			const pixels::packed_pixel_layout& layout,
-			size_type page_index,
-			const filename_type& source_name) const;
+			size_type page_index) const;
 	};
 
 

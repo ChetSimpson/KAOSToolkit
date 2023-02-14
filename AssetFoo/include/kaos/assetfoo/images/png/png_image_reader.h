@@ -13,7 +13,7 @@ namespace hypertech::kaos::assetfoo::images::png
 	/// @brief Loads a PNG image
 	///
 	/// This class loads an PNG format image and converts it to an RGBA image.
-	class png_image_reader : public binary_asset_reader
+	class png_image_reader : public asset_reader
 	{
 	public:
 
@@ -37,7 +37,7 @@ namespace hypertech::kaos::assetfoo::images::png
 		png_image_reader(png_image_reader&& other) noexcept = default;
 
 
-		using binary_asset_reader::load;
+		using asset_reader::load;
 
 
 		/// @brief Loads a PNG format image from a stream.
@@ -45,16 +45,11 @@ namespace hypertech::kaos::assetfoo::images::png
 		/// Loads a PNG format image from the stream specified in \p input_stream.
 		/// 
 		/// @param input_stream The stream to load the image from.
-		/// @param source_name The name of the image file being loaded. This may be a filename or
-		/// another name describing the source of the image such as a network stream or a memory
-		/// buffer.
 		/// 
 		/// @return A pointer to the loaded image.
 		/// 
 		/// @exception hypertech::kaos::core::exceptions::file_format_error Thrown if an error is detected in the format of the asset file.
-		std::unique_ptr<asset> load(
-			std::istream& input_stream,
-			const filename_type& source_name) override;
+		std::unique_ptr<asset> load(std::istream& input_stream) override;
 	};
 
 

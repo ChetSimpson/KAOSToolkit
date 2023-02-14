@@ -13,7 +13,7 @@ namespace hypertech::kaos::assetfoo::colors::gimp
 	/// @brief Asset reader for GIMP palette files.
 	///
 	/// This class loads GIMP (GNU Image Manipulation Program) palette file.
-	class gimp_palette_reader : public ascii_asset_reader
+	class gimp_palette_reader : public asset_reader
 	{
 	protected:
 
@@ -32,7 +32,7 @@ namespace hypertech::kaos::assetfoo::colors::gimp
 
 		using asset_reader::load;
 
-		std::unique_ptr<asset> load(std::istream& input_stream, const filename_type& source_name) override;
+		std::unique_ptr<asset> load(std::istream& input_stream) override;
 	};
 
 
