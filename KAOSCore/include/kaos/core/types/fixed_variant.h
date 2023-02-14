@@ -41,6 +41,7 @@ namespace hypertech::kaos::core::types
 		};
 
 		
+		using empty_type = std::monostate;		//!< @brief Type held by an empty fixed_variant.
 		using string_type = std::string;		//!< @brief String type held by fixed_variant.
 		using boolean_type = bool;				//!< @brief Boolean type held by fixed_variant.
 		using integer_type = std::int64_t;		//!< @brief Signed integer type held by fixed_variant.
@@ -55,7 +56,7 @@ namespace hypertech::kaos::core::types
 
 		/// @brief Storage type used to hold values
 		using storge_type = std::variant<
-			std::monostate,
+			empty_type,
 			boolean_type,
 			integer_type,
 			unsigned_type,
@@ -72,7 +73,7 @@ namespace hypertech::kaos::core::types
 	public:
 
 		/// @brief Create an empty value.
-		fixed_variant() noexcept;
+		fixed_variant() noexcept = default;
 
 		/// @brief Create a boolean value.
 		/// @param value The value.
@@ -248,7 +249,19 @@ namespace hypertech::kaos::core::types
 		/// @return The tag indicating the value type currently held by the value instance.
 		tag_type type() const noexcept
 		{
-			return type_;
+			return static_cast<tag_type>(value_.index());
+		}
+
+		template<class VisitorType_>
+		void accept(VisitorType_& visitor)
+		{
+			std::visit(visitor, value_);
+		}
+
+		template<class VisitorType_>
+		void accept(VisitorType_& visitor) const
+		{
+			std::visit(visitor, value_);
 		}
 
 
@@ -397,9 +410,6 @@ namespace hypertech::kaos::core::types
 
 		static const string_type false_string_;
 		static const string_type true_string_;
-
-		/// @brief The tag indicating the type of value currently held in value_.
-		tag_type type_ = tag_type::Empty;
 
 		/// @brief The value.
 		storge_type	value_;
