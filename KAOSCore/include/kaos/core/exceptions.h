@@ -117,7 +117,7 @@ namespace hypertech::kaos::core::exceptions
 
 		/// @inheritdoc
 		const char * what() const noexcept
-		{  return "bad value cast: negative overflow"; }
+		{  return "bad value cast: conversion from empty type"; }
 	};
 
 
