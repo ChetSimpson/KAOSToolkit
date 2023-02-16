@@ -49,16 +49,11 @@ namespace hypertech::kaos::assetfoo::images::hrs
 		/// Loads a HRS format image from the stream specified in \p input_stream.
 		/// 
 		/// @param input_stream The stream to load the image from.
-		/// @param source_name The name of the image file being loaded. This may be a filename or
-		/// another name describing the source of the image such as a network stream or a memory
-		/// buffer.
 		/// 
 		/// @return A pointer to the loaded image.
 		/// 
 		/// @exception hypertech::kaos::core::exceptions::file_format_error Thrown if an error is detected in the format of the asset file.
-		std::unique_ptr<asset> load(
-			std::istream& input_stream,
-			const filename_type& source_name) override;
+		std::unique_ptr<asset> load(std::istream& input_stream) override;
 	};
 
 

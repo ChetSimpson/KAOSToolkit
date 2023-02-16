@@ -17,9 +17,7 @@ namespace hypertech::kaos::assetfoo::images::rat
 		rat_image_reader::attributes::background_color("background_color");
 
 
-	std::unique_ptr<asset> rat_image_reader::load(
-		std::istream& input_stream,
-		const filename_type& source_name)
+	std::unique_ptr<asset> rat_image_reader::load(std::istream& input_stream)
 	try
 	{
 		binary_reader reader(input_stream, binary_reader::ordering_type::big);
@@ -37,11 +35,11 @@ namespace hypertech::kaos::assetfoo::images::rat
 		const auto& layout(format_details::pixel_layout);
 		if (is_compressed)
 		{
-			load_compressed_pixel_data(reader, *image, *colormap, layout, escape_value, source_name);
+			load_compressed_pixel_data(reader, *image, *colormap, layout, escape_value);
 		}
 		else
 		{
-			load_uncompressed_pixel_data(reader, *image, *colormap, layout, source_name);
+			load_uncompressed_pixel_data(reader, *image, *colormap, layout);
 		}
 
 		image->set_attribute(attributes::native_color_space, native_color_space);
@@ -53,7 +51,7 @@ namespace hypertech::kaos::assetfoo::images::rat
 	catch (core::exceptions::end_of_file_error&)
 	{
 		throw core::exceptions::file_format_error(
-			"image file format error: attempt to read past end of file `" + source_name + "`");
+			"image file format error: attempt to read past end of file `" + source_name_ + "`");
 	}
 
 
@@ -62,8 +60,7 @@ namespace hypertech::kaos::assetfoo::images::rat
 		image_type& image,
 		const color_map_type& colormap,
 		const pixels::packed_pixel_layout& layout,
-		uint8_t escape_value,
-		const filename_type& source_name) const
+		uint8_t escape_value) const
 	try
 	{
 		const auto bpp(layout.bits_per_pixel());
@@ -92,7 +89,7 @@ namespace hypertech::kaos::assetfoo::images::rat
 	{
 		throw core::exceptions::file_format_error(
 			"image file format error: attempt to read past end of file while processing compressed image data of `"
-			+ source_name + "`");
+			+ source_name_ + "`");
 	}
 
 }

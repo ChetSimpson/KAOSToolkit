@@ -15,8 +15,7 @@ namespace hypertech::kaos::assetfoo::images::tc1014
 		core::io::binary_reader& reader,
 		image& image,
 		const color_map_type& colormap,
-		const pixels::packed_pixel_layout& layout,
-		const filename_type& source_name) const
+		const pixels::packed_pixel_layout& layout) const
 	try
 	{
 		const auto bpp(layout.bits_per_pixel());
@@ -31,7 +30,7 @@ namespace hypertech::kaos::assetfoo::images::tc1014
 	{
 		throw core::exceptions::file_format_error(
 			"image file format error: attempt to read past end of file while processing uncompressed image data of `"
-			+ source_name + "`");
+			+ source_name_ + "`");
 	}
 
 }

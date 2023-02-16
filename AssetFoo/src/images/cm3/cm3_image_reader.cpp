@@ -30,9 +30,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		cm3_image_reader::attributes::patterns("patterns");
 
 
-	std::unique_ptr<asset> cm3_image_reader::load(
-		std::istream& input_stream,
-		const filename_type& source_name)
+	std::unique_ptr<asset> cm3_image_reader::load(std::istream& input_stream)
 	try
 	{
 		binary_reader reader(input_stream, binary_reader::ordering_type::big);
@@ -58,7 +56,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		pattern_list_type patterns;
 		if (include_patterns)
 		{
-			patterns = load_patterns(*colormap, reader, source_name);
+			patterns = load_patterns(*colormap, reader);
 		}
 
 		auto image(std::make_unique<image_type>(dimensions, color_type(255, 255, 255)));
@@ -67,8 +65,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 			*image,
 			*colormap,
 			format_details::pixel_layout,
-			page_count,
-			source_name);
+			page_count);
 
 		image->set_attribute(attributes::native_color_space, native_color_space);
 		image->set_attribute(attributes::native_color_map, native_color_map);
@@ -85,13 +82,12 @@ namespace hypertech::kaos::assetfoo::images::cm3
 	catch (core::exceptions::end_of_file_error&)
 	{
 		throw core::exceptions::file_format_error(
-			"image file format error: attempt to read past end of file `" + source_name + "`");
+			"image file format error: attempt to read past end of file `" + source_name_ + "`");
 	}
 
 	cm3_image_reader::pattern_list_type cm3_image_reader::load_patterns(
 		color_map_type colormap,
-		binary_reader& reader,
-		const filename_type& source_name) const
+		binary_reader& reader) const
 	try
 	{
 		reader.skipg(format_details::pattern_section_header_length);
@@ -112,7 +108,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 	{
 		throw core::exceptions::file_format_error(
 			"image file format error: attempt to read past end of file while loading patterns from `"
-			+ source_name);
+			+ source_name_);
 	}
 
 	void cm3_image_reader::load_compressed_pixel_data(
@@ -120,8 +116,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		image_type& image,
 		const color_map_type& colormap,
 		const pixels::packed_pixel_layout& layout,
-		size_type page_count,
-		const filename_type& source_name) const
+		size_type page_count) const
 	{
 		auto page_size(image.height() / page_count);
 
@@ -133,8 +128,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 				image.create_view(0, y_position, image.width(), page_size),
 				colormap,
 				layout,
-				page,
-				source_name);
+				page);
 		}
 	}
 
@@ -144,8 +138,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		image_type::view_type page_view,
 		const color_map_type& colormap,
 		const pixels::packed_pixel_layout& layout,
-		size_type page_index,
-		const filename_type& source_name) const
+		size_type page_index) const
 	try
 	{
 		const auto row_count(reader.read<uint8_t>());
@@ -156,7 +149,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 				+ std::to_string(row_count)
 				+ " in image page "
 				+ std::to_string(page_index)
-				+ " of `" + source_name + "`");
+				+ " of `" + source_name_ + "`");
 		}
 
 		const auto bpp(layout.bits_per_pixel());
@@ -225,7 +218,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		throw core::exceptions::file_format_error(
 			"image file format error: attempt to read past end of file while processing uncompressed image data in page "
 			+ std::to_string(page_index)
-			+ " of `" + source_name + "`");
+			+ " of `" + source_name_ + "`");
 	}
 
 }

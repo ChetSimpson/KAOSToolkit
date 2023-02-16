@@ -55,16 +55,11 @@ namespace hypertech::kaos::assetfoo::images::mge
 		/// Loads a ColorMax MGE format image from the stream specified in \p input_stream.
 		/// 
 		/// @param input_stream The stream to load the image from.
-		/// @param source_name The name of the image file being loaded. This may be a filename or
-		/// another name describing the source of the image such as a network stream or a memory
-		/// buffer.
 		/// 
 		/// @return A pointer to the loaded image.
 		/// 
 		/// @exception hypertech::kaos::core::exceptions::file_format_error Thrown if an error is detected in the format of the asset file.
-		std::unique_ptr<asset> load(
-			std::istream& input_stream,
-			const filename_type& source_name) override;
+		std::unique_ptr<asset> load(std::istream& input_stream) override;
 
 
 	protected:
@@ -75,9 +70,6 @@ namespace hypertech::kaos::assetfoo::images::mge
 		/// @param image The RGBA image to load the converted MGE image data into
 		/// @param colormap The colormap used to map color indexes to.
 		/// @param layout The pixel layout of the image data
-		/// @param source_name The name of the image file being loaded. This may be a filename or
-		/// another name describing the source of the image such as a network stream or a memory
-		/// buffer.
 		/// 
 		/// @exception hypertech::kaos::core::exceptions::file_format_error Thrown if invalid data
 		/// is encountered while decoding the image or if the decoding attemps to read past
@@ -86,8 +78,7 @@ namespace hypertech::kaos::assetfoo::images::mge
 			core::io::binary_reader& reader,
 			image_type& image,
 			const color_map_type& colormap,
-			const pixels::packed_pixel_layout& layout,
-			const filename_type& source_name) const;
+			const pixels::packed_pixel_layout& layout) const;
 	};
 
 

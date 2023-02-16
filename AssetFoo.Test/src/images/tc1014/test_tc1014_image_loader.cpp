@@ -20,7 +20,7 @@ namespace hypertech::kaos::assetfoo::images::tc1014::unittests
 		private:
 
 			// NOT TESTED
-			std::unique_ptr<asset> load(std::istream& input_stream, const filename_type& source_name) override
+			std::unique_ptr<asset> load(std::istream& input_stream) override
 			{
 				return {};
 			}
@@ -28,14 +28,15 @@ namespace hypertech::kaos::assetfoo::images::tc1014::unittests
 
 		public:
 
-			void load_uncompressed_pixel_data(
+			virtual void load_uncompressed_pixel_data(
 				core::io::binary_reader& reader,
 				image& image,
 				const color_map_type& colormap,
 				const pixels::packed_pixel_layout& layout,
-				const filename_type& source_name) const override
+				const filename_type& source_name)
 			{
-				return tc1014_image_reader::load_uncompressed_pixel_data(reader, image, colormap, layout, source_name);
+				source_name_ = source_name;
+				return tc1014_image_reader::load_uncompressed_pixel_data(reader, image, colormap, layout);
 			}
 		};
 

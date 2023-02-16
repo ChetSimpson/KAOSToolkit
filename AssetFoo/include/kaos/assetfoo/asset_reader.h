@@ -32,7 +32,7 @@ namespace hypertech::kaos::assetfoo
 		/// @brief Create an asset reader
 		/// 
 		/// @param is_binary_file Indicates if the asset reader type is binary or ASCII/text.
-		explicit asset_reader(bool is_binary_file);
+		explicit asset_reader() = default;
 
 		/// @brief Create a copy of an asset reader
 		/// 
@@ -97,7 +97,7 @@ namespace hypertech::kaos::assetfoo
 		/// @exception hypertech::kaos::core::exceptions::file_not_found_error Thrown if the file does not exist.
 		/// @exception hypertech::kaos::core::exceptions::file_access_error Thrown if the file is not accessible due to locking or access rights.
 		/// @exception hypertech::kaos::core::exceptions::file_format_error Thrown if an error is detected in the format of the asset file.
-		virtual std::unique_ptr<asset> load(std::istream& input_stream, const filename_type& source_name) = 0;
+		virtual std::unique_ptr<asset> load(std::istream& input_stream, const filename_type& source_name);
 
 		/// @brief Loads an asset.
 		/// 
@@ -123,53 +123,15 @@ namespace hypertech::kaos::assetfoo
 			return assetfoo::dynamic_pointer_cast<Type_, std::default_delete<asset>>(load(input_stream, source_name));
 		}
 
+
 	protected:
 
-		/// @brief Indicates if the asset type is binary or ASCII/text.
-		const bool is_binary_;
-	};
+		virtual std::unique_ptr<asset> load(std::istream& input_stream) = 0;
 
 
-	/// @brief Asset reader for binary assets
-	class binary_asset_reader : public asset_reader
-	{
-	public:
+	protected:
 
-		/// @brief Create a binary asset reader
-		binary_asset_reader()
-			: asset_reader(true)
-		{}
-
-		/// @brief Create copy of an binary asset reader
-		/// 
-		/// @param other The binary asset reader to make a copy of
-		binary_asset_reader(const binary_asset_reader& other) = default;
-
-		/// @brief Create an binary asset reader using move semantics
-		/// 
-		/// @param other The instance to initialize the new binary asset reader with.
-		binary_asset_reader(binary_asset_reader&& other) = default;
-	};
-
-	/// @brief Asset reader ASCII/text assets
-	class ascii_asset_reader : public asset_reader
-	{
-	public:
-
-		/// @brief Create a text asset reader
-		ascii_asset_reader()
-			: asset_reader(false)
-		{}
-
-		/// @brief Create copy of an ASCII asset reader
-		/// 
-		/// @param other The ASCII asset reader to make a copy of
-		ascii_asset_reader(const ascii_asset_reader& other) = default;
-
-		/// @brief Create an ASCII asset reader using move semantics
-		/// 
-		/// @param other The instance to initialize the new ASCII asset reader with.
-		ascii_asset_reader(ascii_asset_reader&& other) = default;
+		filename_type source_name_;
 	};
 
 }

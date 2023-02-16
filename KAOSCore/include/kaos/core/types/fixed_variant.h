@@ -6,6 +6,8 @@
 #include <kaos/core/types/rgba_color.h>
 #include <boost/uuid/uuid.hpp>
 #include <variant>
+#include <vector>
+#include <map>
 #include <string>
 #include <stdexcept>
 #include <typeinfo>
@@ -34,9 +36,12 @@ namespace hypertech::kaos::core::types
 			Path,		//!<	Path value
 			Color,		//!<	RGBA color value.
 			Uuid,		//!<	UUID value
+			Vector,		//!<	Vector of fixed_variant types
+			Map,		//!<	Map of fixed_variant types with string as the key
 		};
 
 		
+		using empty_type = std::monostate;		//!< @brief Type held by an empty fixed_variant.
 		using string_type = std::string;		//!< @brief String type held by fixed_variant.
 		using boolean_type = bool;				//!< @brief Boolean type held by fixed_variant.
 		using integer_type = std::int64_t;		//!< @brief Signed integer type held by fixed_variant.
@@ -46,10 +51,12 @@ namespace hypertech::kaos::core::types
 		using color_type = rgba_color;			//!< @brief Color type held by fixed_variant.
 		using path_type = std::filesystem::path;	//!< @brief Path type held by value.
 		using uuid_type = boost::uuids::uuid;	//!< UUID type
+		using vector_type = std::vector<fixed_variant>;
+		using map_type = std::map<string_type, fixed_variant>;
 
 		/// @brief Storage type used to hold values
 		using storge_type = std::variant<
-			std::monostate,
+			empty_type,
 			boolean_type,
 			integer_type,
 			unsigned_type,
@@ -58,13 +65,15 @@ namespace hypertech::kaos::core::types
 			string_type,
 			path_type,
 			color_type,
-			uuid_type>;
+			uuid_type,
+			vector_type,
+			map_type>;
 
 
 	public:
 
 		/// @brief Create an empty value.
-		fixed_variant() noexcept;
+		fixed_variant() noexcept = default;
 
 		/// @brief Create a boolean value.
 		/// @param value The value.
@@ -110,6 +119,31 @@ namespace hypertech::kaos::core::types
 		/// @param value The uuid value
 		explicit fixed_variant(const uuid_type& value) noexcept;
 
+		/// @brief Create a vector of fixed_variant using copy semantics
+		/// @param value The vector to initialize the fixed_variant with.
+		explicit fixed_variant(const vector_type& value) noexcept;
+
+		/// @brief Create a vector of fixed_variant.
+		/// 
+		/// Create a vector of fixed_variant using move semantics. Once the
+		/// fixed_variant has been initialized \p value will be left in a
+		/// a default empty state.
+		/// 
+		/// @param value The vector to initialize the fixed_variant with.
+		explicit fixed_variant(vector_type&& value) noexcept;
+
+		/// @brief Create a map of fixed_variant using copy semantics
+		/// @param value The map to initialize the fixed_variant with.
+		explicit fixed_variant(const map_type& value) noexcept;
+
+		/// @brief Create a map of fixed_variant.
+		/// 
+		/// Create a map of fixed_variant using move semantics. Once the
+		/// fixed_variant has been initialized \p value will be left in a
+		/// a default empty state.
+		/// 
+		/// @param value The map to initialize the fixed_variant with.
+		explicit fixed_variant(map_type&& value) noexcept;
 
 		/// @brief Create a copy of another fixed_variant.
 		/// 
@@ -126,8 +160,8 @@ namespace hypertech::kaos::core::types
 		/// @param other The fixed_variant to move.
 		fixed_variant(fixed_variant&& other) = default;
 
-		fixed_variant& operator==(const fixed_variant&) const = delete;
-		fixed_variant& operator!=(const fixed_variant&) const = delete;
+		bool operator==(const fixed_variant&) const noexcept = default;
+		bool operator!=(const fixed_variant&) const noexcept = default;
 
 		/// @brief Copy assignment operator
 		/// 
@@ -194,11 +228,40 @@ namespace hypertech::kaos::core::types
 		/// @return *this
 		fixed_variant& operator=(const uuid_type& value) noexcept;
 
+		/// @brief Assign a vector value using copy semantics
+		/// @param value The vector to assign to the fixed_variant.
+		fixed_variant& operator=(const vector_type& value);
+
+		/// @brief Assign a vector value using move semantics
+		/// @param value The vector to assign to the fixed_variant.
+		fixed_variant& operator=(vector_type&& value) noexcept;
+
+		/// @brief Assign a map value using copy semantics
+		/// @param value The map to assign to the fixed_variant.
+		fixed_variant& operator=(const map_type& value);
+
+		/// @brief Assign a map value using move semantics
+		/// @param value The map to assign to the fixed_variant.
+		fixed_variant& operator=(map_type&& value) noexcept;
+
+
 		/// @brief Get the tag type of the value
 		/// @return The tag indicating the value type currently held by the value instance.
 		tag_type type() const noexcept
 		{
-			return type_;
+			return static_cast<tag_type>(value_.index());
+		}
+
+		template<class VisitorType_>
+		void accept(VisitorType_& visitor)
+		{
+			std::visit(visitor, value_);
+		}
+
+		template<class VisitorType_>
+		void accept(VisitorType_& visitor) const
+		{
+			std::visit(visitor, value_);
 		}
 
 
@@ -328,6 +391,15 @@ namespace hypertech::kaos::core::types
 		uuid_type as_uuid() const;
 
 
+		vector_type& as_vector();
+		const vector_type& as_vector() const;
+		vector_type as_vector_copy() const;
+
+		map_type& as_map();
+		const map_type& as_map() const;
+		map_type as_map_copy() const;
+
+
 	private:
 
 		template<class OutputType_>
@@ -338,9 +410,6 @@ namespace hypertech::kaos::core::types
 
 		static const string_type false_string_;
 		static const string_type true_string_;
-
-		/// @brief The tag indicating the type of value currently held in value_.
-		tag_type type_ = tag_type::Empty;
 
 		/// @brief The value.
 		storge_type	value_;

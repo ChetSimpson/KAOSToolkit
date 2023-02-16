@@ -31,8 +31,8 @@ namespace hypertech::kaos::core::types::unittests
 		const auto color1color(fixed_variant::color_type(0x00, 0x55, 0xAA, 0xFF));
 		const auto color2color(fixed_variant::color_type(0xFF, 0xAA, 0x55, 0x00));
 
-		const auto color1value{fixed_variant(color1color)};
-		const auto color2value{fixed_variant(color2color)};
+		const auto color1value{ fixed_variant(color1color) };
+		const auto color2value{ fixed_variant(color2color) };
 
 		const auto raw_uuid{ fixed_variant::uuid_type{
 			0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
@@ -40,6 +40,111 @@ namespace hypertech::kaos::core::types::unittests
 		} };
 
 		const fixed_variant uuid_value(raw_uuid);
+
+		static const inline fixed_variant::vector_type vector1vector =
+		{
+			fixed_variant(fixed_variant::string_type("hello")),
+			fixed_variant(fixed_variant::boolean_type(true)),
+			fixed_variant(fixed_variant::integer_type(-100)),
+			fixed_variant(fixed_variant::unsigned_type(100)),
+			fixed_variant(fixed_variant::float_type(-50.0f)),
+			fixed_variant(fixed_variant::double_type(50.0)),
+			fixed_variant(fixed_variant::color_type(63, 127, 191, 255)),
+			fixed_variant(fixed_variant::path_type("/test/path")),
+			fixed_variant(fixed_variant::uuid_type(raw_uuid)),
+		};
+
+		static const inline fixed_variant::map_type map1map =
+		{
+			{ "0", fixed_variant(fixed_variant::string_type("hello")) },
+			{ "1", fixed_variant(fixed_variant::boolean_type(true)) },
+			{ "2", fixed_variant(fixed_variant::integer_type(-100)) },
+			{ "3", fixed_variant(fixed_variant::unsigned_type(100)) },
+			{ "4", fixed_variant(fixed_variant::float_type(-50.0f)) },
+			{ "5", fixed_variant(fixed_variant::double_type(50.0)) },
+			{ "6", fixed_variant(fixed_variant::color_type(63, 127, 191, 255)) },
+			{ "7", fixed_variant(fixed_variant::path_type("/test/path")) },
+			{ "8", fixed_variant(fixed_variant::uuid_type(raw_uuid)) },
+			{ "9", fixed_variant(fixed_variant::vector_type(vector1vector)) }
+		};
+
+		struct fixed_variant_test_visitor
+		{
+			void operator()(const fixed_variant::empty_type& value)
+			{
+				empty_value_ = value;
+			}
+
+			void operator()(const fixed_variant::boolean_type& value)
+			{
+				boolean_value_ = value;
+			}
+
+			void operator()(const fixed_variant::integer_type& value)
+			{
+				integer_value_ = value;
+			}
+
+			void operator()(const fixed_variant::unsigned_type& value)
+			{
+				unsigned_value_ = value;
+			}
+
+			void operator()(const fixed_variant::float_type& value)
+			{
+				float_value_ = value;
+			}
+
+			void operator()(const fixed_variant::double_type& value)
+			{
+				double_value_ = value;
+			}
+
+			void operator()(const fixed_variant::string_type& value)
+			{
+				string_value_ = value;
+			}
+
+			void operator()(const fixed_variant::path_type& value)
+			{
+				path_value_ = value;
+			}
+
+			void operator()(const fixed_variant::color_type& value)
+			{
+				color_value_ = value;
+			}
+
+			void operator()(const fixed_variant::uuid_type& value)
+			{
+				uuid_value_ = value;
+			}
+
+			void operator()(const fixed_variant::vector_type& value)
+			{
+				vector_value_ = value;
+			}
+
+			void operator()(const fixed_variant::map_type& value)
+			{
+				map_value_ = value;
+			}
+
+
+			std::optional<fixed_variant::empty_type> empty_value_;
+			std::optional<fixed_variant::boolean_type> boolean_value_;
+			std::optional<fixed_variant::integer_type> integer_value_;
+			std::optional<fixed_variant::unsigned_type> unsigned_value_;
+			std::optional<fixed_variant::float_type> float_value_;
+			std::optional<fixed_variant::double_type> double_value_;
+			std::optional<fixed_variant::string_type> string_value_;
+			std::optional<fixed_variant::path_type> path_value_;
+			std::optional<fixed_variant::color_type> color_value_;
+			std::optional<fixed_variant::uuid_type> uuid_value_;
+			std::optional<fixed_variant::vector_type> vector_value_;
+			std::optional<fixed_variant::map_type> map_value_;
+		};
+
 	}
 
 
@@ -50,12 +155,15 @@ namespace hypertech::kaos::core::types::unittests
 		EXPECT_EQ(fixed_variant().type(), fixed_variant::tag_type::Empty);
 	}
 
-	TEST(fixed_variant, convert_empty_to_boolean)
+	TEST(fixed_variant, visit_empty)
 	{
-		EXPECT_THROW(fixed_variant().as_boolean(), exceptions::empty_cast_error);
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant().accept(visitor);
+		EXPECT_TRUE(visitor.empty_value_.has_value());
 	}
 
-	TEST(fixed_variant, convert_empty_to_boolean_exception_typeinfo)
+	TEST(fixed_variant, convert_empty_to_boolean)
 	{
 		bool exception_caught(false);
 
@@ -76,11 +184,6 @@ namespace hypertech::kaos::core::types::unittests
 
 	TEST(fixed_variant, convert_empty_to_integer)
 	{
-		EXPECT_THROW(fixed_variant().as_integer(), exceptions::empty_cast_error);
-	}
-
-	TEST(fixed_variant, convert_empty_to_integer_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -99,11 +202,6 @@ namespace hypertech::kaos::core::types::unittests
 	}
 
 	TEST(fixed_variant, convert_empty_to_unsigned)
-	{
-		EXPECT_THROW(fixed_variant().as_unsigned(), exceptions::empty_cast_error);
-	}
-
-	TEST(fixed_variant, convert_empty_to_unsigned_exception_typeinfo)
 	{
 		bool exception_caught(false);
 
@@ -124,11 +222,6 @@ namespace hypertech::kaos::core::types::unittests
 
 	TEST(fixed_variant, convert_empty_to_float)
 	{
-		EXPECT_THROW(fixed_variant().as_float(), exceptions::empty_cast_error);
-	}
-
-	TEST(fixed_variant, convert_empty_to_float_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -147,11 +240,6 @@ namespace hypertech::kaos::core::types::unittests
 	}
 
 	TEST(fixed_variant, convert_empty_to_double)
-	{
-		EXPECT_THROW(fixed_variant().as_double(), exceptions::empty_cast_error);
-	}
-
-	TEST(fixed_variant, convert_empty_to_double_exception_typeinfo)
 	{
 		bool exception_caught(false);
 
@@ -172,11 +260,6 @@ namespace hypertech::kaos::core::types::unittests
 
 	TEST(fixed_variant, convert_empty_to_string)
 	{
-		EXPECT_THROW(fixed_variant().as_string(), exceptions::empty_cast_error);
-	}
-
-	TEST(fixed_variant, convert_empty_to_string_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -195,11 +278,6 @@ namespace hypertech::kaos::core::types::unittests
 	}
 
 	TEST(fixed_variant, convert_empty_to_path)
-	{
-		EXPECT_THROW(fixed_variant().as_path(), exceptions::empty_cast_error);
-	}
-
-	TEST(fixed_variant, convert_empty_to_path_exception_typeinfo)
 	{
 		bool exception_caught(false);
 
@@ -220,11 +298,6 @@ namespace hypertech::kaos::core::types::unittests
 
 	TEST(fixed_variant, convert_empty_to_color)
 	{
-		EXPECT_THROW(fixed_variant().as_color(), exceptions::empty_cast_error);
-	}
-
-	TEST(fixed_variant, convert_empty_to_color_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -244,11 +317,6 @@ namespace hypertech::kaos::core::types::unittests
 
 	TEST(fixed_variant, convert_empty_to_uuid)
 	{
-		EXPECT_THROW(fixed_variant().as_uuid(), exceptions::empty_cast_error);
-	}
-
-	TEST(fixed_variant, convert_empty_to_uuid_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -261,6 +329,44 @@ namespace hypertech::kaos::core::types::unittests
 
 			EXPECT_EQ(e.source(), typeid(void));
 			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_empty_to_vector)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant().as_vector();
+		}
+		catch (exceptions::empty_cast_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(void));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::vector_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_empty_to_map)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant().as_map();
+		}
+		catch (exceptions::empty_cast_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(void));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::map_type));
 		}
 
 		EXPECT_TRUE(exception_caught);
@@ -295,6 +401,14 @@ namespace hypertech::kaos::core::types::unittests
 		value = false;
 		EXPECT_EQ(value.type(), fixed_variant::tag_type::Boolean);
 		EXPECT_FALSE(value.as_boolean());
+	}
+
+	TEST(fixed_variant, visit_boolean)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(true).accept(visitor);
+		EXPECT_TRUE(visitor.boolean_value_.has_value());
 	}
 
 	TEST(fixed_variant, convert_boolean_to_boolean)
@@ -342,12 +456,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_boolean_to_path)
 	{
 		//	bool -> path
-		EXPECT_THROW(fixed_variant(fixed_variant::boolean_type(false)).as_path(), exceptions::incompatible_type_error);
-		EXPECT_THROW(fixed_variant(fixed_variant::boolean_type(true)).as_path(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_boolean_to_path_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -375,11 +483,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_boolean_to_uuid)
 	{
 		//	bool -> uuid
-		EXPECT_THROW(fixed_variant(fixed_variant::boolean_type(true)).as_uuid(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_boolean_to_uuid_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -392,6 +495,46 @@ namespace hypertech::kaos::core::types::unittests
 
 			EXPECT_EQ(e.source(), typeid(fixed_variant::boolean_type));
 			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_boolean_to_vector)
+	{
+		//	bool -> vector
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::boolean_type(true)).as_vector();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::boolean_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::vector_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_boolean_to_map)
+	{
+		//	bool -> map
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::boolean_type(true)).as_map();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::boolean_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::map_type));
 		}
 
 		EXPECT_TRUE(exception_caught);
@@ -417,6 +560,14 @@ namespace hypertech::kaos::core::types::unittests
 		value = 7LL;
 		EXPECT_EQ(value.type(), fixed_variant::tag_type::Integer);
 		EXPECT_EQ(value.as_integer(), 7);
+	}
+
+	TEST(fixed_variant, visit_integer)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(100LL).accept(visitor);
+		EXPECT_TRUE(visitor.integer_value_.has_value());
 	}
 
 	TEST(fixed_variant, convert_integer_to_boolean)
@@ -536,11 +687,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_integer_to_path)
 	{
 		//	int -> path
-		EXPECT_THROW(fixed_variant(fixed_variant::integer_type(0)).as_path(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_integer_to_path_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -568,11 +714,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_integer_to_uuid)
 	{
 		//	int -> uuid
-		EXPECT_THROW(fixed_variant(fixed_variant::integer_type(0)).as_uuid(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_integer_to_uuid_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -585,6 +726,46 @@ namespace hypertech::kaos::core::types::unittests
 
 			EXPECT_EQ(e.source(), typeid(fixed_variant::integer_type));
 			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_integer_to_vector)
+	{
+		//	integer -> vector
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::integer_type(0)).as_vector();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::integer_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::vector_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_integer_to_map)
+	{
+		//	integer -> map
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::integer_type(0)).as_map();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::integer_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::map_type));
 		}
 
 		EXPECT_TRUE(exception_caught);
@@ -609,6 +790,14 @@ namespace hypertech::kaos::core::types::unittests
 		value = 7ULL;
 		EXPECT_EQ(value.type(), fixed_variant::tag_type::Unsigned);
 		EXPECT_EQ(value.as_unsigned(), 7);
+	}
+
+	TEST(fixed_variant, visit_unsigned)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(100ULL).accept(visitor);
+		EXPECT_TRUE(visitor.unsigned_value_.has_value());
 	}
 
 	TEST(fixed_variant, convert_unsigned_to_boolean)
@@ -702,11 +891,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_unsigned_to_path)
 	{
 		//	unsigned -> path
-		EXPECT_THROW(fixed_variant(fixed_variant::unsigned_type(0)).as_path(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_unsigned_to_path_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -734,11 +918,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_unsigned_to_uuid)
 	{
 		//	unsigned -> uuid
-		EXPECT_THROW(fixed_variant(fixed_variant::unsigned_type(0)).as_uuid(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_unsigned_to_uuid_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -751,6 +930,46 @@ namespace hypertech::kaos::core::types::unittests
 
 			EXPECT_EQ(e.source(), typeid(fixed_variant::unsigned_type));
 			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_unsigned_to_vector)
+	{
+		//	unsigned -> vector
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::unsigned_type(0)).as_vector();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::unsigned_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::vector_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_unsigned_to_map)
+	{
+		//	unsigned -> map
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::unsigned_type(0)).as_map();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::unsigned_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::map_type));
 		}
 
 		EXPECT_TRUE(exception_caught);
@@ -775,6 +994,14 @@ namespace hypertech::kaos::core::types::unittests
 		value = 7.f;
 		EXPECT_EQ(value.type(), fixed_variant::tag_type::Float);
 		EXPECT_EQ(value.as_float(), 7.f);
+	}
+
+	TEST(fixed_variant, visit_float)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(100.0f).accept(visitor);
+		EXPECT_TRUE(visitor.float_value_.has_value());
 	}
 
 	TEST(fixed_variant, convert_float_to_boolean)
@@ -932,11 +1159,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_float_to_path)
 	{
 		//	float -> path
-		EXPECT_THROW(fixed_variant(fixed_variant::float_type(0)).as_path(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_float_to_path_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -964,11 +1186,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_float_to_uuid)
 	{
 		//	float -> uuid
-		EXPECT_THROW(fixed_variant(fixed_variant::float_type(0)).as_uuid(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_float_to_uuid_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -981,6 +1198,46 @@ namespace hypertech::kaos::core::types::unittests
 
 			EXPECT_EQ(e.source(), typeid(fixed_variant::float_type));
 			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_float_to_vector)
+	{
+		//	float -> vector
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::float_type(0)).as_vector();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::float_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::vector_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_float_to_map)
+	{
+		//	float -> map
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::float_type(0)).as_map();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::float_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::map_type));
 		}
 
 		EXPECT_TRUE(exception_caught);
@@ -1005,6 +1262,14 @@ namespace hypertech::kaos::core::types::unittests
 		value = 7.0;
 		EXPECT_EQ(value.type(), fixed_variant::tag_type::Double);
 		EXPECT_EQ(value.as_double(), 7.f);
+	}
+
+	TEST(fixed_variant, visit_double)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(100.0).accept(visitor);
+		EXPECT_TRUE(visitor.double_value_.has_value());
 	}
 
 	TEST(fixed_variant, convert_double_to_boolean)
@@ -1215,11 +1480,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_double_to_path)
 	{
 		//	double -> path
-		EXPECT_THROW(fixed_variant(fixed_variant::double_type(0)).as_path(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_double_to_path_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -1247,11 +1507,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_double_to_uuid)
 	{
 		//	double -> uuid
-		EXPECT_THROW(fixed_variant(fixed_variant::double_type(0)).as_uuid(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_double_to_uuid_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -1264,6 +1519,46 @@ namespace hypertech::kaos::core::types::unittests
 
 			EXPECT_EQ(e.source(), typeid(fixed_variant::double_type));
 			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_double_to_vector)
+	{
+		//	double -> vector
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::double_type(0)).as_vector();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::double_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::vector_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_double_to_map)
+	{
+		//	double -> map
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::double_type(0)).as_map();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::double_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::map_type));
 		}
 
 		EXPECT_TRUE(exception_caught);
@@ -1290,6 +1585,14 @@ namespace hypertech::kaos::core::types::unittests
 		value = "world";
 		EXPECT_EQ(value.type(), fixed_variant::tag_type::String);
 		EXPECT_EQ(value.as_string(), "world");
+	}
+
+	TEST(fixed_variant, visit_string)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant("hello world!").accept(visitor);
+		EXPECT_TRUE(visitor.string_value_.has_value());
 	}
 
 	TEST(fixed_variant, convert_string_to_boolean)
@@ -1661,6 +1964,43 @@ namespace hypertech::kaos::core::types::unittests
 		EXPECT_TRUE(exception_caught);
 	}
 
+	TEST(fixed_variant, convert_string_to_vector)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant("00010203-0405-0607").as_vector();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::string_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::vector_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_string_to_map)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant("00010203-0405-0607").as_map();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::string_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::map_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
 #pragma endregion
 
 
@@ -1683,6 +2023,14 @@ namespace hypertech::kaos::core::types::unittests
 		EXPECT_EQ(value.as_path(), "world");
 	}
 
+	TEST(fixed_variant, visit_path)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(fixed_variant::path_type("/path")).accept(visitor);
+		EXPECT_TRUE(visitor.path_value_.has_value());
+	}
+
 	//	FIXME: Need exception checks for types other than color
 	TEST(fixed_variant, convert_path)
 	{
@@ -1697,11 +2045,6 @@ namespace hypertech::kaos::core::types::unittests
 	}
 
 	TEST(fixed_variant, convert_path_to_color)
-	{
-		EXPECT_THROW(fixed_variant(fixed_variant::path_type()).as_color(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_path_to_color_exception_typeinfo)
 	{
 		bool exception_caught(false);
 
@@ -1722,11 +2065,6 @@ namespace hypertech::kaos::core::types::unittests
 
 	TEST(fixed_variant, convert_path_to_uuid)
 	{
-		EXPECT_THROW(fixed_variant(fixed_variant::path_type()).as_uuid(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_path_to_uuid_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -1739,6 +2077,44 @@ namespace hypertech::kaos::core::types::unittests
 
 			EXPECT_EQ(e.source(), typeid(fixed_variant::path_type));
 			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_path_to_vector)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::path_type()).as_vector();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::path_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::vector_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_path_to_map)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(fixed_variant::path_type()).as_map();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::path_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::map_type));
 		}
 
 		EXPECT_TRUE(exception_caught);
@@ -1759,6 +2135,14 @@ namespace hypertech::kaos::core::types::unittests
 		v = color1color;
 		EXPECT_EQ(v.type(), fixed_variant::tag_type::Color);
 		EXPECT_EQ(v.as_color(), color1color);
+	}
+
+	TEST(fixed_variant, visit_color)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(fixed_variant::color_type(63, 127, 191, 255)).accept(visitor);
+		EXPECT_TRUE(visitor.color_value_.has_value());
 	}
 
 	TEST(fixed_variant, convert_color_to_boolean)
@@ -1825,12 +2209,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_color_to_path)
 	{
 		//	color -> path
-		EXPECT_THROW(color1value.as_path(), exceptions::incompatible_type_error);
-		EXPECT_THROW(color2value.as_path(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_color_to_path_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -1858,11 +2236,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_color_to_uuid)
 	{
 		//	color -> uuid
-		EXPECT_THROW(color1value.as_uuid(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_color_to_uuid_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -1875,6 +2248,46 @@ namespace hypertech::kaos::core::types::unittests
 
 			EXPECT_EQ(e.source(), typeid(fixed_variant::color_type));
 			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_color_to_vector)
+	{
+		//	color -> uuid
+		bool exception_caught(false);
+
+		try
+		{
+			color1value.as_vector();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::color_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::vector_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_color_to_map)
+	{
+		//	color -> uuid
+		bool exception_caught(false);
+
+		try
+		{
+			color1value.as_map();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::color_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::map_type));
 		}
 
 		EXPECT_TRUE(exception_caught);
@@ -1897,14 +2310,17 @@ namespace hypertech::kaos::core::types::unittests
 		EXPECT_EQ(v.as_uuid(), raw_uuid);
 	}
 
+	TEST(fixed_variant, visit_uuid)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(fixed_variant::uuid_type()).accept(visitor);
+		EXPECT_TRUE(visitor.uuid_value_.has_value());
+	}
+
 	TEST(fixed_variant, convert_uuid_to_boolean)
 	{
 		//	uuid -> bool
-		EXPECT_THROW(uuid_value.as_boolean(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_uuid_to_boolean_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -1925,11 +2341,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_uuid_to_integer)
 	{
 		//	uuid -> integer
-		EXPECT_THROW(uuid_value.as_integer(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_uuid_to_integer_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -1950,11 +2361,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_uuid_to_unsigned)
 	{
 		//	uuid -> unsigned
-		EXPECT_THROW(uuid_value.as_unsigned(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_uuid_to_unsigned_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -1975,11 +2381,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_uuid_to_float)
 	{
 		//	uuid -> float
-		EXPECT_THROW(uuid_value.as_float(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_uuid_to_float_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -2000,11 +2401,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_uuid_to_double)
 	{
 		//	uuid -> double
-		EXPECT_THROW(uuid_value.as_double(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_uuid_to_double_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -2031,11 +2427,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_uuid_to_path)
 	{
 		//	uuid -> path
-		EXPECT_THROW(uuid_value.as_path(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_uuid_to_path_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -2056,11 +2447,6 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_uuid_to_color)
 	{
 		//	uuid -> color
-		EXPECT_THROW(uuid_value.as_color(), exceptions::incompatible_type_error);
-	}
-
-	TEST(fixed_variant, convert_uuid_to_color_exception_typeinfo)
-	{
 		bool exception_caught(false);
 
 		try
@@ -2082,6 +2468,659 @@ namespace hypertech::kaos::core::types::unittests
 	{
 		//	uuid -> uuid
 		EXPECT_EQ(uuid_value.as_uuid(), raw_uuid);
+	}
+
+	TEST(fixed_variant, convert_uuid_to_vector)
+	{
+		//	uuid -> color
+		bool exception_caught(false);
+
+		try
+		{
+			uuid_value.as_vector();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::uuid_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::vector_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_uuid_to_map)
+	{
+		//	uuid -> color
+		bool exception_caught(false);
+
+		try
+		{
+			uuid_value.as_map();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::uuid_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::map_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+#pragma endregion
+
+
+#pragma region Vector value
+	TEST(fixed_variant, create_vector_copy)
+	{
+		fixed_variant::vector_type tmp_vector;
+
+		tmp_vector.push_back(color1value);
+		tmp_vector.push_back(color2value);
+
+		fixed_variant vector(tmp_vector);
+		EXPECT_EQ(vector.type(), fixed_variant::tag_type::Vector);
+		EXPECT_EQ(vector.as_vector(), tmp_vector);
+	}
+
+	TEST(fixed_variant, create_vector_move)
+	{
+		fixed_variant::vector_type tmp1_vector;
+
+		tmp1_vector.push_back(color1value);
+		tmp1_vector.push_back(color2value);
+
+		fixed_variant::vector_type tmp2_vector(tmp1_vector);
+
+		fixed_variant vector(move(tmp2_vector));
+		EXPECT_TRUE(tmp2_vector.empty());
+		EXPECT_EQ(vector.type(), fixed_variant::tag_type::Vector);
+		EXPECT_EQ(vector.as_vector(), tmp1_vector);
+	}
+
+	TEST(fixed_variant, assign_vector_copy)
+	{
+		fixed_variant::vector_type tmp_vector;
+
+		tmp_vector.push_back(color1value);
+		tmp_vector.push_back(color2value);
+
+		fixed_variant vector;
+
+		vector = tmp_vector;
+		EXPECT_EQ(vector.type(), fixed_variant::tag_type::Vector);
+		EXPECT_EQ(vector.as_vector(), tmp_vector);
+	}
+
+	TEST(fixed_variant, assign_vector_move)
+	{
+		fixed_variant::vector_type tmp1_vector;
+
+		tmp1_vector.push_back(color1value);
+		tmp1_vector.push_back(color2value);
+
+		fixed_variant::vector_type tmp2_vector(tmp1_vector);
+
+		fixed_variant vector;
+		
+		vector = move(tmp2_vector);
+		EXPECT_EQ(vector.type(), fixed_variant::tag_type::Vector);
+		EXPECT_TRUE(tmp2_vector.empty());
+		EXPECT_EQ(vector.as_vector(), tmp1_vector);
+	}
+
+	TEST(fixed_variant, visit_vector)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(fixed_variant::vector_type()).accept(visitor);
+		EXPECT_TRUE(visitor.vector_value_.has_value());
+	}
+
+	TEST(fixed_variant, convert_vector_to_boolean)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(vector1vector).as_boolean();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::vector_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::boolean_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_vector_to_integer)
+	{
+		//	vector -> int
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(vector1vector).as_integer();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::vector_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::integer_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_vector_to_unsigned)
+	{
+		//	vector -> unsigned
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(vector1vector).as_unsigned();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::vector_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::unsigned_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_vector_to_float)
+	{
+		//	vector -> float
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(vector1vector).as_float();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::vector_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::float_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_vector_to_double)
+	{
+		//	vector -> double
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(vector1vector).as_double();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::vector_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::double_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_vector_to_string)
+	{
+		//	vector -> string
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(vector1vector).as_string();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::vector_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::string_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_vector_to_path)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(vector1vector).as_path();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::vector_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::path_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_vector_to_color)
+	{
+		//	vector -> color
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(vector1vector).as_color();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::vector_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::color_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_vector_to_uuid)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(vector1vector).as_uuid();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::vector_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_vector_to_vector)
+	{
+		//	vector -> vector
+		fixed_variant vector(vector1vector);
+		EXPECT_EQ(vector.as_vector(), vector1vector);
+	}
+
+	TEST(fixed_variant, convert_vector_to_const_vector)
+	{
+		//	vector -> vector
+		const fixed_variant vector(vector1vector);
+		EXPECT_EQ(vector.as_vector(), vector1vector);
+	}
+
+	TEST(fixed_variant, convert_vector_to_vector_copy)
+	{
+		//	vector -> vector
+		const fixed_variant vector(vector1vector);
+		EXPECT_EQ(vector.as_vector_copy(), vector1vector);
+	}
+
+	TEST(fixed_variant, convert_vector_to_map)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(vector1vector).as_map();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::vector_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::map_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+#pragma endregion
+
+
+#pragma region Map value
+	TEST(fixed_variant, create_map_copy)
+	{
+		fixed_variant::map_type tmp_map;
+
+		tmp_map["first"] = color1value;
+		tmp_map["second"] = color2value;
+
+		fixed_variant map(tmp_map);
+		EXPECT_EQ(map.type(), fixed_variant::tag_type::Map);
+		EXPECT_EQ(map.as_map(), tmp_map);
+	}
+
+	TEST(fixed_variant, create_map_move)
+	{
+		fixed_variant::map_type tmp1_map;
+
+		tmp1_map["first"] = color1value;
+		tmp1_map["second"] = color2value;
+
+		fixed_variant::map_type tmp2_map(tmp1_map);
+
+		fixed_variant map(move(tmp2_map));
+		EXPECT_TRUE(tmp2_map.empty());
+		EXPECT_EQ(map.type(), fixed_variant::tag_type::Map);
+		EXPECT_EQ(map.as_map(), tmp1_map);
+	}
+
+	TEST(fixed_variant, assign_map_copy)
+	{
+		fixed_variant::map_type tmp_map;
+
+		tmp_map["first"] = color1value;
+		tmp_map["second"] = color2value;
+
+		fixed_variant map;
+
+		map = tmp_map;
+		EXPECT_EQ(map.type(), fixed_variant::tag_type::Map);
+		EXPECT_EQ(map.as_map(), tmp_map);
+	}
+
+	TEST(fixed_variant, assign_map_move)
+	{
+		fixed_variant::map_type tmp1_map;
+
+		tmp1_map["first"] = color1value;
+		tmp1_map["second"] = color2value;
+
+		fixed_variant::map_type tmp2_map(tmp1_map);
+
+		fixed_variant map;
+
+		map = move(tmp2_map);
+		EXPECT_EQ(map.type(), fixed_variant::tag_type::Map);
+		EXPECT_TRUE(tmp2_map.empty());
+		EXPECT_EQ(map.as_map(), tmp1_map);
+	}
+
+	TEST(fixed_variant, visit_map)
+	{
+		fixed_variant_test_visitor visitor;
+
+		fixed_variant(fixed_variant::map_type()).accept(visitor);
+		EXPECT_TRUE(visitor.map_value_.has_value());
+	}
+
+	TEST(fixed_variant, convert_map_to_boolean)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(map1map).as_boolean();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::map_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::boolean_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_map_to_integer)
+	{
+		//	map -> int
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(map1map).as_integer();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::map_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::integer_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_map_to_unsigned)
+	{
+		//	map -> unsigned
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(map1map).as_unsigned();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::map_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::unsigned_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_map_to_float)
+	{
+		//	map -> float
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(map1map).as_float();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::map_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::float_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_map_to_double)
+	{
+		//	map -> double
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(map1map).as_double();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::map_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::double_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_map_to_string)
+	{
+		//	map -> string
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(map1map).as_string();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::map_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::string_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_map_to_path)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(map1map).as_path();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::map_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::path_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_map_to_color)
+	{
+		//	map -> color
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(map1map).as_color();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::map_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::color_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_map_to_uuid)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(map1map).as_uuid();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::map_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::uuid_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_map_to_vector)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant map(map1map);
+			map.as_vector();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::map_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::vector_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_map_to_vector_const)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			const fixed_variant map(map1map);
+			map.as_vector();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::map_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::vector_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_map_to_vector_copy)
+	{
+		bool exception_caught(false);
+
+		try
+		{
+			fixed_variant(map1map).as_vector_copy();
+		}
+		catch (exceptions::incompatible_type_error& e)
+		{
+			exception_caught = true;
+
+			EXPECT_EQ(e.source(), typeid(fixed_variant::map_type));
+			EXPECT_EQ(e.target(), typeid(fixed_variant::vector_type));
+		}
+
+		EXPECT_TRUE(exception_caught);
+	}
+
+	TEST(fixed_variant, convert_map_to_map)
+	{
+		//	map -> map
+		fixed_variant map(map1map);
+		EXPECT_EQ(map.as_map(), map1map);
+	}
+
+	TEST(fixed_variant, convert_map_to_const_map)
+	{
+		//	map -> map
+		const fixed_variant map(map1map);
+		EXPECT_EQ(map.as_map(), map1map);
+	}
+
+	TEST(fixed_variant, convert_map_to_map_copy)
+	{
+		//	map -> map
+		const fixed_variant map(map1map);
+		EXPECT_EQ(map.as_map_copy(), map1map);
 	}
 #pragma endregion
 

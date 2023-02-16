@@ -14,15 +14,14 @@ namespace hypertech::kaos::assetfoo::images::mge
 
 
 	std::unique_ptr<asset> mge_image_reader::load(
-		std::istream& input_stream,
-		const filename_type& source_name)
+		std::istream& input_stream)
 	try
 	{
 		binary_reader reader(input_stream, binary_reader::ordering_type::big);
 
 		if (reader.read_enum<uint8_t, format_details::image_types>() != format_details::image_types::color_320x200_4bpp)
 		{
-			throw core::exceptions::file_format_error("unknown image type specified in " + source_name);
+			throw core::exceptions::file_format_error("unknown image type specified in " + source_name_);
 		}
 
 		const auto native_color_map(reader.read_vector<native_packed_color_type>(format_details::colormap_length));
@@ -39,11 +38,11 @@ namespace hypertech::kaos::assetfoo::images::mge
 		const auto& layout(pixels::packed_pixel_layout::BPP4);
 		if (is_compressed)
 		{
-			load_compressed_pixel_data(reader, *image, *colormap, layout, source_name);
+			load_compressed_pixel_data(reader, *image, *colormap, layout);
 		}
 		else
 		{
-			load_uncompressed_pixel_data(reader, *image, *colormap, layout, source_name);
+			load_uncompressed_pixel_data(reader, *image, *colormap, layout);
 		}
 
 		image->set_attribute(attributes::title, title);
@@ -58,7 +57,7 @@ namespace hypertech::kaos::assetfoo::images::mge
 	catch (core::exceptions::end_of_file_error&)
 	{
 		throw core::exceptions::file_format_error(
-			"image file format error: attempt to read past end of file `" + source_name + "`");
+			"image file format error: attempt to read past end of file `" + source_name_ + "`");
 	}
 
 
@@ -66,8 +65,7 @@ namespace hypertech::kaos::assetfoo::images::mge
 		core::io::binary_reader& reader,
 		image_type& image,
 		const color_map_type& colormap,
-		const pixels::packed_pixel_layout& layout,
-		const filename_type& source_name) const
+		const pixels::packed_pixel_layout& layout) const
 	try
 	{
 		const auto bpp(layout.bits_per_pixel());
@@ -88,7 +86,7 @@ namespace hypertech::kaos::assetfoo::images::mge
 	{
 		throw core::exceptions::file_format_error(
 			"image file format error: attempt to read past end of file while processing compressed image data of `"
-			+ source_name + "`");
+			+ source_name_ + "`");
 	}
 
 }
