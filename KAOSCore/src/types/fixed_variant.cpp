@@ -472,6 +472,7 @@ namespace hypertech::kaos::core::types
 		throw std::runtime_error("Unknown value type encountered in conversion to string");
 	}
 
+	//	FIXME: We need a "source type" argument to handle converting different types to KAOS RGBA.
 	fixed_variant::color_type fixed_variant::as_color() const
 	{
 		switch (type())
@@ -639,6 +640,7 @@ namespace hypertech::kaos::core::types
 			{
 				//	Adapted from boost issue #5494
 				const auto& value(std::get<string_type>(value_));
+				const bool is_float(value.find('.') != string_type::npos);
 
 				if constexpr (std::is_same<OutputType_, bool>::value)
 				{
@@ -656,6 +658,19 @@ namespace hypertech::kaos::core::types
 					{
 						return true;
 					}
+
+					if (is_float)
+					{
+						auto result(::boost::lexical_cast<double>(value));
+						if (result > 1.0)
+						{
+							throw exceptions::positive_overflow_error(typeid(string_type), typeid(OutputType_));
+						}
+
+						return result != 0.0;
+					}
+
+					return extended_numeric_cast<OutputType_>(::boost::lexical_cast<unsigned_type>(value));
 				}
 
 				if (lexical_precheck<std::is_unsigned<OutputType_>::value>::is_negative(value))
@@ -663,11 +678,16 @@ namespace hypertech::kaos::core::types
 					throw exceptions::negative_overflow_error(typeid(string_type), typeid(OutputType_));
 				}
 
+				if (is_float)
+				{
+					return extended_numeric_cast<OutputType_>(::boost::lexical_cast<double>(value));
+				}
+
 				return ::boost::lexical_cast<OutputType_>(value);
 			}
-			catch (::boost::bad_lexical_cast& e)
+			catch (::boost::bad_lexical_cast&)
 			{
-				throw exceptions::lexical_error(e.source_type(), e.target_type());
+				throw exceptions::lexical_error(typeid(string_type), typeid(OutputType_));
 			}
 
 		case tag_type::Path:
