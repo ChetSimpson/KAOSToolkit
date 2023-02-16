@@ -189,92 +189,60 @@ namespace hypertech::kaos::core::types
 
 
 #pragma region Construction
-	fixed_variant::fixed_variant() noexcept
-		: type_(tag_type::Empty)
-	{}
-
 	fixed_variant::fixed_variant(const boolean_type& value) noexcept
-		:
-		type_(tag_type::Boolean),
-		value_(value)
+		: value_(value)
 	{}
 
 	fixed_variant::fixed_variant(const integer_type& value) noexcept
-		:
-		type_(tag_type::Integer),
-		value_(value)
+		: value_(value)
 	{}
 
 	fixed_variant::fixed_variant(const unsigned_type& value) noexcept
-		:
-		type_(tag_type::Unsigned),
-		value_(value)
+		: value_(value)
 	{}
 
 	fixed_variant::fixed_variant(const float_type& value) noexcept
-		:
-		type_(tag_type::Float),
-		value_(value)
+		: value_(value)
 	{}
 
 	fixed_variant::fixed_variant(const double_type& value) noexcept
-		:
-		type_(tag_type::Double),
-		value_(value)
+		: value_(value)
 	{}
 
 	fixed_variant::fixed_variant(string_type value) noexcept
-		: 
-		type_(tag_type::String),
-		value_(move(value))
+		: value_(move(value))
 	{}
 
 	fixed_variant::fixed_variant(const char* value) throw()
-		: 
-		type_(tag_type::String),
-		value_(string_type(value))
+		: value_(string_type(value))
 	{}
 
 	fixed_variant::fixed_variant(path_type path) noexcept
-		:
-		type_(tag_type::Path),
-		value_(std::move(path))
+		: value_(std::move(path))
 	{}
 
 	fixed_variant::fixed_variant(color_type value) noexcept
-		:
-		type_(tag_type::Color),
-		value_(value)
+		: value_(value)
 	{}
 
 	fixed_variant::fixed_variant(const uuid_type& value) noexcept
-		:
-		type_(tag_type::Uuid),
-		value_(value)
+		: value_(value)
 	{}
 
 	fixed_variant::fixed_variant(vector_type&& value) noexcept
-		:
-		type_(tag_type::Vector),
-		value_(move(value))
+		: value_(move(value))
 	{}
 
 	fixed_variant::fixed_variant(const vector_type &value) noexcept
-		:
-		type_(tag_type::Vector),
-		value_(value)
+		: value_(value)
 	{}
 
 	fixed_variant::fixed_variant(map_type&& value) noexcept
-		:
-		type_(tag_type::Map),
-		value_(move(value))
+		: value_(move(value))
 	{}
 
 	fixed_variant::fixed_variant(const map_type &value) noexcept
-		:
-		type_(tag_type::Map),
-		value_(value)
+		: value_(value)
 	{}
 
 #pragma endregion
@@ -285,7 +253,6 @@ namespace hypertech::kaos::core::types
 #pragma region Assignment
 	fixed_variant& fixed_variant::operator=(const nullptr_t&) noexcept
 	{
-		type_ = tag_type::Empty;
 		value_ = decltype(value_)();
 
 		return *this;
@@ -294,7 +261,6 @@ namespace hypertech::kaos::core::types
 	fixed_variant& fixed_variant::operator=(const boolean_type& value) noexcept
 	{
 		value_ = value;
-		type_ = tag_type::Boolean;
 
 		return *this;
 	}
@@ -302,7 +268,6 @@ namespace hypertech::kaos::core::types
 	fixed_variant& fixed_variant::operator=(const integer_type& value) noexcept
 	{
 		value_ = value;
-		type_ = tag_type::Integer;
 
 		return *this;
 	}
@@ -310,7 +275,6 @@ namespace hypertech::kaos::core::types
 	fixed_variant& fixed_variant::operator=(const unsigned_type& value) noexcept
 	{
 		value_ = value;
-		type_ = tag_type::Unsigned;
 
 		return *this;
 	}
@@ -318,7 +282,6 @@ namespace hypertech::kaos::core::types
 	fixed_variant& fixed_variant::operator=(const float_type& value) noexcept
 	{
 		value_ = value;
-		type_ = tag_type::Float;
 
 		return *this;
 	}
@@ -326,7 +289,6 @@ namespace hypertech::kaos::core::types
 	fixed_variant& fixed_variant::operator=(const double_type& value) noexcept
 	{
 		value_ = value;
-		type_ = tag_type::Double;
 
 		return *this;
 	}
@@ -334,7 +296,6 @@ namespace hypertech::kaos::core::types
 	fixed_variant& fixed_variant::operator=(string_type value) noexcept
 	{
 		value_ = move(value);
-		type_ = tag_type::String;
 
 		return *this;
 	}
@@ -347,7 +308,6 @@ namespace hypertech::kaos::core::types
 	fixed_variant& fixed_variant::operator=(path_type value) noexcept
 	{
 		value_ = std::move(value);
-		type_ = tag_type::Path;
 
 		return *this;
 	}
@@ -355,7 +315,6 @@ namespace hypertech::kaos::core::types
 	fixed_variant& fixed_variant::operator=(color_type value) noexcept
 	{
 		value_ = value;
-		type_ = tag_type::Color;
 
 		return *this;
 	}
@@ -363,7 +322,6 @@ namespace hypertech::kaos::core::types
 	fixed_variant& fixed_variant::operator=(const uuid_type& value) noexcept
 	{
 		value_ = value;
-		type_ = tag_type::Uuid;
 
 		return *this;
 	}
@@ -371,7 +329,6 @@ namespace hypertech::kaos::core::types
 	fixed_variant& fixed_variant::operator=(const vector_type& value)
 	{
 		value_ = value;
-		type_ = tag_type::Vector;
 
 		return *this;
 	}
@@ -379,7 +336,6 @@ namespace hypertech::kaos::core::types
 	fixed_variant& fixed_variant::operator=(vector_type&& value) noexcept
 	{
 		value_ = move(value);
-		type_ = tag_type::Vector;
 
 		return *this;
 	}
@@ -387,7 +343,6 @@ namespace hypertech::kaos::core::types
 	fixed_variant& fixed_variant::operator=(const map_type& value)
 	{
 		value_ = value;
-		type_ = tag_type::Map;
 
 		return *this;
 	}
@@ -395,7 +350,6 @@ namespace hypertech::kaos::core::types
 	fixed_variant& fixed_variant::operator=(map_type&& value) noexcept
 	{
 		value_ = move(value);
-		type_ = tag_type::Map;
 
 		return *this;
 	}
@@ -432,7 +386,7 @@ namespace hypertech::kaos::core::types
 
 	fixed_variant::string_type fixed_variant::as_string() const
 	{
-		switch (type_)
+		switch (type())
 		{
 		case tag_type::Empty:
 			throw exceptions::empty_cast_error(typeid(void), typeid(string_type));
@@ -476,7 +430,7 @@ namespace hypertech::kaos::core::types
 
 	fixed_variant::path_type fixed_variant::as_path() const
 	{
-		switch (type_)
+		switch (type())
 		{
 		case tag_type::Empty:
 			throw exceptions::empty_cast_error(typeid(void), typeid(path_type));
@@ -518,9 +472,10 @@ namespace hypertech::kaos::core::types
 		throw std::runtime_error("Unknown value type encountered in conversion to string");
 	}
 
+	//	FIXME: We need a "source type" argument to handle converting different types to KAOS RGBA.
 	fixed_variant::color_type fixed_variant::as_color() const
 	{
-		switch (type_)
+		switch (type())
 		{
 		case tag_type::Empty:
 			throw exceptions::empty_cast_error(typeid(void), typeid(color_type));
@@ -577,7 +532,7 @@ namespace hypertech::kaos::core::types
 
 	fixed_variant::uuid_type fixed_variant::as_uuid() const
 	{
-		switch (type_)
+		switch (type())
 		{
 		case tag_type::Empty:
 			throw exceptions::empty_cast_error(typeid(void), typeid(uuid_type));
@@ -660,7 +615,7 @@ namespace hypertech::kaos::core::types
 	template<class OutputType_>
 	OutputType_ fixed_variant::convert_value_to_primitive() const
 	{
-		switch (type_)
+		switch (type())
 		{
 		case tag_type::Empty:
 			throw exceptions::empty_cast_error(typeid(void), typeid(OutputType_));
@@ -685,6 +640,7 @@ namespace hypertech::kaos::core::types
 			{
 				//	Adapted from boost issue #5494
 				const auto& value(std::get<string_type>(value_));
+				const bool is_float(value.find('.') != string_type::npos);
 
 				if constexpr (std::is_same<OutputType_, bool>::value)
 				{
@@ -702,6 +658,19 @@ namespace hypertech::kaos::core::types
 					{
 						return true;
 					}
+
+					if (is_float)
+					{
+						auto result(::boost::lexical_cast<double>(value));
+						if (result > 1.0)
+						{
+							throw exceptions::positive_overflow_error(typeid(string_type), typeid(OutputType_));
+						}
+
+						return result != 0.0;
+					}
+
+					return extended_numeric_cast<OutputType_>(::boost::lexical_cast<unsigned_type>(value));
 				}
 
 				if (lexical_precheck<std::is_unsigned<OutputType_>::value>::is_negative(value))
@@ -709,11 +678,16 @@ namespace hypertech::kaos::core::types
 					throw exceptions::negative_overflow_error(typeid(string_type), typeid(OutputType_));
 				}
 
+				if (is_float)
+				{
+					return extended_numeric_cast<OutputType_>(::boost::lexical_cast<double>(value));
+				}
+
 				return ::boost::lexical_cast<OutputType_>(value);
 			}
-			catch (::boost::bad_lexical_cast& e)
+			catch (::boost::bad_lexical_cast&)
 			{
-				throw exceptions::lexical_error(e.source_type(), e.target_type());
+				throw exceptions::lexical_error(typeid(string_type), typeid(OutputType_));
 			}
 
 		case tag_type::Path:

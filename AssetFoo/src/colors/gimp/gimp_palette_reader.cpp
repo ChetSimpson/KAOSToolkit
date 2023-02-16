@@ -23,7 +23,7 @@ namespace hypertech::kaos::assetfoo::colors::gimp
 	const gimp_palette_reader::string_type gimp_palette_reader::header_fields::columns = "Columns: ";
 
 
-	std::unique_ptr<asset> gimp_palette_reader::load(std::istream& input_stream, const filename_type& source_name)
+	std::unique_ptr<asset> gimp_palette_reader::load(std::istream& input_stream)
 	{
 		std::vector<string_type> lines;
 		for (string_type line; getline(input_stream, line);)
@@ -33,14 +33,14 @@ namespace hypertech::kaos::assetfoo::colors::gimp
 
 		if (lines.empty())
 		{
-			throw exceptions::file_format_error("Unable to load empty GIMP palette file '" + source_name + "'");
+			throw exceptions::file_format_error("Unable to load empty GIMP palette file '" + source_name_ + "'");
 		}
 
 
 		auto line_ptr = lines.cbegin();
 		if (!line_ptr->starts_with("GIMP Palette"))
 		{
-			throw exceptions::file_format_error("Incorrect header in GIMP palette file '" + source_name + "'");
+			throw exceptions::file_format_error("Incorrect header in GIMP palette file '" + source_name_ + "'");
 		}
 
 		++line_ptr;
@@ -70,36 +70,36 @@ namespace hypertech::kaos::assetfoo::colors::gimp
 			int red;
 			if(!(color_parser >> red))
 			{
-				throw exceptions::file_format_error("Unable to parse red color component in line '" + *line_ptr +"' from file '" + source_name + "'");
+				throw exceptions::file_format_error("Unable to parse red color component in line '" + *line_ptr +"' from file '" + source_name_ + "'");
 			}
 
 			if (red < 0 || red > 255)
 			{
-				throw exceptions::file_format_error("Red color level is outside the expected range of 0 to 255 in line '" + *line_ptr +"' from file '" + source_name + "'");
+				throw exceptions::file_format_error("Red color level is outside the expected range of 0 to 255 in line '" + *line_ptr +"' from file '" + source_name_ + "'");
 			}
 
 			//	Read in level of green color component
 			int green;
 			if(!(color_parser >> green))
 			{
-				throw exceptions::file_format_error("Unable to parse green color component in line '" + *line_ptr +"' from file '" + source_name + "'");
+				throw exceptions::file_format_error("Unable to parse green color component in line '" + *line_ptr +"' from file '" + source_name_ + "'");
 			}
 
 			if (green < 0 || green > 255)
 			{
-				throw exceptions::file_format_error("Green color level is outside the expected range of 0 to 255 in line '" + *line_ptr +"' from file '" + source_name + "'");
+				throw exceptions::file_format_error("Green color level is outside the expected range of 0 to 255 in line '" + *line_ptr +"' from file '" + source_name_ + "'");
 			}
 
 			//	Read in level of blue color component
 			int blue;
 			if(!(color_parser >> blue))
 			{
-				throw exceptions::file_format_error("Unable to parse blue color component in line '" + *line_ptr +"' from file '" + source_name + "'");
+				throw exceptions::file_format_error("Unable to parse blue color component in line '" + *line_ptr +"' from file '" + source_name_ + "'");
 			}
 
 			if (blue < 0 || blue > 255)
 			{
-				throw exceptions::file_format_error("Blue color level is outside the expected range of 0 to 255 in line '" + *line_ptr +"' from file '" + source_name + "'");
+				throw exceptions::file_format_error("Blue color level is outside the expected range of 0 to 255 in line '" + *line_ptr +"' from file '" + source_name_ + "'");
 			}
 
 			//auto comment = algorithm::trim({ std::istreambuf_iterator<char>(color_parser), {} });

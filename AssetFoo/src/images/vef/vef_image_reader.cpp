@@ -22,9 +22,7 @@ namespace hypertech::kaos::assetfoo::images::vef
 		{ { 640, 200 }, pixels::packed_pixel_layout::BPP1}
 	}};
 
-	std::unique_ptr<asset> vef_image_reader::load(
-		std::istream& input_stream,
-		const filename_type& source_name)
+	std::unique_ptr<asset> vef_image_reader::load(std::istream& input_stream)
 	try
 	{
 		binary_reader reader(input_stream, binary_reader::ordering_type::big);
@@ -33,7 +31,7 @@ namespace hypertech::kaos::assetfoo::images::vef
 		const auto image_descriptor_id(reader.read<uint8_t>());
 		if (image_descriptor_id >= image_type_descriptors.size())
 		{
-			throw core::exceptions::file_format_error("invalid image type in `" + source_name + "`");
+			throw core::exceptions::file_format_error("invalid image type in `" + source_name_ + "`");
 		}
 		const auto& image_descriptor(image_type_descriptors[image_descriptor_id]);
 		const auto native_color_space(color_space_type::rgb);
@@ -46,11 +44,11 @@ namespace hypertech::kaos::assetfoo::images::vef
 
 		if (is_compressed)
 		{
-			load_compressed_pixel_data(reader, *image, *colormap, image_descriptor.layout, source_name);
+			load_compressed_pixel_data(reader, *image, *colormap, image_descriptor.layout);
 		}
 		else
 		{
-			load_uncompressed_pixel_data(reader, *image, *colormap, image_descriptor.layout, source_name);
+			load_uncompressed_pixel_data(reader, *image, *colormap, image_descriptor.layout);
 		}
 
 		image->set_attribute(attributes::native_color_space, native_color_space);
@@ -61,7 +59,7 @@ namespace hypertech::kaos::assetfoo::images::vef
 	catch (core::exceptions::end_of_file_error&)
 	{
 		throw core::exceptions::file_format_error(
-			"image file format error: attempt to read past end of file `" + source_name + "`");
+			"image file format error: attempt to read past end of file `" + source_name_ + "`");
 	}
 
 
@@ -69,8 +67,7 @@ namespace hypertech::kaos::assetfoo::images::vef
 		core::io::binary_reader& reader,
 		image_type& image,
 		const color_map_type& colormap,
-		const pixels::packed_pixel_layout& layout,
-		const filename_type& source_name) const
+		const pixels::packed_pixel_layout& layout) const
 	try
 	{
 		const auto bpp(layout.bits_per_pixel());
@@ -109,7 +106,7 @@ namespace hypertech::kaos::assetfoo::images::vef
 	{
 		throw core::exceptions::file_format_error(
 			"image file format error: attempt to read past end of file while processing compressed image data of `"
-			+ source_name + "`");
+			+ source_name_ + "`");
 	}
 
 }

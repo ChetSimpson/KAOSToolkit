@@ -16,7 +16,7 @@ namespace hypertech::kaos::assetfoo::images::tc1014
 {
 
 	/// @brief Image reader for TC1014 (Tandy Color Computer 3) based images
-	class tc1014_image_reader : public binary_asset_reader
+	class tc1014_image_reader : public asset_reader
 	{
 	public:
 
@@ -71,9 +71,6 @@ namespace hypertech::kaos::assetfoo::images::tc1014
 		/// @param image The RGBA image to load the converted image data into
 		/// @param colormap The colormap used to map color indexes to.
 		/// @param layout The pixel layout of the image data
-		/// @param source_name The name of the image file being loaded. This may be a filename or
-		/// another name describing the source of the image such as a network stream or a memory
-		/// buffer.
 		/// 
 		/// @exception hypertech::kaos::core::exceptions::file_format_error Thrown if invalid data
 		/// is encountered while decoding the image or if the decoding attemps to read past
@@ -82,8 +79,7 @@ namespace hypertech::kaos::assetfoo::images::tc1014
 			core::io::binary_reader& reader,
 			image& image,
 			const color_map_type& colormap,
-			const pixels::packed_pixel_layout& layout,
-			const filename_type& source_name) const;
+			const pixels::packed_pixel_layout& layout) const;
 
 		/// @brief Get a reference to the color converter
 		/// 

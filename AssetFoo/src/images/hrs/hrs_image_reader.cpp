@@ -13,9 +13,7 @@ namespace hypertech::kaos::assetfoo::images::hrs
 
 	using core::io::binary_reader;
 
-	std::unique_ptr<asset> hrs_image_reader::load(
-		std::istream& input_stream,
-		const filename_type& source_name)
+	std::unique_ptr<asset> hrs_image_reader::load(std::istream& input_stream)
 	try
 	{
 		binary_reader reader(input_stream, binary_reader::ordering_type::big);
@@ -26,7 +24,7 @@ namespace hypertech::kaos::assetfoo::images::hrs
 
 		auto image(std::make_unique<image_type>(format_details::dimensions));
 
-		load_uncompressed_pixel_data(reader, *image, *colormap, format_details::pixel_layout, source_name);
+		load_uncompressed_pixel_data(reader, *image, *colormap, format_details::pixel_layout);
 
 		image->set_attribute(attributes::native_color_space, native_color_space);
 		image->set_attribute(attributes::native_color_map, native_color_map);
@@ -36,7 +34,7 @@ namespace hypertech::kaos::assetfoo::images::hrs
 	catch (core::exceptions::end_of_file_error&)
 	{
 		throw core::exceptions::file_format_error(
-			"image file format error: attempt to read past end of file `" + source_name + "`");
+			"image file format error: attempt to read past end of file `" + source_name_ + "`");
 	}
 
 }
