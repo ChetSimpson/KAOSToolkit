@@ -14,20 +14,20 @@ namespace hypertech::kaos::assetfoo::images::cm3
 	using core::io::binary_reader;
 	using core::utility::bit_reader;
 
-	const asset::attribute_def<cm3_image_reader::size_type>
-		cm3_image_reader::attributes::color_animation_rate("color_animation_rate");
-	const asset::attribute_def<cm3_image_reader::size_type>
-		cm3_image_reader::attributes::color_animation_start_index("color_animation_start_index");
-	const asset::attribute_def<cm3_image_reader::size_type>
-		cm3_image_reader::attributes::color_animation_end_index("color_animation_end_index");
-	const asset::attribute_def<cm3_image_reader::size_type>
-		cm3_image_reader::attributes::color_cycle_rate("color_cycle_rate");
-	const asset::attribute_def<cm3_image_reader::size_type>
-		cm3_image_reader::attributes::color_cycle_index("color_cycle_index");
-	const asset::attribute_def<cm3_image_reader::cycle_colors_list_type>
-		cm3_image_reader::attributes::color_cycle_colors("color_cycle_colors");
-	const asset::attribute_def<cm3_image_reader::pattern_list_type>
-		cm3_image_reader::attributes::patterns("patterns");
+	const cm3_image_attributes::attribute_definition<cm3_image_reader::size_type>
+		cm3_image_attributes::color_animation_rate("color_animation_rate");
+	const cm3_image_attributes::attribute_definition<cm3_image_reader::size_type>
+		cm3_image_attributes::color_animation_start_index("color_animation_start_index");
+	const cm3_image_attributes::attribute_definition<cm3_image_reader::size_type>
+		cm3_image_attributes::color_animation_end_index("color_animation_end_index");
+	const cm3_image_attributes::attribute_definition<cm3_image_reader::size_type>
+		cm3_image_attributes::color_cycle_rate("color_cycle_rate");
+	const cm3_image_attributes::attribute_definition<cm3_image_reader::size_type>
+		cm3_image_attributes::color_cycle_index("color_cycle_index");
+	const cm3_image_attributes::attribute_definition<cm3_image_reader::cycle_colors_list_type>
+		cm3_image_attributes::color_cycle_colors("color_cycle_colors");
+	const cm3_image_attributes::attribute_definition<cm3_image_reader::pattern_list_type>
+		cm3_image_attributes::patterns("patterns");
 
 
 	std::unique_ptr<asset> cm3_image_reader::load(std::istream& input_stream)

@@ -8,13 +8,13 @@
 namespace hypertech::kaos::assetfoo::images::mge
 {
 
-	const asset::attribute_def<mge_image_attributes::string_type>
+	const mge_image_attributes::attribute_definition<mge_image_attributes::string_type>
 		mge_image_attributes::title("title");
-	const asset::attribute_def<mge_image_attributes::size_type>
+	const mge_image_attributes::attribute_definition<mge_image_attributes::size_type>
 		mge_image_attributes::color_animation_rate("color_animation_rate");
-	const asset::attribute_def<mge_image_attributes::size_type>
+	const mge_image_attributes::attribute_definition<mge_image_attributes::size_type>
 		mge_image_attributes::color_animation_start_index("color_animation_start_index");
-	const asset::attribute_def<mge_image_attributes::size_type>
+	const mge_image_attributes::attribute_definition<mge_image_attributes::size_type>
 		mge_image_attributes::color_animation_end_index("color_animation_end_index");
 
 }

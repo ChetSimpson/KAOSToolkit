@@ -18,7 +18,7 @@ namespace hypertech::kaos::assetfoo::images::rat
 		using color_type = colors::tc1014::tc1014_color_converter::color_type;
 
 		/// @brief Attribute definition for image title
-		static const asset::attribute_def<color_type> background_color;
+		static const attribute_definition<color_type> background_color;
 	};
 
 }

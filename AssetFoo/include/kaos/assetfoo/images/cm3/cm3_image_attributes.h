@@ -25,18 +25,18 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		using cycle_colors_list_type = std::vector<color_type>;
 
 		/// @brief Attribute definition for color animation rate
-		static const asset::attribute_def<size_type> color_animation_rate;
+		static const attribute_definition<size_type> color_animation_rate;
 		/// @brief Attribute definition for first palette index for color animation
-		static const asset::attribute_def<size_type> color_animation_start_index;
+		static const attribute_definition<size_type> color_animation_start_index;
 		/// @brief Attribute definition for last palette index for color animation
-		static const asset::attribute_def<size_type> color_animation_end_index;
+		static const attribute_definition<size_type> color_animation_end_index;
 		/// @brief Attribute definition for the color cycling rate
-		static const asset::attribute_def<size_type> color_cycle_rate;
+		static const attribute_definition<size_type> color_cycle_rate;
 		/// @brief Attribute definition for the color cycle index
-		static const asset::attribute_def<size_type> color_cycle_index;
+		static const attribute_definition<size_type> color_cycle_index;
 		///	@brief Attribute definition for color cycling color list
-		static const asset::attribute_def<cycle_colors_list_type> color_cycle_colors;
+		static const attribute_definition<cycle_colors_list_type> color_cycle_colors;
 		///	@brief Attribute definition for embedded monochrome bitmap patterns
-		static const asset::attribute_def<pattern_list_type> patterns;
+		static const attribute_definition<pattern_list_type> patterns;
 	};
 }

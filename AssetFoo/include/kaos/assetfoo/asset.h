@@ -3,7 +3,6 @@
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
-#include <kaos/core/types/attribute_extension.h>
 #include <kaos/core/memory.h>
 #include <memory>
 
@@ -12,7 +11,7 @@ namespace hypertech::kaos::assetfoo
 {
 
 	/// @brief Base class for all asset types
-	class asset : public core::types::attribute_extension
+	class asset
 	{
 	public:
 

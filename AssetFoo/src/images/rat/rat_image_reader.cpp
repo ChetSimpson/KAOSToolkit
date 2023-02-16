@@ -13,8 +13,8 @@ namespace hypertech::kaos::assetfoo::images::rat
 
 	using core::io::binary_reader;
 
-	const asset::attribute_def<rat_image_reader::color_type>
-		rat_image_reader::attributes::background_color("background_color");
+	const rat_image_attributes::attribute_definition<rat_image_reader::color_type>
+		rat_image_attributes::background_color("background_color");
 
 
 	std::unique_ptr<asset> rat_image_reader::load(std::istream& input_stream)
