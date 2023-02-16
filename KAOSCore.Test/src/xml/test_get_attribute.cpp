@@ -307,7 +307,7 @@ namespace hypertech::kaos::core::xml::unittests
 			EXPECT_THROWS_MESSAGE(
 				DEBUG_DiscardResult(try_get_attribute_as<TypeParam>(node, this->attribute_name_)),
 				exceptions::attribute_conversion_error,
-				("mismatched type error encountered while converting attribute `"
+				("negative overflow error encountered while converting attribute `"
 					+ this->attribute_name_ + "` to `" + typeid(TypeParam).name() + "`").c_str());
 		}
 	}
@@ -438,7 +438,7 @@ namespace hypertech::kaos::core::xml::unittests
 			EXPECT_THROWS_MESSAGE(
 				DEBUG_DiscardResult(get_attribute_as<TypeParam>(node, this->attribute_name_)),
 				exceptions::attribute_conversion_error,
-				("mismatched type error encountered while converting attribute `"
+				("negative overflow error encountered while converting attribute `"
 					+ this->attribute_name_ + "` to `" + typeid(TypeParam).name() + "`").c_str());
 		}
 	}
