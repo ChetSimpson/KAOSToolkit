@@ -33,7 +33,7 @@ namespace pugi
 		/// 
 		/// @return An instance of `std::from_chars_result` contaning a pointer to
 		/// 1 past the last character converted and the status of the conversion.
-		template<class Type_, bool ThrowIfNotFound_>
+		template<class Type_>
 		[[nodiscard]] std::from_chars_result convert_from_chars(
 			const std::string& string_value,
 			Type_& output) requires std::is_same_v<Type_, std::string>
@@ -55,7 +55,7 @@ namespace pugi
 		/// 
 		/// @return An instance of `std::from_chars_result` contaning a pointer to
 		/// 1 past the last character converted and the status of the conversion.
-		template<class Type_, bool ThrowIfNotFound_>
+		template<class Type_>
 		[[nodiscard]] std::from_chars_result convert_from_chars(
 			const std::string& string_value,
 			Type_& output) requires integral_not_bool_v<Type_> || std::is_floating_point_v<Type_>
@@ -78,7 +78,7 @@ namespace pugi
 		/// 
 		/// @return An instance of `std::from_chars_result` contaning a pointer to
 		/// 1 past the last character converted and the status of the conversion.
-		template<class Type_, bool ThrowIfNotFound_>
+		template<class Type_>
 		[[nodiscard]] std::from_chars_result convert_from_chars(
 			const std::string& string_value,
 			Type_& output) requires std::is_same_v<Type_, bool>
@@ -180,7 +180,7 @@ namespace pugi
 					if (throw_on_conversion_error)
 					{
 						throw ::hypertech::kaos::core::exceptions::attribute_conversion_error(
-							"mismatched type",
+							"negative overflow",
 							name,
 							typeid(Type_));
 					}
@@ -192,7 +192,7 @@ namespace pugi
 
 
 			Type_ converted_value;
-			auto result(convert_from_chars<Type_, ThrowIfNotFound_>(string_value, converted_value));
+			auto result(convert_from_chars(string_value, converted_value));
 
 			// First we need to check for input that couldn't be parsed.
 			if (result.ec == std::errc::invalid_argument)
@@ -316,6 +316,18 @@ namespace pugi
 	[[nodiscard]] Type_ get_attribute_as(const xml_node& node, const std::string& name)
 	{
 		return details::get_attribute_as<Type_, true>(node, name, true).value();
+	}
+
+	template<class Type_>
+	[[nodiscard]] Type_ get_attribute_as(const xml_node& node, const std::string& name, const Type_& default_value)
+	{
+		auto value(details::get_attribute_as<Type_, false>(node, name, true));
+		if (value.has_value())
+		{
+			return value.value();
+		}
+
+		return default_value;
 	}
 
 }
