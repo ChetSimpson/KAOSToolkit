@@ -30,8 +30,6 @@ namespace hypertech::kaos::assetfoo
 	public:
 
 		/// @brief Create an asset reader
-		/// 
-		/// @param is_binary_file Indicates if the asset reader type is binary or ASCII/text.
 		explicit asset_reader() = default;
 
 		/// @brief Create a copy of an asset reader
@@ -126,11 +124,26 @@ namespace hypertech::kaos::assetfoo
 
 	protected:
 
+		/// @brief Loads an asset.
+		/// 
+		/// Loads the asset from the stream specified in \p input_stream.
+		/// 
+		/// @param input_stream The stream to load the asset from.
+		/// 
+		/// @return A pointer to the loaded asset.
+		/// 
+		/// @exception hypertech::kaos::core::exceptions::file_not_found_error Thrown if the file does not exist.
+		/// @exception hypertech::kaos::core::exceptions::file_access_error Thrown if the file is not accessible due to locking or access rights.
+		/// @exception hypertech::kaos::core::exceptions::file_format_error Thrown if an error is detected in the format of the asset file.
 		virtual std::unique_ptr<asset> load(std::istream& input_stream) = 0;
 
 
 	protected:
 
+		/// @brief The name of the source file or resource containing the asset being
+		///	loaded. The value of source_name_ must be set by the load and load_as
+		/// functions taking the source_name as a parameter. The value contained
+		/// in source_name_ is only valid during a load operation.
 		filename_type source_name_;
 	};
 

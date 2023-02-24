@@ -32,8 +32,6 @@ namespace hypertech::kaos::assetfoo
 	public:
 
 		/// @brief Create an asset reader
-		/// 
-		/// @param is_binary_file Indicates if the asset reader type is binary or ASCII/text.
 		asset_writer() = default;
 
 		/// @brief Create a copy of an asset reader

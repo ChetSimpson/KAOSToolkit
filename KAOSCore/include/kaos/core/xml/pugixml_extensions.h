@@ -318,6 +318,25 @@ namespace pugi
 		return details::get_attribute_as<Type_, true>(node, name, true).value();
 	}
 
+	/// @brief Gets an attribute value from a node and converts to a specific type
+	/// 
+	/// Retrieve an attribute from an XML node and converts it to a specific value
+	/// type. If the attribute does not exist a default value is returned. If an
+	/// error occurs converting the attribute to the specified value type an
+	/// exception is thrown.
+	/// 
+	/// @tparam Type_ The type to convert the attribute to.
+	/// 
+	/// @param node The XML node containing the attribute.
+	/// @param name The name of the attribute to convert.
+	/// @param default_value The value to return if the attribute does not exist.
+	/// 
+	/// @return The converted attribute value.
+	/// 
+	/// @throws hypertech::kaos::core::exceptions::attribute_not_found_error If the
+	/// attribute does not exist.
+	/// @throws hypertech::kaos::core::exceptions::attribute_conversion_error If the
+	/// value cannot be converted.
 	template<class Type_>
 	[[nodiscard]] Type_ get_attribute_as(const xml_node& node, const std::string& name, const Type_& default_value)
 	{

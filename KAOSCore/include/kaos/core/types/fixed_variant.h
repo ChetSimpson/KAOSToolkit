@@ -51,8 +51,8 @@ namespace hypertech::kaos::core::types
 		using color_type = rgba_color;			//!< @brief Color type held by fixed_variant.
 		using path_type = std::filesystem::path;	//!< @brief Path type held by value.
 		using uuid_type = boost::uuids::uuid;	//!< UUID type
-		using vector_type = std::vector<fixed_variant>;
-		using map_type = std::map<string_type, fixed_variant>;
+		using vector_type = std::vector<fixed_variant>;	//!< Vector type containing fixed_variants held by fixed_variant
+		using map_type = std::map<string_type, fixed_variant>;	//!< Map type containing fixed_variants with a string key held by fixed_variant
 
 		/// @brief Storage type used to hold values
 		using storge_type = std::variant<
@@ -160,8 +160,25 @@ namespace hypertech::kaos::core::types
 		/// @param other The fixed_variant to move.
 		fixed_variant(fixed_variant&& other) = default;
 
-		bool operator==(const fixed_variant&) const noexcept = default;
-		bool operator!=(const fixed_variant&) const noexcept = default;
+		/// @brief Compare two variants for equality
+		/// 
+		/// Compares two variants for equality by type and value. No conversion or type
+		/// promotion is performed during the comparison.
+		/// 
+		/// @param other The fixed variant to compare against for equality
+		/// 
+		/// @return Returns true if the variants are equal; false if they are not.
+		bool operator==(const fixed_variant& other) const noexcept = default;
+
+		/// @brief Compare two variants for inequality
+		/// 
+		/// Compare two variants for inequality by type and value. No conversion or type
+		/// promotion is performed during the comparison.
+		/// 
+		/// @param other The fixed variant to compare against for inequality
+		/// 
+		/// @return Returns true if the variants are not equal; false if they are.
+		bool operator!=(const fixed_variant& other) const noexcept = default;
 
 		/// @brief Copy assignment operator
 		/// 
@@ -252,12 +269,24 @@ namespace hypertech::kaos::core::types
 			return static_cast<tag_type>(value_.index());
 		}
 
+		/// @brief Applies a visitor to the variant
+		/// 
+		/// @tparam VisitorType_ The type of visitor to apply
+		/// 
+		/// @param visitor A callable visitor that can be called with any combination of
+		/// types from the fixed_variant
 		template<class VisitorType_>
 		void accept(VisitorType_& visitor)
 		{
 			std::visit(visitor, value_);
 		}
 
+		/// @brief Applies a visitor to the variant
+		/// 
+		/// @tparam VisitorType_ The type of visitor to apply
+		/// 
+		/// @param visitor A callable visitor that can be called with any combination of
+		/// types from the fixed_variant
 		template<class VisitorType_>
 		void accept(VisitorType_& visitor) const
 		{
@@ -391,12 +420,78 @@ namespace hypertech::kaos::core::types
 		uuid_type as_uuid() const;
 
 
+		/// @brief Gets the value as a vector of fixed_variants.
+		/// 
+		/// Attempts to retrieve the current value as a vector of fixed_variant's.
+		/// If the value contained in the fixed_variant is not of type vector an
+		/// exception is thrown.
+		/// 
+		/// @return A reference to a mutable vector.
+		/// 
+		/// @exception empty_cast_error The value is currently empty.
+		/// @exception incompatible_type_error The current value is not a vector.
 		vector_type& as_vector();
+
+		/// @brief Gets the value as a vector of fixed_variants.
+		/// 
+		/// Attempts to retrieve the current value as a vector of fixed_variant's.
+		/// If the value contained in the fixed_variant is not of type vector an
+		/// exception is thrown.
+		/// 
+		/// @return A reference to an immutable vector.
+		/// 
+		/// @exception empty_cast_error The value is currently empty.
+		/// @exception incompatible_type_error The current value is not a vector.
 		const vector_type& as_vector() const;
+
+		/// @brief Gets the value as a vector of fixed_variants.
+		/// 
+		/// Attempts to retrieve the current value as a vector of fixed_variant's.
+		/// If the value contained in the fixed_variant is not of type vector and
+		/// cannot be converted an exception is thrown.
+		/// 
+		/// @return A copy of the vector contained in the variant.
+		/// 
+		/// @exception empty_cast_error The value is currently empty.
+		/// @exception incompatible_type_error The current value is not a vector
+		/// and cannot be converted.
 		vector_type as_vector_copy() const;
 
+
+		/// @brief Gets the value as a map of fixed_variants using a string as the key.
+		/// 
+		/// Attempts to retrieve the current value as a map of fixed_variant's and a string
+		/// as the key. If the value contained in the fixed_variant is not of type map an
+		/// exception is thrown.
+		/// 
+		/// @return A reference to a mutable map of fixed_variants.
+		/// 
+		/// @exception empty_cast_error The value is currently empty.
+		/// @exception incompatible_type_error The current value is not a map.
 		map_type& as_map();
+
+		/// @brief Gets the value as a map of fixed_variants using a string as the key.
+		/// 
+		/// Attempts to retrieve the current value as a map of fixed_variant's and a string
+		/// as the key. If the value contained in the fixed_variant is not of type map an
+		/// exception is thrown.
+		/// 
+		/// @return A reference to an immutable map of fixed_variants.
+		/// 
+		/// @exception empty_cast_error The value is currently empty.
+		/// @exception incompatible_type_error The current value is not a map.
 		const map_type& as_map() const;
+
+		/// @brief Gets the value as a map of fixed_variants using a string as the key.
+		/// 
+		/// Attempts to retrieve the current value as a map of fixed_variant's and a string
+		/// as the key. If the value contained in the fixed_variant is not of type map an
+		/// exception is thrown.
+		/// 
+		/// @return A copy of the map of fixed_variants.
+		/// 
+		/// @exception empty_cast_error The value is currently empty.
+		/// @exception incompatible_type_error The current value is not a map.
 		map_type as_map_copy() const;
 
 

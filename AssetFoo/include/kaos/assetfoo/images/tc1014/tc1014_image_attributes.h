@@ -14,6 +14,7 @@ namespace hypertech::kaos::assetfoo::images::tc1014
 	struct tc1014_image_attributes
 	{
 
+		/// @copydoc hypertech::kaos::core::types::attribute_extension::attribute_definition
 		template<class Type_>
 		using attribute_definition = hypertech::kaos::core::types::attribute_extension::attribute_definition<Type_>;
 
