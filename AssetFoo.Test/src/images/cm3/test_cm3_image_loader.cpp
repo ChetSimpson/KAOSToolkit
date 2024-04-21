@@ -6,6 +6,7 @@
 #include <kaos/core/exceptions.h>
 #include <kaos/assetfoo/test/images/cm3/default_patterns.h>
 #include <kaos/assetfoo/test/load_tc1014_image_test_expectations.h>
+#include <kaos/assetfoo/test/asset_loader_fixture.h>
 #include <kaos/test/gtest-extensions.h>
 #include <gtest/gtest.h>
 #include <fstream>
@@ -604,8 +605,9 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 		};
 
 
-		template<class TestType_>
-		class test_cm3_image_reader : public ::testing::Test {};
+		template<class TestType_ = void>
+		class test_cm3_image_reader_typed : public assetfoo::unittests::asset_loader_fixture {};
+		class test_cm3_image_reader : public assetfoo::unittests::asset_loader_fixture {};
 
 		using testing_types = testing::Types<
 			default_rgb_cm3_expectations,
@@ -650,7 +652,7 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 
 	}
 
-	TEST(test_cm3_image_reader, load_file_not_found)
+	TEST_F(test_cm3_image_reader, load_file_not_found)
 	{
 		const std::string filename("TestData/images/cm3/NOEXIST.cm3");
 		EXPECT_THROWS_MESSAGE(
@@ -660,28 +662,28 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 	}
 
 
-	TEST(test_cm3_image_reader, load_past_end_of_header)
+	TEST_F(test_cm3_image_reader, load_past_end_of_header)
 	{
 		std::istringstream input("01234567890ABCDEF");
 		EXPECT_THROWS_MESSAGE(
-			cm3_image_reader().load(input, "<TEST>"),
+			cm3_image_reader().load(input, test_resource_locator),
 			core::exceptions::file_format_error,
 			"image file format error: attempt to read past end of file `<TEST>`");
 	}
 
 
 
-	TEST(test_cm3_image_reader, load_past_end_of_patterns)
+	TEST_F(test_cm3_image_reader, load_past_end_of_patterns)
 	{
 		std::istringstream input(single_page_include_patterns_header_data);
 
 		EXPECT_THROWS_MESSAGE(
-			cm3_image_reader().load(input, "<TEST>"),
+			cm3_image_reader().load(input, test_resource_locator),
 			core::exceptions::file_format_error,
 			"image file format error: attempt to read past end of file while loading patterns from `<TEST>");
 	}
 
-	TEST(test_cm3_image_reader, load_invalid_page_row_count)
+	TEST_F(test_cm3_image_reader, load_invalid_page_row_count)
 	{
 		auto file_data =
 			single_page_exclude_patterns_header_data
@@ -690,28 +692,28 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 		std::istringstream input(file_data);
 
 		EXPECT_THROWS_MESSAGE(
-			cm3_image_reader().load(input, "<TEST>"),
+			cm3_image_reader().load(input, test_resource_locator),
 			core::exceptions::file_format_error,
 			"image file format error: invalid row count of 1 in image page 0 of `<TEST>`");
 	}
 
 
-	TEST(test_cm3_image_reader, load_past_end_of_page)
+	TEST_F(test_cm3_image_reader, load_past_end_of_page)
 	{
 		std::istringstream input(
 			single_page_exclude_patterns_header_data
 			+ std::string("\xc0"));
 
 		EXPECT_THROWS_MESSAGE(
-			cm3_image_reader().load(input, "<TEST>"),
+			cm3_image_reader().load(input, test_resource_locator),
 			core::exceptions::file_format_error,
 			"image file format error: attempt to read past end of file while processing uncompressed image data in page 0 of `<TEST>`");
 	}
 
 
-	TYPED_TEST_CASE_P(test_cm3_image_reader);
+	TYPED_TEST_CASE_P(test_cm3_image_reader_typed);
 
-	TYPED_TEST_P(test_cm3_image_reader, load)
+	TYPED_TEST_P(test_cm3_image_reader_typed, load)
 	{
 		using attributes = cm3_image_reader::attributes;
 		TypeParam expectations;
@@ -734,7 +736,7 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 		EXPECT_EQ(calculate_md5_hash(*image), expectations.hash);
 	}
 
-	REGISTER_TYPED_TEST_CASE_P(test_cm3_image_reader, load);
-	INSTANTIATE_TYPED_TEST_CASE_P(test_cm3_image_reader, test_cm3_image_reader, testing_types);
+	REGISTER_TYPED_TEST_CASE_P(test_cm3_image_reader_typed, load);
+	INSTANTIATE_TYPED_TEST_CASE_P(test_cm3_image_reader, test_cm3_image_reader_typed, testing_types);
 
 }

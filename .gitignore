@@ -263,3 +263,4 @@ __pycache__/
 
 # Local ignores
 /@Pending
+/AssetFoo.Test/TestData/documents/tiled/project/*.tiled-session

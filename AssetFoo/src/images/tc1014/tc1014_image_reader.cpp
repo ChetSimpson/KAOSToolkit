@@ -30,7 +30,7 @@ namespace hypertech::kaos::assetfoo::images::tc1014
 	{
 		throw core::exceptions::file_format_error(
 			"image file format error: attempt to read past end of file while processing uncompressed image data of `"
-			+ source_name_ + "`");
+			+ location_text() + "`");
 	}
 
 }

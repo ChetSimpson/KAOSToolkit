@@ -12,28 +12,37 @@ namespace hypertech::kaos::assetfoo
 {
 	namespace exceptions = core::exceptions;
 
-
-	std::unique_ptr<asset> asset_reader::load(const filename_type& filename)
+	void asset_reader::start(const resource_locator_type& location)
 	{
-		if (!std::filesystem::exists(filename))
+		location_ = location;
+	}
+
+	asset_reader::string_type asset_reader::location_text() const noexcept
+	{
+		return location_.text();
+	}
+
+	std::unique_ptr<asset> asset_reader::load(const path_type& path)
+	{
+		if (!std::filesystem::exists(path.string()))
 		{
-			throw exceptions::file_not_found_error("Unable to open '" + filename + "'. File does not exist");
+			throw exceptions::file_not_found_error("Unable to open '" + path.string() + "'. File does not exist");
 		}
 
-		std::ifstream input_stream(filename, std::ios_base::in |std::ios_base::binary);
+		std::ifstream input_stream(path, std::ios_base::in | std::ios_base::binary);
 		if (!input_stream.is_open())
 		{
-			throw exceptions::file_access_error("Unable to open file '" + filename + "'");
+			throw exceptions::file_access_error("Unable to open file '" + path.string() + "'");
 		}
 
-		source_name_ = filename;
+		start(resource_locator_type(path));
 
 		return load(input_stream);
 	}
 
-	std::unique_ptr<asset> asset_reader::load(std::istream& input_stream, const filename_type& source_name)
+	std::unique_ptr<asset> asset_reader::load(std::istream& input_stream, const resource_locator_type& location)
 	{
-		source_name_ = source_name;
+		start(location);
 
 		return load(input_stream);
 	}

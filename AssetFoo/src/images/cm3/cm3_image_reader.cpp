@@ -82,7 +82,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 	catch (core::exceptions::end_of_file_error&)
 	{
 		throw core::exceptions::file_format_error(
-			"image file format error: attempt to read past end of file `" + source_name_ + "`");
+			"image file format error: attempt to read past end of file `" + location_text() + "`");
 	}
 
 	cm3_image_reader::pattern_list_type cm3_image_reader::load_patterns(
@@ -108,7 +108,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 	{
 		throw core::exceptions::file_format_error(
 			"image file format error: attempt to read past end of file while loading patterns from `"
-			+ source_name_);
+			+ location_text());
 	}
 
 	void cm3_image_reader::load_compressed_pixel_data(
@@ -149,7 +149,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 				+ std::to_string(row_count)
 				+ " in image page "
 				+ std::to_string(page_index)
-				+ " of `" + source_name_ + "`");
+				+ " of `" + location_text() + "`");
 		}
 
 		const auto bpp(layout.bits_per_pixel());
@@ -218,7 +218,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		throw core::exceptions::file_format_error(
 			"image file format error: attempt to read past end of file while processing uncompressed image data in page "
 			+ std::to_string(page_index)
-			+ " of `" + source_name_ + "`");
+			+ " of `" + location_text() + "`");
 	}
 
 }

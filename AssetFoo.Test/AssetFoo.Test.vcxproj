@@ -59,6 +59,9 @@
     <ProjectReference Include="..\AssetFoo\AssetFoo.vcxproj">
       <Project>{f62661dc-1812-4a14-8749-24a993c1fd4b}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\KAOSCore\KAOSCore.vcxproj">
+      <Project>{0da8b796-3e26-475c-b65e-fa8ccea53757}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Colors\GIMP\test_gimp_palette_loader.cpp" />
@@ -85,6 +88,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\kaos\assetfoo\test\asset_loader_fixture.h" />
     <ClInclude Include="include\kaos\assetfoo\test\base_fixture.h" />
     <ClInclude Include="include\kaos\assetfoo\test\images\cm3\default_patterns.h" />
     <ClInclude Include="include\kaos\assetfoo\test\load_tc1014_image_test_expectations.h" />

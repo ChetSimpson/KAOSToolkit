@@ -51,7 +51,7 @@ namespace hypertech::kaos::assetfoo::images::rat
 	catch (core::exceptions::end_of_file_error&)
 	{
 		throw core::exceptions::file_format_error(
-			"image file format error: attempt to read past end of file `" + source_name_ + "`");
+			"image file format error: attempt to read past end of file `" + location_text() + "`");
 	}
 
 
@@ -89,7 +89,7 @@ namespace hypertech::kaos::assetfoo::images::rat
 	{
 		throw core::exceptions::file_format_error(
 			"image file format error: attempt to read past end of file while processing compressed image data of `"
-			+ source_name_ + "`");
+			+ location_text() + "`");
 	}
 
 }

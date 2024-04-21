@@ -5,6 +5,7 @@
 #include <kaos/assetfoo/colors/gimp/gimp_palette_reader.h>
 #include <kaos/assetfoo/colors/color_map.h>
 #include <kaos/core/exceptions.h>
+#include <kaos/assetfoo/test/asset_loader_fixture.h>
 #include <kaos/test/gtest-extensions.h>
 #include <gtest/gtest.h>
 #include <sstream>
@@ -15,31 +16,36 @@
 namespace hypertech::kaos::assetfoo::colors::gimp::unittests
 {
 
-	namespace test_colors
+	namespace
 	{
-		using color_type = color_map::color_type;
 
-		static const color_type color0(0, 0, 0);
-		static const color_type color1(85, 85, 85);
-		static const color_type color2(170, 170, 170);
-		static const color_type color3(85, 85, 170);
-		static const color_type color4(0, 85, 170);
-		static const color_type color5(85, 170, 255);
-		static const color_type color6(170, 170, 255);
-		static const color_type color7(0, 85, 0);
-		static const color_type color8(0, 170, 0);
-		static const color_type color9(170, 0, 0);
-		static const color_type color10(255, 0, 0);
-		static const color_type color11(170, 85, 0);
-		static const color_type color12(255, 170, 0);
-		static const color_type color13(170, 0, 170);
-		static const color_type color14(255, 0, 255);
-		static const color_type color15(255, 255, 255);
+		namespace gimp_test_colors
+		{
+			using color_type = color_map::color_type;
+
+			static const color_type color0(0, 0, 0);
+			static const color_type color1(85, 85, 85);
+			static const color_type color2(170, 170, 170);
+			static const color_type color3(85, 85, 170);
+			static const color_type color4(0, 85, 170);
+			static const color_type color5(85, 170, 255);
+			static const color_type color6(170, 170, 255);
+			static const color_type color7(0, 85, 0);
+			static const color_type color8(0, 170, 0);
+			static const color_type color9(170, 0, 0);
+			static const color_type color10(255, 0, 0);
+			static const color_type color11(170, 85, 0);
+			static const color_type color12(255, 170, 0);
+			static const color_type color13(170, 0, 170);
+			static const color_type color14(255, 0, 255);
+			static const color_type color15(255, 255, 255);
+		}
+
+
+		class test_gimp_palette_reader : public assetfoo::unittests::asset_loader_fixture {};
 	}
 
-
-
-	TEST(gimp_palette_reader, load_non_existent_palette_from_file)
+	TEST_F(test_gimp_palette_reader, load_non_existent_palette_from_file)
 	{
 		EXPECT_THROWS_MESSAGE(
 			gimp_palette_reader().load("TestData/Palettes/NOPALETTEFILE"),
@@ -66,31 +72,31 @@ namespace hypertech::kaos::assetfoo::colors::gimp::unittests
 	//}
 
 
-	TEST(gimp_palette_reader, load_palette_from_file)
+	TEST_F(test_gimp_palette_reader, load_palette_from_file)
 	{
 		auto palette(dynamic_pointer_cast<color_map>(gimp_palette_reader().load("TestData/Palettes/TestPalette1.gpl")));
 
 		ASSERT_NE(palette, nullptr);
-		EXPECT_EQ(palette->at(0), test_colors::color0);
-		EXPECT_EQ(palette->at(1), test_colors::color1);
-		EXPECT_EQ(palette->at(2), test_colors::color2);
-		EXPECT_EQ(palette->at(3), test_colors::color3);
-		EXPECT_EQ(palette->at(4), test_colors::color4);
-		EXPECT_EQ(palette->at(5), test_colors::color5);
-		EXPECT_EQ(palette->at(6), test_colors::color6);
-		EXPECT_EQ(palette->at(7), test_colors::color7);
-		EXPECT_EQ(palette->at(8), test_colors::color8);
-		EXPECT_EQ(palette->at(9), test_colors::color9);
-		EXPECT_EQ(palette->at(10), test_colors::color10);
-		EXPECT_EQ(palette->at(11), test_colors::color11);
-		EXPECT_EQ(palette->at(12), test_colors::color12);
-		EXPECT_EQ(palette->at(13), test_colors::color13);
-		EXPECT_EQ(palette->at(14), test_colors::color14);
-		EXPECT_EQ(palette->at(15), test_colors::color15);
+		EXPECT_EQ(palette->at(0), gimp_test_colors::color0);
+		EXPECT_EQ(palette->at(1), gimp_test_colors::color1);
+		EXPECT_EQ(palette->at(2), gimp_test_colors::color2);
+		EXPECT_EQ(palette->at(3), gimp_test_colors::color3);
+		EXPECT_EQ(palette->at(4), gimp_test_colors::color4);
+		EXPECT_EQ(palette->at(5), gimp_test_colors::color5);
+		EXPECT_EQ(palette->at(6), gimp_test_colors::color6);
+		EXPECT_EQ(palette->at(7), gimp_test_colors::color7);
+		EXPECT_EQ(palette->at(8), gimp_test_colors::color8);
+		EXPECT_EQ(palette->at(9), gimp_test_colors::color9);
+		EXPECT_EQ(palette->at(10), gimp_test_colors::color10);
+		EXPECT_EQ(palette->at(11), gimp_test_colors::color11);
+		EXPECT_EQ(palette->at(12), gimp_test_colors::color12);
+		EXPECT_EQ(palette->at(13), gimp_test_colors::color13);
+		EXPECT_EQ(palette->at(14), gimp_test_colors::color14);
+		EXPECT_EQ(palette->at(15), gimp_test_colors::color15);
 	}
 
 
-	TEST(gimp_palette_reader, load_palette_from_stream)
+	TEST_F(test_gimp_palette_reader, load_palette_from_stream)
 	{
 		std::string file_in_string =
 			"GIMP Palette\n"
@@ -116,40 +122,40 @@ namespace hypertech::kaos::assetfoo::colors::gimp::unittests
 
 		std::istringstream input_stream(file_in_string);
 
-		auto palette(dynamic_pointer_cast<color_map>(gimp_palette_reader().load(input_stream, "<string stream>")));
+		auto palette(dynamic_pointer_cast<color_map>(gimp_palette_reader().load(input_stream, string_stream_locator)));
 
 		ASSERT_NE(palette, nullptr);
-		EXPECT_EQ(palette->at(0), test_colors::color0);
-		EXPECT_EQ(palette->at(1), test_colors::color1);
-		EXPECT_EQ(palette->at(2), test_colors::color2);
-		EXPECT_EQ(palette->at(3), test_colors::color3);
-		EXPECT_EQ(palette->at(4), test_colors::color4);
-		EXPECT_EQ(palette->at(5), test_colors::color5);
-		EXPECT_EQ(palette->at(6), test_colors::color6);
-		EXPECT_EQ(palette->at(7), test_colors::color7);
-		EXPECT_EQ(palette->at(8), test_colors::color8);
-		EXPECT_EQ(palette->at(9), test_colors::color9);
-		EXPECT_EQ(palette->at(10), test_colors::color10);
-		EXPECT_EQ(palette->at(11), test_colors::color11);
-		EXPECT_EQ(palette->at(12), test_colors::color12);
-		EXPECT_EQ(palette->at(13), test_colors::color13);
-		EXPECT_EQ(palette->at(14), test_colors::color14);
-		EXPECT_EQ(palette->at(15), test_colors::color15);
+		EXPECT_EQ(palette->at(0), gimp_test_colors::color0);
+		EXPECT_EQ(palette->at(1), gimp_test_colors::color1);
+		EXPECT_EQ(palette->at(2), gimp_test_colors::color2);
+		EXPECT_EQ(palette->at(3), gimp_test_colors::color3);
+		EXPECT_EQ(palette->at(4), gimp_test_colors::color4);
+		EXPECT_EQ(palette->at(5), gimp_test_colors::color5);
+		EXPECT_EQ(palette->at(6), gimp_test_colors::color6);
+		EXPECT_EQ(palette->at(7), gimp_test_colors::color7);
+		EXPECT_EQ(palette->at(8), gimp_test_colors::color8);
+		EXPECT_EQ(palette->at(9), gimp_test_colors::color9);
+		EXPECT_EQ(palette->at(10), gimp_test_colors::color10);
+		EXPECT_EQ(palette->at(11), gimp_test_colors::color11);
+		EXPECT_EQ(palette->at(12), gimp_test_colors::color12);
+		EXPECT_EQ(palette->at(13), gimp_test_colors::color13);
+		EXPECT_EQ(palette->at(14), gimp_test_colors::color14);
+		EXPECT_EQ(palette->at(15), gimp_test_colors::color15);
 	}
 
 
-	TEST(gimp_palette_reader, empty_file)
+	TEST_F(test_gimp_palette_reader, empty_file)
 	{
 		std::istringstream input_stream;
 
 		EXPECT_THROWS_MESSAGE(
-			gimp_palette_reader().load(input_stream, "<string stream>"),
+			gimp_palette_reader().load(input_stream, string_stream_locator),
 			core::exceptions::file_format_error,
 			"Unable to load empty GIMP palette file '<string stream>'");
 	}
 
 
-	TEST(gimp_palette_reader, invalid_header)
+	TEST_F(test_gimp_palette_reader, invalid_header)
 	{
 		std::string file_in_string =
 			"GUMP Palette\n"
@@ -160,13 +166,13 @@ namespace hypertech::kaos::assetfoo::colors::gimp::unittests
 		std::istringstream input_stream(file_in_string);
 
 		EXPECT_THROWS_MESSAGE(
-			gimp_palette_reader().load(input_stream, "<string stream>"),
+			gimp_palette_reader().load(input_stream, string_stream_locator),
 			core::exceptions::file_format_error,
 			"Incorrect header in GIMP palette file '<string stream>'");
 	}
 
 
-	TEST(gimp_palette_reader, invalid_red_level_single_space_in_line)
+	TEST_F(test_gimp_palette_reader, invalid_red_level_single_space_in_line)
 	{
 		std::string file_in_string =
 			"GIMP Palette\n"
@@ -176,13 +182,13 @@ namespace hypertech::kaos::assetfoo::colors::gimp::unittests
 		std::istringstream input_stream(file_in_string);
 
 		EXPECT_THROWS_MESSAGE(
-			gimp_palette_reader().load(input_stream, "<string stream>"),
+			gimp_palette_reader().load(input_stream, string_stream_locator),
 			core::exceptions::file_format_error,
 			"Unable to parse red color component in line ' ' from file '<string stream>'");
 	}
 
 
-	TEST(gimp_palette_reader, invalid_red_level_non_int)
+	TEST_F(test_gimp_palette_reader, invalid_red_level_non_int)
 	{
 		std::string file_in_string =
 			"GIMP Palette\n"
@@ -192,13 +198,13 @@ namespace hypertech::kaos::assetfoo::colors::gimp::unittests
 		std::istringstream input_stream(file_in_string);
 
 		EXPECT_THROWS_MESSAGE(
-			gimp_palette_reader().load(input_stream, "<string stream>"),
+			gimp_palette_reader().load(input_stream, string_stream_locator),
 			core::exceptions::file_format_error,
 			"Unable to parse red color component in line '--- 255 255' from file '<string stream>'");
 	}
 
 
-	TEST(gimp_palette_reader, invalid_red_level)
+	TEST_F(test_gimp_palette_reader, invalid_red_level)
 	{
 		std::string file_in_string =
 			"GIMP Palette\n"
@@ -208,13 +214,13 @@ namespace hypertech::kaos::assetfoo::colors::gimp::unittests
 		std::istringstream input_stream(file_in_string);
 
 		EXPECT_THROWS_MESSAGE(
-			gimp_palette_reader().load(input_stream, "<string stream>"),
+			gimp_palette_reader().load(input_stream, string_stream_locator),
 			core::exceptions::file_format_error,
 			"Red color level is outside the expected range of 0 to 255 in line '265 255 255' from file '<string stream>'");
 	}
 
 
-	TEST(gimp_palette_reader, invalid_green_level_missinglevel)
+	TEST_F(test_gimp_palette_reader, invalid_green_level_missinglevel)
 	{
 		std::string file_in_string =
 			"GIMP Palette\n"
@@ -224,13 +230,13 @@ namespace hypertech::kaos::assetfoo::colors::gimp::unittests
 		std::istringstream input_stream(file_in_string);
 
 		EXPECT_THROWS_MESSAGE(
-			gimp_palette_reader().load(input_stream, "<string stream>"),
+			gimp_palette_reader().load(input_stream, string_stream_locator),
 			core::exceptions::file_format_error,
 			"Unable to parse green color component in line '255' from file '<string stream>'");
 	}
 
 
-	TEST(gimp_palette_reader, invalid_green_level_nonint)
+	TEST_F(test_gimp_palette_reader, invalid_green_level_nonint)
 	{
 		std::string file_in_string =
 			"GIMP Palette\n"
@@ -240,12 +246,12 @@ namespace hypertech::kaos::assetfoo::colors::gimp::unittests
 		std::istringstream input_stream(file_in_string);
 
 		EXPECT_THROWS_MESSAGE(
-			gimp_palette_reader().load(input_stream, "<string stream>"),
+			gimp_palette_reader().load(input_stream, string_stream_locator),
 			core::exceptions::file_format_error,
 			"Unable to parse green color component in line '255 --- 255' from file '<string stream>'");
 	}
 
-	TEST(gimp_palette_reader, invalid_green_level)
+	TEST_F(test_gimp_palette_reader, invalid_green_level)
 	{
 		std::string file_in_string =
 			"GIMP Palette\n"
@@ -255,13 +261,13 @@ namespace hypertech::kaos::assetfoo::colors::gimp::unittests
 		std::istringstream input_stream(file_in_string);
 
 		EXPECT_THROWS_MESSAGE(
-			gimp_palette_reader().load(input_stream, "<string stream>"),
+			gimp_palette_reader().load(input_stream, string_stream_locator),
 			core::exceptions::file_format_error,
 			"Green color level is outside the expected range of 0 to 255 in line '255 265 255' from file '<string stream>'");
 	}
 
 
-	TEST(gimp_palette_reader, invalid_blue_level_missing_level)
+	TEST_F(test_gimp_palette_reader, invalid_blue_level_missing_level)
 	{
 		std::string file_in_string =
 			"GIMP Palette\n"
@@ -271,13 +277,13 @@ namespace hypertech::kaos::assetfoo::colors::gimp::unittests
 		std::istringstream input_stream(file_in_string);
 
 		EXPECT_THROWS_MESSAGE(
-			gimp_palette_reader().load(input_stream, "<string stream>"),
+			gimp_palette_reader().load(input_stream, string_stream_locator),
 			core::exceptions::file_format_error,
 			"Unable to parse blue color component in line '255 255' from file '<string stream>'");
 	}
 
 
-	TEST(gimp_palette_reader, invalid_blue_level_non_int)
+	TEST_F(test_gimp_palette_reader, invalid_blue_level_non_int)
 	{
 		std::string file_in_string =
 			"GIMP Palette\n"
@@ -287,12 +293,12 @@ namespace hypertech::kaos::assetfoo::colors::gimp::unittests
 		std::istringstream input_stream(file_in_string);
 
 		EXPECT_THROWS_MESSAGE(
-			gimp_palette_reader().load(input_stream, "<string stream>"),
+			gimp_palette_reader().load(input_stream, string_stream_locator),
 			core::exceptions::file_format_error,
 			"Unable to parse blue color component in line '255 255 ---' from file '<string stream>'");
 	}
 
-	TEST(gimp_palette_reader, invalid_blue_level)
+	TEST_F(test_gimp_palette_reader, invalid_blue_level)
 	{
 		std::string file_in_string =
 			"GIMP Palette\n"
@@ -302,7 +308,7 @@ namespace hypertech::kaos::assetfoo::colors::gimp::unittests
 		std::istringstream input_stream(file_in_string);
 
 		EXPECT_THROWS_MESSAGE(
-			gimp_palette_reader().load(input_stream, "<string stream>"),
+			gimp_palette_reader().load(input_stream, string_stream_locator),
 			core::exceptions::file_format_error,
 			"Blue color level is outside the expected range of 0 to 255 in line '255 255 265' from file '<string stream>'");
 	}

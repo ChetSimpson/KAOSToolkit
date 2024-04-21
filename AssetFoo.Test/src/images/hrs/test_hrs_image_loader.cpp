@@ -5,6 +5,7 @@
 #include <kaos/assetfoo/images/hrs/hrs_image_reader.h>
 #include <kaos/core/exceptions.h>
 #include <kaos/assetfoo/test/load_tc1014_image_test_expectations.h>
+#include <kaos/assetfoo/test/asset_loader_fixture.h>
 #include <kaos/test/gtest-extensions.h>
 #include <gtest/gtest.h>
 #include <fstream>
@@ -36,14 +37,14 @@ namespace hypertech::kaos::assetfoo::images::hrs::unittests
 		};
 
 
-
 		template<class TestType_>
-		class test_hrs_image_reader : public ::testing::Test {};
+		class test_hrs_image_reader_typed : public assetfoo::unittests::asset_loader_fixture {};
+		class test_hrs_image_reader : public assetfoo::unittests::asset_loader_fixture {};
 
 		using testing_types = testing::Types<monalisa_hrs_expectations>;
 	}
 
-	TEST(test_hrs_image_reader, load_file_not_found)
+	TEST_F(test_hrs_image_reader, load_file_not_found)
 	{
 		const std::string filename("TestData/images/hrs/NOEXIST.hrs");
 		EXPECT_THROWS_MESSAGE(
@@ -52,22 +53,22 @@ namespace hypertech::kaos::assetfoo::images::hrs::unittests
 			("Unable to open '" + filename + "'. File does not exist").c_str());
 	}
 
-	TEST(test_hrs_image_reader, load_past_end_of_header)
+	TEST_F(test_hrs_image_reader, load_past_end_of_header)
 	{
 		std::istringstream input("0");
 
 		EXPECT_THROWS_MESSAGE(
-			hrs_image_reader().load(input, "<TEST>"),
+			hrs_image_reader().load(input, test_resource_locator),
 			core::exceptions::file_format_error,
 			"image file format error: attempt to read past end of file `<TEST>`");
 	}
 
-	TEST(test_hrs_image_reader, load_past_end_of_image)
+	TEST_F(test_hrs_image_reader, load_past_end_of_image)
 	{
 		std::istringstream input(std::string(32, 0));
 
 		EXPECT_THROWS_MESSAGE(
-			hrs_image_reader().load(input, "<TEST>"),
+			hrs_image_reader().load(input, test_resource_locator),
 			core::exceptions::file_format_error,
 			"image file format error: attempt to read past end of file while processing uncompressed image data of `<TEST>`");
 	}
@@ -75,9 +76,9 @@ namespace hypertech::kaos::assetfoo::images::hrs::unittests
 
 
 
-	TYPED_TEST_CASE_P(test_hrs_image_reader);
+	TYPED_TEST_CASE_P(test_hrs_image_reader_typed);
 
-	TYPED_TEST_P(test_hrs_image_reader, load)
+	TYPED_TEST_P(test_hrs_image_reader_typed, load)
 	{
 		using attributes = hrs_image_reader::attributes;
 		TypeParam expectations;
@@ -93,7 +94,7 @@ namespace hypertech::kaos::assetfoo::images::hrs::unittests
 		EXPECT_EQ(calculate_md5_hash(*image), expectations.hash);
 	}
 
-	REGISTER_TYPED_TEST_CASE_P(test_hrs_image_reader, load);
-	INSTANTIATE_TYPED_TEST_CASE_P(test_hrs_image_reader, test_hrs_image_reader, testing_types);
+	REGISTER_TYPED_TEST_CASE_P(test_hrs_image_reader_typed, load);
+	INSTANTIATE_TYPED_TEST_CASE_P(test_hrs_image_reader, test_hrs_image_reader_typed, testing_types);
 
 }

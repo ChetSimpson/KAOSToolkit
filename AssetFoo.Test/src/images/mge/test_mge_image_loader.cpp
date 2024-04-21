@@ -5,6 +5,7 @@
 #include <kaos/assetfoo/images/mge/mge_image_reader.h>
 #include <kaos/core/exceptions.h>
 #include <kaos/assetfoo/test/load_tc1014_image_test_expectations.h>
+#include <kaos/assetfoo/test/asset_loader_fixture.h>
 #include <kaos/test/gtest-extensions.h>
 #include <gtest/gtest.h>
 #include <fstream>
@@ -64,7 +65,8 @@ namespace hypertech::kaos::assetfoo::images::mge::unittests
 
 
 		template<class TestType_>
-		class test_mge_image_reader : public ::testing::Test {};
+		class test_mge_image_reader_typed : public assetfoo::unittests::asset_loader_fixture {};
+		class test_mge_image_reader : public assetfoo::unittests::asset_loader_fixture {};
 
 		using testing_types = testing::Types<
 			test1_uncompressed_mge_expectations,
@@ -72,7 +74,7 @@ namespace hypertech::kaos::assetfoo::images::mge::unittests
 			titlepage_mge_expectations>;
 	}
 
-	TEST(test_mge_image_reader, load_file_not_found)
+	TEST_F(test_mge_image_reader, load_file_not_found)
 	{
 		const std::string filename("TestData/images/mge/NOEXIST.mge");
 		EXPECT_THROWS_MESSAGE(
@@ -81,51 +83,51 @@ namespace hypertech::kaos::assetfoo::images::mge::unittests
 			("Unable to open '" + filename + "'. File does not exist").c_str());
 	}
 
-	TEST(test_mge_image_reader, load_invalid_image_type)
+	TEST_F(test_mge_image_reader, load_invalid_image_type)
 	{
 		std::istringstream input("\xff");
 
 		EXPECT_THROWS_MESSAGE(
-			mge_image_reader().load(input, "<TEST>"),
+			mge_image_reader().load(input, test_resource_locator),
 			core::exceptions::file_format_error,
 			"unknown image type specified in <TEST>");
 	}
 
-	TEST(test_mge_image_reader, load_past_end_of_header)
+	TEST_F(test_mge_image_reader, load_past_end_of_header)
 	{
 		std::istringstream input("\x0", 1);
 
 		EXPECT_THROWS_MESSAGE(
-			mge_image_reader().load(input, "<TEST>"),
+			mge_image_reader().load(input, test_resource_locator),
 			core::exceptions::file_format_error,
 			"image file format error: attempt to read past end of file `<TEST>`");
 	}
 
-	TEST(test_mge_image_reader, load_past_end_of_uncompressed_image)
+	TEST_F(test_mge_image_reader, load_past_end_of_uncompressed_image)
 	{
 		std::istringstream input(std::string(64, 0));
 
 		EXPECT_THROWS_MESSAGE(
-			mge_image_reader().load(input, "<TEST>"),
+			mge_image_reader().load(input, test_resource_locator),
 			core::exceptions::file_format_error,
 			"image file format error: attempt to read past end of file while processing compressed image data of `<TEST>`");
 	}
 
-	TEST(test_mge_image_reader, load_past_end_of_compressed_image)
+	TEST_F(test_mge_image_reader, load_past_end_of_compressed_image)
 	{
 		std::istringstream input(std::string(18, 0) + "\x01" + std::string(64, 0));
 
 		EXPECT_THROWS_MESSAGE(
-			mge_image_reader().load(input, "<TEST>"),
+			mge_image_reader().load(input, test_resource_locator),
 			core::exceptions::file_format_error,
 			"image file format error: attempt to read past end of file while processing uncompressed image data of `<TEST>`");
 	}
 
 
 
-	TYPED_TEST_CASE_P(test_mge_image_reader);
+	TYPED_TEST_CASE_P(test_mge_image_reader_typed);
 
-	TYPED_TEST_P(test_mge_image_reader, load)
+	TYPED_TEST_P(test_mge_image_reader_typed, load)
 	{
 		using attributes = mge_image_reader::attributes;
 
@@ -147,7 +149,7 @@ namespace hypertech::kaos::assetfoo::images::mge::unittests
 		EXPECT_EQ(calculate_md5_hash(*image), expectations.hash);
 	}
 
-	REGISTER_TYPED_TEST_CASE_P(test_mge_image_reader, load);
-	INSTANTIATE_TYPED_TEST_CASE_P(test_mge_image_reader, test_mge_image_reader, testing_types);
+	REGISTER_TYPED_TEST_CASE_P(test_mge_image_reader_typed, load);
+	INSTANTIATE_TYPED_TEST_CASE_P(test_mge_image_reader, test_mge_image_reader_typed, testing_types);
 
 }

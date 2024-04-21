@@ -31,7 +31,7 @@ namespace hypertech::kaos::assetfoo::images::vef
 		const auto image_descriptor_id(reader.read<uint8_t>());
 		if (image_descriptor_id >= image_type_descriptors.size())
 		{
-			throw core::exceptions::file_format_error("invalid image type in `" + source_name_ + "`");
+			throw core::exceptions::file_format_error("invalid image type in `" + location_text() + "`");
 		}
 		const auto& image_descriptor(image_type_descriptors[image_descriptor_id]);
 		const auto native_color_space(color_space_type::rgb);
@@ -59,7 +59,7 @@ namespace hypertech::kaos::assetfoo::images::vef
 	catch (core::exceptions::end_of_file_error&)
 	{
 		throw core::exceptions::file_format_error(
-			"image file format error: attempt to read past end of file `" + source_name_ + "`");
+			"image file format error: attempt to read past end of file `" + location_text() + "`");
 	}
 
 
@@ -106,7 +106,7 @@ namespace hypertech::kaos::assetfoo::images::vef
 	{
 		throw core::exceptions::file_format_error(
 			"image file format error: attempt to read past end of file while processing compressed image data of `"
-			+ source_name_ + "`");
+			+ location_text() + "`");
 	}
 
 }

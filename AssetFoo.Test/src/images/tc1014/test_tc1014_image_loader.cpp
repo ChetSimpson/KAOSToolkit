@@ -33,9 +33,9 @@ namespace hypertech::kaos::assetfoo::images::tc1014::unittests
 				image& image,
 				const color_map_type& colormap,
 				const pixels::packed_pixel_layout& layout,
-				const filename_type& source_name)
+				const path_type& source_name)
 			{
-				source_name_ = source_name;
+				start(resource_locator_type(source_name));
 				return tc1014_image_reader::load_uncompressed_pixel_data(reader, image, colormap, layout);
 			}
 		};

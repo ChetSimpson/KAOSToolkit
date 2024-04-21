@@ -53,6 +53,9 @@
     <ClCompile Include="src\io\binary_writer.cpp">
       <Filter>Source Files\io</Filter>
     </ClCompile>
+    <ClCompile Include="src\resource_locator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\kaos\core\debug.h">
@@ -123,6 +126,9 @@
     </ClInclude>
     <ClInclude Include="include\kaos\core\io\binary_writer.h">
       <Filter>Header Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\core\resource_locator.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

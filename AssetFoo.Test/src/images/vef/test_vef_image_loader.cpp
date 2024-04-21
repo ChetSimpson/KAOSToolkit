@@ -5,6 +5,7 @@
 #include <kaos/assetfoo/images/vef/vef_image_reader.h>
 #include <kaos/core/exceptions.h>
 #include <kaos/assetfoo/test/load_tc1014_image_test_expectations.h>
+#include <kaos/assetfoo/test/asset_loader_fixture.h>
 #include <kaos/test/gtest-extensions.h>
 #include <gtest/gtest.h>
 #include <fstream>
@@ -168,7 +169,8 @@ namespace hypertech::kaos::assetfoo::images::vef::unittests
 
 
 		template<class TestType_>
-		class test_vef_image_reader : public ::testing::Test {};
+		class test_vef_image_reader_typed : public assetfoo::unittests::asset_loader_fixture {};
+		class test_vef_image_reader : public assetfoo::unittests::asset_loader_fixture {};
 
 		using testing_types = testing::Types<
 			batman_vef_expectations,
@@ -183,7 +185,7 @@ namespace hypertech::kaos::assetfoo::images::vef::unittests
 			zebra_vef_expectations>;
 	}
 
-	TEST(test_vef_image_reader, load_file_not_found)
+	TEST_F(test_vef_image_reader, load_file_not_found)
 	{
 		const std::string filename("TestData/images/vef/NOEXIST.vef");
 		EXPECT_THROWS_MESSAGE(
@@ -192,51 +194,51 @@ namespace hypertech::kaos::assetfoo::images::vef::unittests
 			("Unable to open '" + filename + "'. File does not exist").c_str());
 	}
 
-	TEST(test_vef_image_reader, load_invalid_image_type)
+	TEST_F(test_vef_image_reader, load_invalid_image_type)
 	{
 		std::istringstream input(std::string("\x00\x05", 2));
 
 		EXPECT_THROWS_MESSAGE(
-			vef_image_reader().load(input, "<TEST>"),
+			vef_image_reader().load(input, test_resource_locator),
 			core::exceptions::file_format_error,
 			"invalid image type in `<TEST>`");
 	}
 
-	TEST(test_vef_image_reader, load_past_end_of_header)
+	TEST_F(test_vef_image_reader, load_past_end_of_header)
 	{
 		std::istringstream input("\x0", 1);
 
 		EXPECT_THROWS_MESSAGE(
-			vef_image_reader().load(input, "<TEST>"),
+			vef_image_reader().load(input, test_resource_locator),
 			core::exceptions::file_format_error,
 			"image file format error: attempt to read past end of file `<TEST>`");
 	}
 
-	TEST(test_vef_image_reader, load_past_end_of_uncompressed_image)
+	TEST_F(test_vef_image_reader, load_past_end_of_uncompressed_image)
 	{
 		std::istringstream input(std::string("\x00\x00", 2) + std::string(64, 0));
 
 		EXPECT_THROWS_MESSAGE(
-			vef_image_reader().load(input, "<TEST>"),
+			vef_image_reader().load(input, test_resource_locator),
 			core::exceptions::file_format_error,
 			"image file format error: attempt to read past end of file while processing uncompressed image data of `<TEST>`");
 	}
 
-	TEST(test_vef_image_reader, load_past_end_of_compressed_image)
+	TEST_F(test_vef_image_reader, load_past_end_of_compressed_image)
 	{
 		std::istringstream input(std::string("\x80\x00", 2) + std::string(64, 0));
 
 		EXPECT_THROWS_MESSAGE(
-			vef_image_reader().load(input, "<TEST>"),
+			vef_image_reader().load(input, test_resource_locator),
 			core::exceptions::file_format_error,
 			"image file format error: attempt to read past end of file while processing compressed image data of `<TEST>`");
 	}
 
 
 
-	TYPED_TEST_CASE_P(test_vef_image_reader);
+	TYPED_TEST_CASE_P(test_vef_image_reader_typed);
 
-	TYPED_TEST_P(test_vef_image_reader, load)
+	TYPED_TEST_P(test_vef_image_reader_typed, load)
 	{
 		using attributes = vef_image_reader::attributes;
 		TypeParam expectations;
@@ -252,7 +254,7 @@ namespace hypertech::kaos::assetfoo::images::vef::unittests
 		EXPECT_EQ(calculate_md5_hash(*image), expectations.hash);
 	}
 
-	REGISTER_TYPED_TEST_CASE_P(test_vef_image_reader, load);
-	INSTANTIATE_TYPED_TEST_CASE_P(test_vef_image_reader, test_vef_image_reader, testing_types);
+	REGISTER_TYPED_TEST_CASE_P(test_vef_image_reader_typed, load);
+	INSTANTIATE_TYPED_TEST_CASE_P(test_vef_image_reader, test_vef_image_reader_typed, testing_types);
 
 }

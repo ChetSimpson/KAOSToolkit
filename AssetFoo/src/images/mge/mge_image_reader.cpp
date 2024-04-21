@@ -21,7 +21,7 @@ namespace hypertech::kaos::assetfoo::images::mge
 
 		if (reader.read_enum<uint8_t, format_details::image_types>() != format_details::image_types::color_320x200_4bpp)
 		{
-			throw core::exceptions::file_format_error("unknown image type specified in " + source_name_);
+			throw core::exceptions::file_format_error("unknown image type specified in " + location_text());
 		}
 
 		const auto native_color_map(reader.read_vector<native_packed_color_type>(format_details::colormap_length));
@@ -57,7 +57,7 @@ namespace hypertech::kaos::assetfoo::images::mge
 	catch (core::exceptions::end_of_file_error&)
 	{
 		throw core::exceptions::file_format_error(
-			"image file format error: attempt to read past end of file `" + source_name_ + "`");
+			"image file format error: attempt to read past end of file `" + location_text() + "`");
 	}
 
 
@@ -86,7 +86,7 @@ namespace hypertech::kaos::assetfoo::images::mge
 	{
 		throw core::exceptions::file_format_error(
 			"image file format error: attempt to read past end of file while processing compressed image data of `"
-			+ source_name_ + "`");
+			+ location_text() + "`");
 	}
 
 }

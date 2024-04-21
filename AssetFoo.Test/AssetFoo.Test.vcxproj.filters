@@ -122,5 +122,8 @@
     <ClInclude Include="include\kaos\assetfoo\test\images\cm3\default_patterns.h">
       <Filter>Header Files\images\cm3</Filter>
     </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\test\asset_loader_fixture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

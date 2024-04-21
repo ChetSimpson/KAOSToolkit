@@ -34,7 +34,7 @@ namespace hypertech::kaos::assetfoo::images::hrs
 	catch (core::exceptions::end_of_file_error&)
 	{
 		throw core::exceptions::file_format_error(
-			"image file format error: attempt to read past end of file `" + source_name_ + "`");
+			"image file format error: attempt to read past end of file `" + location_text() + "`");
 	}
 
 }

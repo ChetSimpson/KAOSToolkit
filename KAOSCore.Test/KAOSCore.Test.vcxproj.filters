@@ -1,64 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="types">
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{06e38db9-61ee-483a-ba0b-f1819582ba39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\types">
       <UniqueIdentifier>{4e6acbef-7328-4c2b-a983-c2f42d40c8b0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="io">
-      <UniqueIdentifier>{058b97fb-1d81-44d3-87be-b49b5ef46b5c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="utility">
+    <Filter Include="Source Files\utility">
       <UniqueIdentifier>{5739931b-b493-4167-ada1-0a1fc0221e28}</UniqueIdentifier>
     </Filter>
-    <Filter Include="xml">
+    <Filter Include="Source Files\xml">
       <UniqueIdentifier>{3e86d59a-f4bf-456a-8c3f-08d75a80329f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\io">
+      <UniqueIdentifier>{058b97fb-1d81-44d3-87be-b49b5ef46b5c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Types\test_box_iterator.cpp">
-      <Filter>types</Filter>
+      <Filter>Source Files\types</Filter>
     </ClCompile>
     <ClCompile Include="src\Types\test_rgba_color.cpp">
-      <Filter>types</Filter>
+      <Filter>Source Files\types</Filter>
     </ClCompile>
     <ClCompile Include="src\Types\test_vector2.cpp">
-      <Filter>types</Filter>
+      <Filter>Source Files\types</Filter>
     </ClCompile>
     <ClCompile Include="src\Types\test_empty_bitfield.cpp">
-      <Filter>types</Filter>
+      <Filter>Source Files\types</Filter>
     </ClCompile>
     <ClCompile Include="src\Types\test_split_bitfield.cpp">
-      <Filter>types</Filter>
+      <Filter>Source Files\types</Filter>
     </ClCompile>
     <ClCompile Include="src\Types\test_single_bitfield.cpp">
-      <Filter>types</Filter>
+      <Filter>Source Files\types</Filter>
     </ClCompile>
     <ClCompile Include="src\Types\test_fixed_variant.cpp">
-      <Filter>types</Filter>
+      <Filter>Source Files\types</Filter>
     </ClCompile>
     <ClCompile Include="src\types\test_box_view.cpp">
-      <Filter>types</Filter>
+      <Filter>Source Files\types</Filter>
     </ClCompile>
     <ClCompile Include="src\types\test_dimension2d.cpp">
-      <Filter>types</Filter>
+      <Filter>Source Files\types</Filter>
     </ClCompile>
     <ClCompile Include="src\io\test_binary_reader.cpp">
-      <Filter>io</Filter>
+      <Filter>Source Files\io</Filter>
     </ClCompile>
     <ClCompile Include="src\utility\test_bit_reader.cpp">
-      <Filter>utility</Filter>
+      <Filter>Source Files\utility</Filter>
     </ClCompile>
     <ClCompile Include="src\utility\test_byteswap.cpp">
-      <Filter>utility</Filter>
+      <Filter>Source Files\utility</Filter>
     </ClCompile>
     <ClCompile Include="src\xml\test_get_attribute.cpp">
-      <Filter>xml</Filter>
+      <Filter>Source Files\xml</Filter>
     </ClCompile>
     <ClCompile Include="src\types\test_attribute_extension.cpp">
-      <Filter>types</Filter>
+      <Filter>Source Files\types</Filter>
     </ClCompile>
     <ClCompile Include="src\io\test_binary_writer.cpp">
-      <Filter>io</Filter>
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="src\test_resource_locator.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

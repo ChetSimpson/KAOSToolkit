@@ -22,7 +22,7 @@ namespace hypertech::kaos::assetfoo::images::png
 		std::vector<uint8_t> input_buffer(boost::numeric_cast<size_t>(end_position - start_position), 0);
 		if (!input_stream.read(reinterpret_cast<char*>(input_buffer.data()), input_buffer.size()))
 		{
-			throw core::exceptions::file_format_error("image file format error: unexpected error encountered while loading `" + source_name_ + "`");
+			throw core::exceptions::file_format_error("image file format error: unexpected error encountered while loading `" + location_text() + "`");
 		}
 
 
@@ -33,7 +33,7 @@ namespace hypertech::kaos::assetfoo::images::png
 		{
 			free(pixel_buffer_ptr);
 
-			throw core::exceptions::file_format_error("image file format error: unexpected error encountered while decoding `" + source_name_ + "`");
+			throw core::exceptions::file_format_error("image file format error: unexpected error encountered while decoding `" + location_text() + "`");
 		}
 
 		std::vector<image::pixel_type> pixel_buffer;

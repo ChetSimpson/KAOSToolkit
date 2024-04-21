@@ -5,6 +5,7 @@
 #include <kaos/assetfoo/images/png/png_image_reader.h>
 #include <kaos/core/exceptions.h>
 #include <kaos/assetfoo/test/load_tc1014_image_test_expectations.h>
+#include <kaos/assetfoo/test/asset_loader_fixture.h>
 #include <kaos/test/gtest-extensions.h>
 #include <gtest/gtest.h>
 #include <fstream>
@@ -15,6 +16,7 @@ namespace hypertech::kaos::assetfoo::images::png::unittests
 
 	namespace
 	{
+
 		template<size_t Width_, size_t Height_, uint32_t Hash1_, uint32_t Hash2_, uint32_t Hash3_, uint32_t Hash4_>
 		struct png_image_reader_test_expectations
 		{
@@ -65,7 +67,8 @@ namespace hypertech::kaos::assetfoo::images::png::unittests
 
 
 		template<class TestType_>
-		class test_png_image_reader : public ::testing::Test {};
+		class test_png_image_reader_typed : public assetfoo::unittests::asset_loader_fixture {};
+		class test_png_image_reader : public assetfoo::unittests::asset_loader_fixture {};
 
 		using testing_types = testing::Types<
 			test1_base_png_expectations,
@@ -75,7 +78,7 @@ namespace hypertech::kaos::assetfoo::images::png::unittests
 			ninja_gaiden_png_expectations>;
 	}
 
-	TEST(test_png_image_reader, load_file_not_found)
+	TEST_F(test_png_image_reader, load_file_not_found)
 	{
 		const std::string filename("TestData/images/png/NOEXIST.png");
 		EXPECT_THROWS_MESSAGE(
@@ -84,21 +87,21 @@ namespace hypertech::kaos::assetfoo::images::png::unittests
 			("Unable to open '" + filename + "'. File does not exist").c_str());
 	}
 
-	TEST(test_png_image_reader, load_past_end_of_image)
+	TEST_F(test_png_image_reader, load_past_end_of_image)
 	{
 		std::istringstream input(std::string(32, 0));
 
 		EXPECT_THROWS_MESSAGE(
-			png_image_reader().load(input, "<TEST>"),
+			png_image_reader().load(input, test_resource_locator),
 			core::exceptions::file_format_error,
 			"image file format error: unexpected error encountered while decoding `<TEST>`");
 	}
 
 
 
-	TYPED_TEST_CASE_P(test_png_image_reader);
+	TYPED_TEST_CASE_P(test_png_image_reader_typed);
 
-	TYPED_TEST_P(test_png_image_reader, load)
+	TYPED_TEST_P(test_png_image_reader_typed, load)
 	{
 		TypeParam expectations;
 
@@ -111,7 +114,7 @@ namespace hypertech::kaos::assetfoo::images::png::unittests
 		EXPECT_EQ(calculate_md5_hash(*image), expectations.hash);
 	}
 
-	REGISTER_TYPED_TEST_CASE_P(test_png_image_reader, load);
-	INSTANTIATE_TYPED_TEST_CASE_P(test_png_image_reader, test_png_image_reader, testing_types);
+	REGISTER_TYPED_TEST_CASE_P(test_png_image_reader_typed, load);
+	INSTANTIATE_TYPED_TEST_CASE_P(test_png_image_reader, test_png_image_reader_typed, testing_types);
 
 }
