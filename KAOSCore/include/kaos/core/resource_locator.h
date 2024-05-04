@@ -34,12 +34,7 @@ namespace hypertech::kaos::core
 		/// @param path The file system based path to assign to the resource locator.
 		/// 
 		/// @return *this.
-		resource_locator& operator=(const path_type& path);
-
-		/// @brief Retrieves the text representation of the resource location.
-		/// 
-		/// @return The text representation of the resource location.
-		string_type text() const noexcept;
+		resource_locator& operator=(path_type path);
 
 
 		/// @brief Compares two instances of `resource_locator` for equality.
@@ -55,6 +50,21 @@ namespace hypertech::kaos::core
 		/// 
 		/// @return `true` if the instances of `resource_locator` are not the same; `false` otherwise.
 		bool operator!=(const resource_locator& other) const noexcept = default;
+
+		bool empty() const noexcept;
+
+		bool is_absolute() const;
+
+		bool is_relative() const;
+
+		resource_locator make_relative_of(const resource_locator& base) const;
+		resource_locator make_absolute() const;
+		resource_locator make_absolute(const resource_locator& base) const;
+
+		/// @brief Retrieves the text representation of the resource location.
+		/// 
+		/// @return The text representation of the resource location.
+		string_type text() const noexcept;
 
 
 	private:
