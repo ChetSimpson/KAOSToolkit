@@ -9,6 +9,8 @@
 
 namespace hypertech::kaos::assetfoo::images
 {
+	//	FIXME: This type should not carry around color information. That should be
+	//	maintained separately in an appropriate colormap or similar container.
 
 	/// @brief Monochrome bitmap pattern
 	/// 
