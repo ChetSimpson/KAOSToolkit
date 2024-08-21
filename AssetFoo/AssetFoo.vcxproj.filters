@@ -89,7 +89,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Pixel\packed_pixel_layout.cpp">
+    <ClCompile Include="src\Pixel\basic_packed_pixel_layout.cpp">
       <Filter>Source Files\pixel</Filter>
     </ClCompile>
     <ClCompile Include="src\Colors\color_converter.cpp">
@@ -175,9 +175,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\kaos\assetfoo\abstract_packed_pixel_layout.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\kaos\assetfoo\asset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -202,7 +199,7 @@
     <ClInclude Include="include\kaos\assetfoo\pixels\packed_pixel_converter.h">
       <Filter>Header Files\pixels</Filter>
     </ClInclude>
-    <ClInclude Include="include\kaos\assetfoo\pixels\packed_pixel_layout.h">
+    <ClInclude Include="include\kaos\assetfoo\pixels\basic_packed_pixel_layout.h">
       <Filter>Header Files\pixels</Filter>
     </ClInclude>
     <ClInclude Include="include\kaos\assetfoo\exceptions.h">
@@ -273,6 +270,9 @@
     </ClInclude>
     <ClInclude Include="include\kaos\assetfoo\images\vef\vef_image_format_details.h">
       <Filter>Header Files\images\vef</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\pixels\packed_pixel_layout.h">
+      <Filter>Header Files\pixels</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

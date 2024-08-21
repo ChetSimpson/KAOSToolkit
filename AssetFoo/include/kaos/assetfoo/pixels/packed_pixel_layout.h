@@ -3,73 +3,87 @@
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
-#include <kaos/assetfoo/abstract_packed_pixel_layout.h>
-#include <initializer_list>
+#include <kaos/core/types/single_bitfield.h>
+#include <vector>
 
 
 namespace hypertech::kaos::assetfoo::pixels
 {
 
-	/// @brief Base implementation of the packed pixel format interface
-	///
-	/// This class provides an implementation of the \ref abstract_packed_pixel_layout
-	/// to provide information about packed pixel formats.
-	class packed_pixel_layout final : public abstract_packed_pixel_layout
+	/// @brief Provides the base interface for packed pixel formats.
+	/// 
+	/// Ths class provides the base interface and information about packed
+	/// pixel formats needed for conversion between pixel storage formats.
+	class packed_pixel_layout
 	{
 	public:
 
-		/// @brief Create a packed pixel layout.
-		/// 
-		/// @param pixel_bitfields List of bitfields used to get and set color components in a packed pixel
-		/// 
-		/// @exception std::invalid_argument Thrown \p pixel_bitfields is empty.
-		explicit packed_pixel_layout(bitfieldlist_type pixel_bitfields);
+		/// @brief Size type.
+		using size_type = size_t;
+		/// @brief Packed pixel value type.
+		using packedpixelvalue_type = uint8_t;
+		/// @brief Bitfield descripting a single pixel in a packed value.
+		using bitfield_type = core::types::single_bitfield<packedpixelvalue_type>;
+		/// @brief Container type for pixel bitfields
+		using bitfieldlist_type = std::vector<bitfield_type>;
+
+
+	public:
+
+		/// @brief Create a packed pixel layout
+		packed_pixel_layout() noexcept = default;
 
 		/// @brief Create a copy of a packed pixel layout
 		/// 
 		/// @param other The packed pixel layout to make a copy of
-		packed_pixel_layout(const packed_pixel_layout& other) = default;
+		packed_pixel_layout(const packed_pixel_layout& other) noexcept = delete;
 
+		/// @brief Create a packed pixel layout using move semantics
+		/// 
+		/// @param other The instance to initialize the new packed pixel layout with.
 		packed_pixel_layout(packed_pixel_layout&& other) noexcept = delete;
 
+		/// @brief Destructor.
+		virtual ~packed_pixel_layout() noexcept = default;
 
-		/// @brief Create a packed pixel format
+
+		/// @brief Returns the maximum number of colors pixels per
+		virtual size_type max_colors_in_pixel() const noexcept = 0;
+
+		/// @brief Returns the number of pixels packed in a single value.
+		virtual size_type pixels_per_packed_value() const noexcept = 0;
+
+		/// @brief Returns the number of bits per pixel.
+		virtual size_type bits_per_pixel() const noexcept = 0;
+
+		/// @brief Returns a list of pixel bitfields used to shift a pixel from or to
+		/// its home position.
 		/// 
-		/// @param bits_per_pixel The number of bits per pixel.
+		/// Returns a list of pixel bitfields used to shift a pixel right from its home
+		/// position to create a value of 0 to N with N being the value-1 returned from
+		/// max_colors_in_pixel(). The first element in the list is the bitfield for
+		/// the most significant pixel in the packed value while the last element in the
+		/// list is the bitfield for the least significant pixel in the packed value.
+		/// Likewise the bitfields can be used to move (shift left) a pixel value of 0
+		/// to N to its home position in a packed pixel value.
 		/// 
-		/// @exception std::range_error If \p bits_per_pixel is zero.
-		/// @exception std::overflow_error If the number of bits specified in \p bits_per_pixel is larger than
-		/// the total number of bits available in a packed pixel value.
-		/// @exception std::range_error If the value in \p bits_per_pixel is not a power of two.
-		explicit packed_pixel_layout(size_type bits_per_pixel);
+		/// @return A list of pixel bitfields.
+		virtual const bitfieldlist_type& pixel_bitfields() const noexcept = 0;
 
-		size_type max_colors_in_pixel() const noexcept override;
-		size_type pixels_per_packed_value() const noexcept override;
-		size_type bits_per_pixel() const noexcept override;
+		/// @brief Calculates the number of bytes required to store row of packed pixels.
+		/// 
+		/// @param width_in_pixels The number of pixels to store in a row of packed pixel values.
+		/// @param alignment_in_bytes The number of bytes the pitch should be aligned to. Value
+		/// must be a power of two.
+		/// 
+		/// @return The number of bytes required to store a row of packed pixels.
+		/// 
+		/// @exception std::invalid_argument Thrown if \p width_in_pixels is 0 or if \p alignment
+		/// is 0 or not a power of two.
+		virtual size_type calculate_pitch(size_type width_in_pixels, size_type alignment_in_bytes) const = 0;
 
-		const bitfieldlist_type& pixel_bitfields() const noexcept override;
-
-		size_type calculate_pitch(size_type width_in_pixels, size_type alignment_in_bytes) const override;
-
-
-	private:
-
-		static bitfieldlist_type make_bitfields(size_type bits_per_pixel);
-
-	public:
-
-		/// @brief Default representation of an 8 bits per pixel packed pixel stored in a single byte
-		static const packed_pixel_layout BPP8;
-		/// @brief Default representation of an 4 bits per pixel packed pixel stored in a single byte
-		static const packed_pixel_layout BPP4;
-		/// @brief Default representation of an 2 bits per pixel packed pixel stored in a single byte
-		static const packed_pixel_layout BPP2;
-		/// @brief Default representation of an 1 bit per pixel packed pixel stored in a single byte
-		static const packed_pixel_layout BPP1;
-
-	private:
-
-		const bitfieldlist_type pixel_bitfields_;	//!<	List of pixel bitfields
+		packed_pixel_layout& operator=(const packed_pixel_layout&) = delete;
+		packed_pixel_layout& operator=(const packed_pixel_layout&&) = delete;
 	};
 
 }

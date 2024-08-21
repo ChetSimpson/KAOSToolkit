@@ -4,7 +4,7 @@
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
 #include <kaos/assetfoo/images/image.h>
-#include <kaos/assetfoo/pixels/packed_pixel_layout.h>
+#include <kaos/assetfoo/pixels/basic_packed_pixel_layout.h>
 
 
 namespace hypertech::kaos::assetfoo::images::hrs
@@ -23,7 +23,7 @@ namespace hypertech::kaos::assetfoo::images::hrs
 		static inline const auto dimensions = image::dimensions_type(320, 192);
 
 		/// @brief Pixel layout of the image
-		static const inline pixels::packed_pixel_layout& pixel_layout{ pixels::packed_pixel_layout::BPP4 };
+		static const inline pixels::packed_pixel_layout& pixel_layout{ pixels::basic_packed_pixel_layout::BPP4 };
 	};
 
 }

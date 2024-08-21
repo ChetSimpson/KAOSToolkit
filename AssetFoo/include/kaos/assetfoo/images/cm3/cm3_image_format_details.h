@@ -3,7 +3,7 @@
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
-#include <kaos/assetfoo/pixels/packed_pixel_layout.h>
+#include <kaos/assetfoo/pixels/basic_packed_pixel_layout.h>
 
 
 namespace hypertech::kaos::assetfoo::images::cm3
@@ -24,7 +24,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		/// @brief The height of each image page. 
 		static const size_type page_height = 192;
 		/// @brief Pixel layout of the image
-		static const inline pixels::packed_pixel_layout& pixel_layout{ pixels::packed_pixel_layout::BPP4 };
+		static const inline pixels::packed_pixel_layout& pixel_layout{ pixels::basic_packed_pixel_layout::BPP4 };
 		/// @brief The mask for accessing the flag determining if the image is one or two pages in length
 		static const uint8_t double_page_flag_mask = 0x80;
 		/// @brief The mask for accessing the flag determining if the image contains editor patterns.

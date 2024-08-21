@@ -15,11 +15,11 @@ namespace hypertech::kaos::assetfoo::images::vef
 
 	const std::array<vef_image_reader::image_descriptor, 5> vef_image_reader::image_type_descriptors
 	{{
-		{ { 320, 200 }, pixels::packed_pixel_layout::BPP4},
-		{ { 640, 200 }, pixels::packed_pixel_layout::BPP2},
-		{ { 160, 200 }, pixels::packed_pixel_layout::BPP4},
-		{ { 320, 200 }, pixels::packed_pixel_layout::BPP2},
-		{ { 640, 200 }, pixels::packed_pixel_layout::BPP1}
+		{ { 320, 200 }, pixels::basic_packed_pixel_layout::BPP4},
+		{ { 640, 200 }, pixels::basic_packed_pixel_layout::BPP2},
+		{ { 160, 200 }, pixels::basic_packed_pixel_layout::BPP4},
+		{ { 320, 200 }, pixels::basic_packed_pixel_layout::BPP2},
+		{ { 640, 200 }, pixels::basic_packed_pixel_layout::BPP1}
 	}};
 
 	std::unique_ptr<asset> vef_image_reader::load(std::istream& input_stream)

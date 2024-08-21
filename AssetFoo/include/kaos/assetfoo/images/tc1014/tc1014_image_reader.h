@@ -8,7 +8,7 @@
 #include <kaos/assetfoo/images/tc1014/tc1014_image_attributes.h>
 #include <kaos/assetfoo/colors/tc1014/tc1014_color_converter.h>
 #include <kaos/assetfoo/pixels/packed_pixel_converter.h>
-#include <kaos/assetfoo/pixels/packed_pixel_layout.h>
+#include <kaos/assetfoo/pixels/basic_packed_pixel_layout.h>
 #include <kaos/core/types/attribute_extension.h>
 #include <kaos/core/io/binary_reader.h>
 

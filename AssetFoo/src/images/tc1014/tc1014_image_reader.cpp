@@ -3,7 +3,6 @@
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #include <kaos/assetfoo/images/mge/mge_image_reader.h>
-#include <kaos/assetfoo/pixels/packed_pixel_layout.h>
 #include <kaos/core/exceptions.h>
 #include <algorithm>
 

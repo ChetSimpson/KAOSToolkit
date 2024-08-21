@@ -2,7 +2,7 @@
 //
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
-#include <kaos/assetfoo/pixels/packed_pixel_layout.h>
+#include <kaos/assetfoo/pixels/basic_packed_pixel_layout.h>
 #include <kaos/test/gtest-extensions.h>
 #include <gtest/gtest.h>
 #include <algorithm>
@@ -11,7 +11,7 @@
 namespace hypertech::kaos::assetfoo::pixels::unittests
 {
 
-	class packed_pixel_layout_fixture : public ::testing::Test
+	class basic_packed_pixel_layout_fixture : public ::testing::Test
 	{
 	protected:
 
@@ -22,77 +22,74 @@ namespace hypertech::kaos::assetfoo::pixels::unittests
 		static const bitfieldlist_type bitfields_4bpp_;
 		static const bitfieldlist_type bitfields_8bpp_;
 
-		static const packed_pixel_layout test_format_;
+		static const basic_packed_pixel_layout test_format_;
 		static const size_t default_pitch_alignment_ = 1;
 	};
 
 
-	const packed_pixel_layout_fixture::bitfieldlist_type packed_pixel_layout_fixture::bitfields_1bpp_(
-		packed_pixel_layout_fixture::bitfieldlist_type({ {1, 7}, {1, 6}, {1, 5}, {1, 4}, {1, 3}, {1, 2}, {1, 1}, {1, 0} }));
+	const basic_packed_pixel_layout_fixture::bitfieldlist_type basic_packed_pixel_layout_fixture::bitfields_1bpp_(
+		basic_packed_pixel_layout_fixture::bitfieldlist_type({ {1, 7}, {1, 6}, {1, 5}, {1, 4}, {1, 3}, {1, 2}, {1, 1}, {1, 0} }));
 
-	const packed_pixel_layout_fixture::bitfieldlist_type packed_pixel_layout_fixture::bitfields_2bpp_(
-		packed_pixel_layout_fixture::bitfieldlist_type({ {2, 6}, {2, 4}, {2, 2}, {2, 0} }));
+	const basic_packed_pixel_layout_fixture::bitfieldlist_type basic_packed_pixel_layout_fixture::bitfields_2bpp_(
+		basic_packed_pixel_layout_fixture::bitfieldlist_type({ {2, 6}, {2, 4}, {2, 2}, {2, 0} }));
 
-	const packed_pixel_layout_fixture::bitfieldlist_type packed_pixel_layout_fixture::bitfields_4bpp_(
-		packed_pixel_layout_fixture::bitfieldlist_type({ {4, 4}, {4, 0} }));
+	const basic_packed_pixel_layout_fixture::bitfieldlist_type basic_packed_pixel_layout_fixture::bitfields_4bpp_(
+		basic_packed_pixel_layout_fixture::bitfieldlist_type({ {4, 4}, {4, 0} }));
 
-	const packed_pixel_layout_fixture::bitfieldlist_type packed_pixel_layout_fixture::bitfields_8bpp_ = 
-		packed_pixel_layout_fixture::bitfieldlist_type({ {8, 0} });
+	const basic_packed_pixel_layout_fixture::bitfieldlist_type basic_packed_pixel_layout_fixture::bitfields_8bpp_ = 
+		basic_packed_pixel_layout_fixture::bitfieldlist_type({ {8, 0} });
 
-	const packed_pixel_layout packed_pixel_layout_fixture::test_format_(bitfields_8bpp_);
+	const basic_packed_pixel_layout basic_packed_pixel_layout_fixture::test_format_(bitfields_8bpp_);
 
 
-	TEST_F(packed_pixel_layout_fixture, ctor_empty_bitfield_list)
+	TEST_F(basic_packed_pixel_layout_fixture, ctor_empty_bitfield_list)
 	{
 		EXPECT_THROWS_MESSAGE(
-			packed_pixel_layout(bitfieldlist_type{}),
+			basic_packed_pixel_layout(bitfieldlist_type{}),
 			std::invalid_argument,
 			"Pixel bitfields list cannot contain 0 elements");
 	}
 
-	TEST_F(packed_pixel_layout_fixture, ctor_non_uniform_pixels)
+	TEST_F(basic_packed_pixel_layout_fixture, ctor_non_uniform_pixels)
 	{
 		EXPECT_THROWS_MESSAGE(
-			packed_pixel_layout({ {1,7}, {2, 5} }),
+			basic_packed_pixel_layout({ {1,7}, {2, 5} }),
 			std::invalid_argument,
 			"Packed pixel bitfield definitions must be uniform");
 	}
 
-	TEST_F(packed_pixel_layout_fixture, ctor_zero_bits_per_pixel)
+	TEST_F(basic_packed_pixel_layout_fixture, ctor_zero_bits_per_pixel)
 	{
 		EXPECT_THROWS_MESSAGE(
-			packed_pixel_layout(0),
+			basic_packed_pixel_layout(0),
 			std::range_error,
-			"Bits per pixel passed to packed_pixel_layout cannot be 0");
+			"Bits per pixel passed to basic_packed_pixel_layout cannot be 0");
 	}
 
-	TEST_F(packed_pixel_layout_fixture, ctor_bits_per_pixel_larger_than_underlying_value_type)
+	TEST_F(basic_packed_pixel_layout_fixture, ctor_bits_per_pixel_larger_than_underlying_value_type)
 	{
 		EXPECT_THROWS_MESSAGE(
-			packed_pixel_layout(64),
+			basic_packed_pixel_layout(64),
 			std::overflow_error,
-			"Bits per pixel passed to packed_pixel_layout must be less than or equal to 8");
+			"Bits per pixel passed to basic_packed_pixel_layout must be less than or equal to 8");
 	}
 
-	TEST_F(packed_pixel_layout_fixture, ctor_non_power_of_two_bits_per_pixel)
+	TEST_F(basic_packed_pixel_layout_fixture, ctor_non_power_of_two_bits_per_pixel)
 	{
 		EXPECT_THROWS_MESSAGE(
-			packed_pixel_layout(3),
+			basic_packed_pixel_layout(3),
 			std::range_error,
-			"Bits per pixel passed to packed_pixel_layout must be a power of two");
+			"Bits per pixel passed to basic_packed_pixel_layout must be a power of two");
 	}
 
 
-	TEST_F(packed_pixel_layout_fixture, copy_constructor)
+	TEST_F(basic_packed_pixel_layout_fixture, copy_constructor)
 	{
-		packed_pixel_layout layout(bitfields_1bpp_);
+		basic_packed_pixel_layout layout(bitfields_1bpp_);
 
 		auto layout_copy(layout);
 
-		EXPECT_EQ(layout_copy.pixel_bitfields(), layout.pixel_bitfields());
-		EXPECT_EQ(layout_copy.max_colors_in_pixel(), layout.max_colors_in_pixel());
-		EXPECT_EQ(layout_copy.pixels_per_packed_value(), layout.pixels_per_packed_value());
-		EXPECT_EQ(layout_copy.bits_per_pixel(), layout.bits_per_pixel());
+		EXPECT_EQ(layout_copy, layout);
 	}
 
 
@@ -102,7 +99,7 @@ namespace hypertech::kaos::assetfoo::pixels::unittests
 
 
 
-	TEST_F(packed_pixel_layout_fixture, calculate_pitch_fail_on_zero_pixel_width)
+	TEST_F(basic_packed_pixel_layout_fixture, calculate_pitch_fail_on_zero_pixel_width)
 	{
 		EXPECT_THROWS_MESSAGE(
 			test_format_.calculate_pitch(0, default_pitch_alignment_),
@@ -111,7 +108,7 @@ namespace hypertech::kaos::assetfoo::pixels::unittests
 	}
 
 
-	TEST_F(packed_pixel_layout_fixture, calculate_pitch_fail_on_zero_alignment)
+	TEST_F(basic_packed_pixel_layout_fixture, calculate_pitch_fail_on_zero_alignment)
 	{
 		EXPECT_THROWS_MESSAGE(
 			test_format_.calculate_pitch(8, 0),
@@ -120,7 +117,7 @@ namespace hypertech::kaos::assetfoo::pixels::unittests
 	}
 
 
-	TEST_F(packed_pixel_layout_fixture, calculate_pitch_valid_alignment)
+	TEST_F(basic_packed_pixel_layout_fixture, calculate_pitch_valid_alignment)
 	{
 		EXPECT_EQ(test_format_.calculate_pitch(1, 1), 1);
 		EXPECT_EQ(test_format_.calculate_pitch(2, 1), 2);
@@ -162,7 +159,7 @@ namespace hypertech::kaos::assetfoo::pixels::unittests
 	}
 
 
-	TEST_F(packed_pixel_layout_fixture, calculate_pitch_fail_on_alignment_not_power_of_two)
+	TEST_F(basic_packed_pixel_layout_fixture, calculate_pitch_fail_on_alignment_not_power_of_two)
 	{
 		EXPECT_THROWS_MESSAGE(
 			test_format_.calculate_pitch(8, 3),
@@ -193,7 +190,7 @@ namespace hypertech::kaos::assetfoo::pixels::unittests
 
 
 
-	TEST_F(packed_pixel_layout_fixture, attributes_1bpp)
+	TEST_F(basic_packed_pixel_layout_fixture, attributes_1bpp)
 	{
 		auto tester = [](const auto& format, const auto& bitfields)
 		{
@@ -203,14 +200,14 @@ namespace hypertech::kaos::assetfoo::pixels::unittests
 			EXPECT_TRUE(std::equal(format.pixel_bitfields().begin(), format.pixel_bitfields().end(), bitfields.begin(), bitfields.end()));
 		};
 
-		tester(packed_pixel_layout(1), bitfields_1bpp_);
-		tester(packed_pixel_layout::BPP1, bitfields_1bpp_);
+		tester(basic_packed_pixel_layout(1), bitfields_1bpp_);
+		tester(basic_packed_pixel_layout::BPP1, bitfields_1bpp_);
 	}
 
 
-	TEST_F(packed_pixel_layout_fixture, calculate_pitch_1bpp)
+	TEST_F(basic_packed_pixel_layout_fixture, calculate_pitch_1bpp)
 	{
-		const auto& format = packed_pixel_layout::BPP1;
+		const auto& format = basic_packed_pixel_layout::BPP1;
 
 		EXPECT_EQ(format.calculate_pitch(1, default_pitch_alignment_), 1);
 		EXPECT_EQ(format.calculate_pitch(2, default_pitch_alignment_), 1);
@@ -243,7 +240,7 @@ namespace hypertech::kaos::assetfoo::pixels::unittests
 
 
 
-	TEST_F(packed_pixel_layout_fixture, attributes_2bpp)
+	TEST_F(basic_packed_pixel_layout_fixture, attributes_2bpp)
 	{
 		auto tester = [](const auto& format, const auto& bitfields)
 		{
@@ -253,14 +250,14 @@ namespace hypertech::kaos::assetfoo::pixels::unittests
 			EXPECT_TRUE(std::equal(format.pixel_bitfields().begin(), format.pixel_bitfields().end(), bitfields.begin(), bitfields.end()));
 		};
 
-		tester(packed_pixel_layout(2), bitfields_2bpp_);
-		tester(packed_pixel_layout::BPP2, bitfields_2bpp_);
+		tester(basic_packed_pixel_layout(2), bitfields_2bpp_);
+		tester(basic_packed_pixel_layout::BPP2, bitfields_2bpp_);
 	}
 
 
-	TEST_F(packed_pixel_layout_fixture, calculate_pitch_2bpp)
+	TEST_F(basic_packed_pixel_layout_fixture, calculate_pitch_2bpp)
 	{
-		const auto& format = packed_pixel_layout::BPP2;
+		const auto& format = basic_packed_pixel_layout::BPP2;
 
 		EXPECT_EQ(format.calculate_pitch(1, default_pitch_alignment_), 1);
 		EXPECT_EQ(format.calculate_pitch(2, default_pitch_alignment_), 1);
@@ -286,7 +283,7 @@ namespace hypertech::kaos::assetfoo::pixels::unittests
 
 
 
-	TEST_F(packed_pixel_layout_fixture, attributes_4bpp)
+	TEST_F(basic_packed_pixel_layout_fixture, attributes_4bpp)
 	{
 		auto tester = [](const auto& format, const auto& bitfields)
 		{
@@ -296,14 +293,14 @@ namespace hypertech::kaos::assetfoo::pixels::unittests
 			EXPECT_TRUE(std::equal(format.pixel_bitfields().begin(), format.pixel_bitfields().end(), bitfields.begin(), bitfields.end()));
 		};
 
-		tester(packed_pixel_layout(4), bitfields_4bpp_);
-		tester(packed_pixel_layout::BPP4, bitfields_4bpp_);
+		tester(basic_packed_pixel_layout(4), bitfields_4bpp_);
+		tester(basic_packed_pixel_layout::BPP4, bitfields_4bpp_);
 	}
 
 
-	TEST_F(packed_pixel_layout_fixture, calculate_pitch_4bpp)
+	TEST_F(basic_packed_pixel_layout_fixture, calculate_pitch_4bpp)
 	{
-		const auto& format = packed_pixel_layout::BPP4;
+		const auto& format = basic_packed_pixel_layout::BPP4;
 
 		EXPECT_EQ(format.calculate_pitch(1, default_pitch_alignment_), 1);
 		EXPECT_EQ(format.calculate_pitch(2, default_pitch_alignment_), 1);
@@ -333,7 +330,7 @@ namespace hypertech::kaos::assetfoo::pixels::unittests
 
 
 
-	TEST_F(packed_pixel_layout_fixture, attributes_8bpp)
+	TEST_F(basic_packed_pixel_layout_fixture, attributes_8bpp)
 	{
 		auto tester = [](const auto& format, const auto& bitfields)
 		{
@@ -343,15 +340,15 @@ namespace hypertech::kaos::assetfoo::pixels::unittests
 			EXPECT_TRUE(std::equal(format.pixel_bitfields().begin(), format.pixel_bitfields().end(), bitfields.begin(), bitfields.end()));
 		};
 
-		tester(packed_pixel_layout(8), bitfields_8bpp_);
-		tester(packed_pixel_layout::BPP8, bitfields_8bpp_);
+		tester(basic_packed_pixel_layout(8), bitfields_8bpp_);
+		tester(basic_packed_pixel_layout::BPP8, bitfields_8bpp_);
 
 	}
 
 
-	TEST_F(packed_pixel_layout_fixture, calculate_pitch_8bpp)
+	TEST_F(basic_packed_pixel_layout_fixture, calculate_pitch_8bpp)
 	{
-		const auto& format = packed_pixel_layout::BPP8;
+		const auto& format = basic_packed_pixel_layout::BPP8;
 
 		EXPECT_EQ(format.calculate_pitch(1, default_pitch_alignment_), 1);
 		EXPECT_EQ(format.calculate_pitch(2, default_pitch_alignment_), 2);

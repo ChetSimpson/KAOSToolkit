@@ -35,7 +35,7 @@ namespace hypertech::kaos::assetfoo::images::mge
 
 		auto image(std::make_unique<image_type>(format_details::dimensions));
 
-		const auto& layout(pixels::packed_pixel_layout::BPP4);
+		const auto& layout(pixels::basic_packed_pixel_layout::BPP4);
 		if (is_compressed)
 		{
 			load_compressed_pixel_data(reader, *image, *colormap, layout);

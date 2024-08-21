@@ -7,7 +7,7 @@
 #include <kaos/assetfoo/images/cm3/cm3_image_format_details.h>
 #include <kaos/assetfoo/images/tc1014/tc1014_image_reader.h>
 #include <kaos/assetfoo/images/monochrome_pattern.h>
-#include <kaos/assetfoo/pixels/packed_pixel_layout.h>
+#include <kaos/assetfoo/pixels/basic_packed_pixel_layout.h>
 
 
 namespace hypertech::kaos::assetfoo::images::cm3

@@ -39,7 +39,7 @@
     <ClCompile Include="src\images\tc1014\tc1014_image_reader.cpp" />
     <ClCompile Include="src\images\vef\vef_image_reader.cpp" />
     <ClCompile Include="src\Pixel\packed_pixel_converter.cpp" />
-    <ClCompile Include="src\Pixel\packed_pixel_layout.cpp" />
+    <ClCompile Include="src\Pixel\basic_packed_pixel_layout.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="docs\images\cm3.dox" />
@@ -51,7 +51,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\kaos\assetfoo\abstract_packed_pixel_layout.h" />
     <ClInclude Include="include\kaos\assetfoo\asset.h" />
     <ClInclude Include="include\kaos\assetfoo\asset_reader.h" />
     <ClInclude Include="include\kaos\assetfoo\asset_writer.h" />
@@ -83,6 +82,7 @@
     <ClInclude Include="include\kaos\assetfoo\images\vef\vef_image_format_details.h" />
     <ClInclude Include="include\kaos\assetfoo\images\vef\vef_image_reader.h" />
     <ClInclude Include="include\kaos\assetfoo\pixels\packed_pixel_converter.h" />
+    <ClInclude Include="include\kaos\assetfoo\pixels\basic_packed_pixel_layout.h" />
     <ClInclude Include="include\kaos\assetfoo\pixels\packed_pixel_layout.h" />
   </ItemGroup>
   <ItemGroup>

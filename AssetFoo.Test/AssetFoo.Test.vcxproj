@@ -82,7 +82,7 @@
     <ClCompile Include="src\images\test_monochrome_pattern.cpp" />
     <ClCompile Include="src\images\vef\test_vef_image_loader.cpp" />
     <ClCompile Include="src\Pixels\test_packed_pixel_converter.cpp" />
-    <ClCompile Include="src\Pixels\test_packed_pixel_layout.cpp" />
+    <ClCompile Include="src\Pixels\test_basic_packed_pixel_layout.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

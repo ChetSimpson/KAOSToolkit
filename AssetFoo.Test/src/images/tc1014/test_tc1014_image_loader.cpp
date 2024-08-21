@@ -79,7 +79,7 @@ namespace hypertech::kaos::assetfoo::images::tc1014::unittests
 
 		std::istringstream input;
 		core::io::binary_reader reader(input);
-		const auto& layout(pixels::packed_pixel_layout::BPP4);
+		const auto& layout(pixels::basic_packed_pixel_layout::BPP4);
 		EXPECT_THROWS_MESSAGE(
 			image_reader.load_uncompressed_pixel_data(reader, image, *colormap, layout, "<TEST>"),
 			core::exceptions::file_format_error,
@@ -100,7 +100,7 @@ namespace hypertech::kaos::assetfoo::images::tc1014::unittests
 			reader,
 			image,
 			*colormap,
-			pixels::packed_pixel_layout::BPP4,
+			pixels::basic_packed_pixel_layout::BPP4,
 			"<TEST>");
 
 		auto image_color_ptr(image.get_sequence().begin());

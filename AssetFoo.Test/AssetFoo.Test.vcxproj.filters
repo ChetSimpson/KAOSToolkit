@@ -51,7 +51,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Pixels\test_packed_pixel_layout.cpp">
+    <ClCompile Include="src\Pixels\test_basic_packed_pixel_layout.cpp">
       <Filter>Source Files\pixels</Filter>
     </ClCompile>
     <ClCompile Include="src\Colors\test_color_map.cpp">
