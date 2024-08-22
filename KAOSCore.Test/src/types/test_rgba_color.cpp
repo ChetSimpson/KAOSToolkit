@@ -13,50 +13,50 @@ namespace hypertech::kaos::core::types::unittests
 	{
 		rgba_color color;
 
-		EXPECT_EQ(color.R, 0);
-		EXPECT_EQ(color.G, 0);
-		EXPECT_EQ(color.B, 0);
-		EXPECT_EQ(color.A, 255);
+		EXPECT_EQ(color.r, 0);
+		EXPECT_EQ(color.g, 0);
+		EXPECT_EQ(color.b, 0);
+		EXPECT_EQ(color.a, 255);
 	}
 
 	TEST(rgba_color, rgb_ctor)
 	{
 		rgba_color color(0, 85, 170);
 
-		EXPECT_EQ(color.R, 0);
-		EXPECT_EQ(color.G, 85);
-		EXPECT_EQ(color.B, 170);
-		EXPECT_EQ(color.A, 255);
+		EXPECT_EQ(color.r, 0);
+		EXPECT_EQ(color.g, 85);
+		EXPECT_EQ(color.b, 170);
+		EXPECT_EQ(color.a, 255);
 	}
 
 	TEST(rgba_color, RGBA_Ctor)
 	{
 		rgba_color color(85, 170, 255, 100);
 
-		EXPECT_EQ(color.R, 85);
-		EXPECT_EQ(color.G, 170);
-		EXPECT_EQ(color.B, 255);
-		EXPECT_EQ(color.A, 100);
+		EXPECT_EQ(color.r, 85);
+		EXPECT_EQ(color.g, 170);
+		EXPECT_EQ(color.b, 255);
+		EXPECT_EQ(color.a, 100);
 	}
 
 	TEST(rgba_color, unsigned_packed_rgba_ctor)
 	{
 		rgba_color color(rgba_color::unsigned_packed_color_type(0x55AAFF80));
 
-		EXPECT_EQ(color.R, 0x55);
-		EXPECT_EQ(color.G, 0xaa);
-		EXPECT_EQ(color.B, 0xff);
-		EXPECT_EQ(color.A, 0x80);
+		EXPECT_EQ(color.r, 0x55);
+		EXPECT_EQ(color.g, 0xaa);
+		EXPECT_EQ(color.b, 0xff);
+		EXPECT_EQ(color.a, 0x80);
 	}
 
 	TEST(rgba_color, signed_packed_rgba_ctor)
 	{
 		rgba_color color(rgba_color::signed_packed_color_type(0x55AAFF80));
 
-		EXPECT_EQ(color.R, 0x55);
-		EXPECT_EQ(color.G, 0xaa);
-		EXPECT_EQ(color.B, 0xff);
-		EXPECT_EQ(color.A, 0x80);
+		EXPECT_EQ(color.r, 0x55);
+		EXPECT_EQ(color.g, 0xaa);
+		EXPECT_EQ(color.b, 0xff);
+		EXPECT_EQ(color.a, 0x80);
 	}
 
 	TEST(rgba_color, Equals)

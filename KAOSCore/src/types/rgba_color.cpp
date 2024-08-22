@@ -11,8 +11,8 @@ namespace hypertech::kaos::core::types
 
 	float rgba_color::brightness() const
 	{
-		float max = std::max(R, std::max(G, B));
-		float min = std::min(R, std::min(G, B));
+		float max = std::max(r, std::max(g, b));
+		float min = std::min(r, std::min(g, b));
 
 		auto brightness = ((max + min) / 2.0f) / max_component_value_as<float>();
 

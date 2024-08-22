@@ -20,10 +20,10 @@ namespace hypertech::kaos::assetfoo::images
 		{
 			std::array<image::pixel_type::component_value_type, 4> color_components;
 
-			color_components[0] = pixel.R;
-			color_components[1] = pixel.G;
-			color_components[2] = pixel.B;
-			color_components[3] = pixel.A;
+			color_components[0] = pixel.r;
+			color_components[1] = pixel.g;
+			color_components[2] = pixel.b;
+			color_components[3] = pixel.a;
 
 			hash.process_bytes(color_components.data(), color_components.size());
 		}

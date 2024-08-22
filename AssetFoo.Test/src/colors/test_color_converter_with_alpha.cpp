@@ -104,21 +104,21 @@ namespace hypertech::kaos::assetfoo::colors::unittests
 
 	TEST_F(color_converter_with_alpha_fixture, from_rgb)
 	{
-		EXPECT_EQ(converter_.from_rgb(test_colors::black.R, test_colors::black.G, test_colors::black.B), packed_colors::black);
+		EXPECT_EQ(converter_.from_rgb(test_colors::black.r, test_colors::black.g, test_colors::black.b), packed_colors::black);
 
-		EXPECT_EQ(converter_.from_rgb(test_colors::dark_red.R, test_colors::dark_red.G, test_colors::dark_red.B), packed_colors::dark_red);
-		EXPECT_EQ(converter_.from_rgb(test_colors::medium_red.R, test_colors::medium_red.G, test_colors::medium_red.B), packed_colors::medium_red);
-		EXPECT_EQ(converter_.from_rgb(test_colors::bright_red.R, test_colors::bright_red.G, test_colors::bright_red.B), packed_colors::bright_red);
+		EXPECT_EQ(converter_.from_rgb(test_colors::dark_red.r, test_colors::dark_red.g, test_colors::dark_red.b), packed_colors::dark_red);
+		EXPECT_EQ(converter_.from_rgb(test_colors::medium_red.r, test_colors::medium_red.g, test_colors::medium_red.b), packed_colors::medium_red);
+		EXPECT_EQ(converter_.from_rgb(test_colors::bright_red.r, test_colors::bright_red.g, test_colors::bright_red.b), packed_colors::bright_red);
 
-		EXPECT_EQ(converter_.from_rgb(test_colors::dark_green.R, test_colors::dark_green.G, test_colors::dark_green.B), packed_colors::dark_green);
-		EXPECT_EQ(converter_.from_rgb(test_colors::medium_green.R, test_colors::medium_green.G, test_colors::medium_green.B), packed_colors::medium_green);
-		EXPECT_EQ(converter_.from_rgb(test_colors::bright_green.R, test_colors::bright_green.G, test_colors::bright_green.B), packed_colors::bright_green);
+		EXPECT_EQ(converter_.from_rgb(test_colors::dark_green.r, test_colors::dark_green.g, test_colors::dark_green.b), packed_colors::dark_green);
+		EXPECT_EQ(converter_.from_rgb(test_colors::medium_green.r, test_colors::medium_green.g, test_colors::medium_green.b), packed_colors::medium_green);
+		EXPECT_EQ(converter_.from_rgb(test_colors::bright_green.r, test_colors::bright_green.g, test_colors::bright_green.b), packed_colors::bright_green);
 
-		EXPECT_EQ(converter_.from_rgb(test_colors::dark_blue.R, test_colors::dark_blue.G, test_colors::dark_blue.B), packed_colors::dark_blue);
-		EXPECT_EQ(converter_.from_rgb(test_colors::medium_blue.R, test_colors::medium_blue.G, test_colors::medium_blue.B), packed_colors::medium_blue);
-		EXPECT_EQ(converter_.from_rgb(test_colors::bright_blue.R, test_colors::bright_blue.G, test_colors::bright_blue.B), packed_colors::bright_blue);
+		EXPECT_EQ(converter_.from_rgb(test_colors::dark_blue.r, test_colors::dark_blue.g, test_colors::dark_blue.b), packed_colors::dark_blue);
+		EXPECT_EQ(converter_.from_rgb(test_colors::medium_blue.r, test_colors::medium_blue.g, test_colors::medium_blue.b), packed_colors::medium_blue);
+		EXPECT_EQ(converter_.from_rgb(test_colors::bright_blue.r, test_colors::bright_blue.g, test_colors::bright_blue.b), packed_colors::bright_blue);
 
-		EXPECT_EQ(converter_.from_rgb(test_colors::white.R, test_colors::white.G, test_colors::white.G), packed_colors::white);
+		EXPECT_EQ(converter_.from_rgb(test_colors::white.r, test_colors::white.g, test_colors::white.g), packed_colors::white);
 	}
 
 }

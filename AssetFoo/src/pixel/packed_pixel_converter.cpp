@@ -41,10 +41,10 @@ namespace hypertech::kaos::assetfoo::pixels
 			{
 				throw std::runtime_error(
 					"pixel index for color ("
-					+ std::to_string(input_ptr->R) + ", "
-					+ std::to_string(input_ptr->G) + ", "
-					+ std::to_string(input_ptr->B) + ", "
-					+ std::to_string(input_ptr->A)
+					+ std::to_string(input_ptr->r) + ", "
+					+ std::to_string(input_ptr->g) + ", "
+					+ std::to_string(input_ptr->b) + ", "
+					+ std::to_string(input_ptr->a)
 					+ ") not found in target colormap");
 			}
 
@@ -54,10 +54,10 @@ namespace hypertech::kaos::assetfoo::pixels
 					"Pixel index "
 					+ std::to_string(pixel_index.value())
 					+ " for color ("
-					+ std::to_string(input_ptr->R) + ", "
-					+ std::to_string(input_ptr->G) + ", "
-					+ std::to_string(input_ptr->B) + ", "
-					+ std::to_string(input_ptr->A)
+					+ std::to_string(input_ptr->r) + ", "
+					+ std::to_string(input_ptr->g) + ", "
+					+ std::to_string(input_ptr->b) + ", "
+					+ std::to_string(input_ptr->a)
 					+ ") is out of range");
 			}
 
@@ -123,10 +123,10 @@ namespace hypertech::kaos::assetfoo::pixels
 				{
 					throw std::runtime_error(
 						"pixel index for color ("
-						+ std::to_string(input_ptr->R) + ", "
-						+ std::to_string(input_ptr->G) + ", "
-						+ std::to_string(input_ptr->B) + ", "
-						+ std::to_string(input_ptr->A)
+						+ std::to_string(input_ptr->r) + ", "
+						+ std::to_string(input_ptr->g) + ", "
+						+ std::to_string(input_ptr->b) + ", "
+						+ std::to_string(input_ptr->a)
 						+ ") not found in target colormap");
 				}
 
@@ -136,10 +136,10 @@ namespace hypertech::kaos::assetfoo::pixels
 						"Pixel index "
 						+ std::to_string(pixel_index.value())
 						+ " for color ("
-						+ std::to_string(input_ptr->R) + ", "
-						+ std::to_string(input_ptr->G) + ", "
-						+ std::to_string(input_ptr->B) + ", "
-						+ std::to_string(input_ptr->A)
+						+ std::to_string(input_ptr->r) + ", "
+						+ std::to_string(input_ptr->g) + ", "
+						+ std::to_string(input_ptr->b) + ", "
+						+ std::to_string(input_ptr->a)
 						+ ") is out of range");
 				}
 

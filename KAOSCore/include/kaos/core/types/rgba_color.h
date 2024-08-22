@@ -82,7 +82,7 @@ namespace hypertech::kaos::core::types
 			component_value_type green,
 			component_value_type blue,
 			component_value_type alpha) noexcept
-			: R(red), G(green), B(blue), A(alpha)
+			: r(red), g(green), b(blue), a(alpha)
 		{}
 
 		
@@ -95,10 +95,10 @@ namespace hypertech::kaos::core::types
 		/// R, G, B, and A component values.
 		explicit rgba_color(const unsigned_packed_color_type& packedvalue) noexcept
 			:
-			R((packedvalue >> 24) & 0xff),
-			G((packedvalue >> 16) & 0xff),
-			B((packedvalue >> 8) & 0xff),
-			A((packedvalue >> 0) & 0xff)
+			r((packedvalue >> 24) & 0xff),
+			g((packedvalue >> 16) & 0xff),
+			b((packedvalue >> 8) & 0xff),
+			a((packedvalue >> 0) & 0xff)
 		{}
 
 		
@@ -111,10 +111,10 @@ namespace hypertech::kaos::core::types
 		/// R, G, B, and A component values.
 		explicit rgba_color(const signed_packed_color_type& packedvalue) noexcept
 			:
-			R((packedvalue >> 24) & 0xff),
-			G((packedvalue >> 16) & 0xff),
-			B((packedvalue >> 8) & 0xff),
-			A((packedvalue >> 0) & 0xff)
+			r((packedvalue >> 24) & 0xff),
+			g((packedvalue >> 16) & 0xff),
+			b((packedvalue >> 8) & 0xff),
+			a((packedvalue >> 0) & 0xff)
 		{}
 
 		/// @brief Copy constructor
@@ -152,7 +152,7 @@ namespace hypertech::kaos::core::types
 		/// @return true if the colors are equal; false if the colors are not equal.
 		bool operator==(const rgba_color& other) const noexcept
 		{
-			return R == other.R && G == other.G && B == other.B && A == other.A;
+			return r == other.r && g == other.g && b == other.b && a == other.a;
 		}
 
 		/// @brief Tests if this rgba_color object is not equal to the rgba_color on the
@@ -162,21 +162,21 @@ namespace hypertech::kaos::core::types
 		/// @return true if the colors are not equal; false if the colors are equal.
 		bool operator!=(const rgba_color& other) const noexcept
 		{
-			return R != other.R || G != other.G || B != other.B || A != other.A;
+			return r != other.r || g != other.g || b != other.b || a != other.a;
 		}
 
 		/// @brief Converts the color to packed unsigned integer value.
 		/// @return The packed color value
 		unsigned_packed_color_type to_unsigned() const noexcept
 		{
-			return (R << 24) | (G << 16) | (B << 8) | A;
+			return (r << 24) | (g << 16) | (b << 8) | a;
 		}
 
 		/// @brief Converts the color to packed signed integer value.
 		/// @return The packed color value
 		signed_packed_color_type to_signed() const noexcept
 		{
-			return (R << 24) | (G << 16) | (B << 8) | A;
+			return (r << 24) | (g << 16) | (b << 8) | a;
 		}
 
 		/// @brief Returns the Hue-Saturation-Lightness (HSL) lightness for this rgba_color.
@@ -189,10 +189,10 @@ namespace hypertech::kaos::core::types
 
 	public:
 
-		component_value_type R;	//!<	The red component value of the color
-		component_value_type G;	//!<	The green component value of the color
-		component_value_type B;	//!<	The blue component value of the color
-		component_value_type A;	//!<	The alpha component value of the color
+		component_value_type r;	//!<	The red component value of the color
+		component_value_type g;	//!<	The green component value of the color
+		component_value_type b;	//!<	The blue component value of the color
+		component_value_type a;	//!<	The alpha component value of the color
 	};
 
 }

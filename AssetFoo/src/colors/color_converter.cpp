@@ -53,7 +53,7 @@ namespace hypertech::kaos::assetfoo::colors
 
 	color_converter::packed_color_type color_converter::from_color(color_type color) const
 	{
-		return from_rgba_impl(color.R, color.G, color.B, color.A);
+		return from_rgba_impl(color.r, color.g, color.b, color.a);
 	}
 
 
