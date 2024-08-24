@@ -56,7 +56,7 @@ namespace hypertech::kaos::assetfoo
 		/// 
 		/// Loads the asset from the file specified in \p filename.
 		/// 
-		/// @param filename The name of the asset file to load.
+		/// @param path The path to the asset to load.
 		/// 
 		/// @return A pointer to the loaded asset.
 		/// 
@@ -72,7 +72,7 @@ namespace hypertech::kaos::assetfoo
 		/// 
 		/// @tparam Type_ The type (derived from asset) to load the asset as. 
 		/// 
-		/// @param filename The name of the asset file to load.
+		/// @param path The path to the asset to load.
 		/// 
 		/// @return A pointer to the loaded asset.
 		/// 

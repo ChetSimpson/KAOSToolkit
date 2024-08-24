@@ -8,6 +8,8 @@
 
 namespace hypertech::kaos::core
 {
+	// FIXME: This should be renamed to resource_location
+
 	/// @brief Basic container for resource locations.
 	class resource_locator
 	{
@@ -51,20 +53,64 @@ namespace hypertech::kaos::core
 		/// @return `true` if the instances of `resource_locator` are not the same; `false` otherwise.
 		bool operator!=(const resource_locator& other) const noexcept = default;
 
+		/// @brief Indicates if the resource location is empty.
+		/// 
+		/// @return `true` if the resource location is empty; `false` otherwise.
 		bool empty() const noexcept;
 
-		bool is_absolute() const;
+		/// @brief Indicates if the resource location is an absolute path.
+		/// 
+		/// @return `true` if the resource location is absolute; `false` otherwise.
+		bool is_absolute() const noexcept;
 
-		bool is_relative() const;
+		/// @brief Indicates if the resource location is a relative path.
+		/// 
+		/// @return `true` if the resource location is relative; `false` otherwise.
+		bool is_relative() const noexcept;
 
+		/// @brief Creates a resource location that is relative of another.
+		/// 
+		/// Creates a resource location from the current resource location
+		/// that is relative to the value of `base`.
+		/// 
+		/// @param base The location the new one will be relative of.
+		/// 
+		/// @return A resource location relative to value of `base`.
+		/// 
+		/// @exception TODO
 		resource_locator make_relative_of(const resource_locator& base) const;
+
+		/// @brief Creates a resource location that is an absolute path.
+		/// 
+		/// Creates a resource location from the current resource location that is
+		/// an absolute path. If the current resource location is already absolute
+		/// the new resource location will be an exact duplicate. Otherwise the new
+		/// resource location will be relative to the current working path of the
+		/// current resource locations resource type.
+		/// 
+		/// @return A resource location that is an absolute path to a resource.
+		/// 
+		/// @exception TODO
 		resource_locator make_absolute() const;
+
+		/// @brief Creates a resource location that is an absolute path.
+		/// 
+		/// Creates a resource location from the current resource location that is
+		/// an absolute path. If the current resource location is already absolute
+		/// the new resource location will be an exact duplicate. Otherwise the new
+		/// resource location will be relative to the value of `base`.
+		/// 
+		/// @param base The location the new one will be relative of.
+		/// 
+		/// @return A resource location that is an absolute path to a resource.
+		/// 
+		/// @exception TODO
 		resource_locator make_absolute(const resource_locator& base) const;
 
 		/// @brief Retrieves the text representation of the resource location.
 		/// 
 		/// @return The text representation of the resource location.
-		string_type text() const noexcept;
+		string_type text() const;
 
 
 	private:

@@ -53,8 +53,12 @@ namespace hypertech::kaos::assetfoo::pixels
 
 		size_type calculate_pitch(size_type width_in_pixels, size_type alignment_in_bytes) const override;
 
-		// TODO: Document
-		bool operator==(const basic_packed_pixel_layout&) const;
+		/// @brief Equality operator (is equal)
+		/// 
+		/// @param other the layout to compare against.
+		/// 
+		/// @return `true` if the layouts are the same; `false` otherwise.
+		bool operator==(const basic_packed_pixel_layout& other) const;
 
 
 	private:

@@ -25,12 +25,12 @@ namespace hypertech::kaos::core
 	}
 
 
-	bool resource_locator::is_absolute() const
+	bool resource_locator::is_absolute() const noexcept
 	{
 		return path_.is_absolute();
 	}
 
-	bool resource_locator::is_relative() const
+	bool resource_locator::is_relative() const noexcept
 	{
 		return path_.is_relative();
 	}
@@ -69,7 +69,7 @@ namespace hypertech::kaos::core
 	}
 
 
-	resource_locator::string_type resource_locator::text() const noexcept
+	resource_locator::string_type resource_locator::text() const
 	{
 		return path_.generic_string();
 	}
