@@ -49,6 +49,12 @@
     <Filter Include="Source Files\colors\tc1014">
       <UniqueIdentifier>{944cdd60-56ce-43ec-9c2d-6ab9b6495524}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\composites">
+      <UniqueIdentifier>{f6d77444-01a2-410b-8ed5-400e255928ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\composites\objects">
+      <UniqueIdentifier>{28286e5b-5b1a-4ae6-9017-4470e26ad4cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pixels\test_basic_packed_pixel_layout.cpp">
@@ -107,6 +113,18 @@
     </ClCompile>
     <ClCompile Include="src\images\test_monochrome_pattern.cpp">
       <Filter>Source Files\images</Filter>
+    </ClCompile>
+    <ClCompile Include="src\composites\test_object.cpp">
+      <Filter>Source Files\composites</Filter>
+    </ClCompile>
+    <ClCompile Include="src\composites\objects\test_ellipse.cpp">
+      <Filter>Source Files\composites\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\composites\objects\test_polygon.cpp">
+      <Filter>Source Files\composites\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\composites\objects\test_rectangle.cpp">
+      <Filter>Source Files\composites\objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

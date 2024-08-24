@@ -87,6 +87,18 @@
     <Filter Include="Source Files\colors\tc1014">
       <UniqueIdentifier>{1d33955b-1b62-4020-ae4a-e70a5452eb5b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\composites">
+      <UniqueIdentifier>{47b6ada6-dec9-455e-8016-71c9a27158de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\composites\objects">
+      <UniqueIdentifier>{2bc071b5-86de-49ca-b40b-caaf48dd493a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\composites">
+      <UniqueIdentifier>{f08b906b-ceda-4521-90a2-d2038d09600c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\composites\objects">
+      <UniqueIdentifier>{aef56539-a8cb-40b9-8f15-7217461c5b84}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pixel\basic_packed_pixel_layout.cpp">
@@ -151,6 +163,21 @@
     </ClCompile>
     <ClCompile Include="src\images\tc1014\tc1014_image_attributes.cpp">
       <Filter>Source Files\images\tc1014</Filter>
+    </ClCompile>
+    <ClCompile Include="src\composites\objects\ellipse.cpp">
+      <Filter>Source Files\composites\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\composites\objects\point.cpp">
+      <Filter>Source Files\composites\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\composites\objects\polygon.cpp">
+      <Filter>Source Files\composites\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\composites\objects\rectangle.cpp">
+      <Filter>Source Files\composites\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\composites\object.cpp">
+      <Filter>Source Files\composites</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +300,21 @@
     </ClInclude>
     <ClInclude Include="include\kaos\assetfoo\pixels\packed_pixel_layout.h">
       <Filter>Header Files\pixels</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\composites\objects\ellipse.h">
+      <Filter>Header Files\composites\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\composites\objects\point.h">
+      <Filter>Header Files\composites\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\composites\objects\polygon.h">
+      <Filter>Header Files\composites\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\composites\objects\rectangle.h">
+      <Filter>Header Files\composites\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\composites\object.h">
+      <Filter>Header Files\composites</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

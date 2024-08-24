@@ -71,6 +71,10 @@
     <ClCompile Include="src\colors\test_color_converter_withoutalpha.cpp" />
     <ClCompile Include="src\colors\test_color_converter_with_alpha.cpp" />
     <ClCompile Include="src\Colors\test_color_map.cpp" />
+    <ClCompile Include="src\composites\objects\test_ellipse.cpp" />
+    <ClCompile Include="src\composites\objects\test_polygon.cpp" />
+    <ClCompile Include="src\composites\objects\test_rectangle.cpp" />
+    <ClCompile Include="src\composites\test_object.cpp" />
     <ClCompile Include="src\images\cm3\default_patterns.cpp" />
     <ClCompile Include="src\images\cm3\test_cm3_image_loader.cpp" />
     <ClCompile Include="src\images\hrs\test_hrs_image_loader.cpp" />

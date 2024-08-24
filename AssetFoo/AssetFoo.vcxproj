@@ -27,6 +27,11 @@
     <ClCompile Include="src\colors\gimp\gimp_palette_reader.cpp" />
     <ClCompile Include="src\colors\tc1014\tc1014_color_converter.cpp" />
     <ClCompile Include="src\colors\tc1014\tc1014_color_layout.cpp" />
+    <ClCompile Include="src\composites\object.cpp" />
+    <ClCompile Include="src\composites\objects\ellipse.cpp" />
+    <ClCompile Include="src\composites\objects\point.cpp" />
+    <ClCompile Include="src\composites\objects\polygon.cpp" />
+    <ClCompile Include="src\composites\objects\rectangle.cpp" />
     <ClCompile Include="src\images\cm3\cm3_image_reader.cpp" />
     <ClCompile Include="src\images\hash.cpp" />
     <ClCompile Include="src\images\hrs\hrs_image_reader.cpp" />
@@ -61,6 +66,11 @@
     <ClInclude Include="include\kaos\assetfoo\colors\gimp\gimp_palette_reader.h" />
     <ClInclude Include="include\kaos\assetfoo\colors\tc1014\tc1014_color_converter.h" />
     <ClInclude Include="include\kaos\assetfoo\colors\tc1014\tc1014_color_layout.h" />
+    <ClInclude Include="include\kaos\assetfoo\composites\object.h" />
+    <ClInclude Include="include\kaos\assetfoo\composites\objects\ellipse.h" />
+    <ClInclude Include="include\kaos\assetfoo\composites\objects\point.h" />
+    <ClInclude Include="include\kaos\assetfoo\composites\objects\polygon.h" />
+    <ClInclude Include="include\kaos\assetfoo\composites\objects\rectangle.h" />
     <ClInclude Include="include\kaos\assetfoo\exceptions.h" />
     <ClInclude Include="include\kaos\assetfoo\images\cm3\cm3_image_attributes.h" />
     <ClInclude Include="include\kaos\assetfoo\images\cm3\cm3_image_format_details.h" />
