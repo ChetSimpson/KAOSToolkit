@@ -168,12 +168,14 @@
     <ClInclude Include="include\kaos\core\types\attribute_extension.h" />
     <ClInclude Include="include\kaos\core\types\box_iterator.h" />
     <ClInclude Include="include\kaos\core\types\box_view.h" />
+    <ClInclude Include="include\kaos\core\types\collection_range.h" />
     <ClInclude Include="include\kaos\core\types\dimension2.h" />
     <ClInclude Include="include\kaos\core\types\empty_bitfield.h" />
     <ClInclude Include="include\kaos\core\types\fixed_variant.h" />
     <ClInclude Include="include\kaos\core\types\rgba_color.h" />
     <ClInclude Include="include\kaos\core\types\single_bitfield.h" />
     <ClInclude Include="include\kaos\core\types\split_bitfield.h" />
+    <ClInclude Include="include\kaos\core\types\string_literal_argument.h" />
     <ClInclude Include="include\kaos\core\types\vector2.h" />
     <ClInclude Include="include\kaos\core\type_traits.h" />
     <ClInclude Include="include\kaos\core\utility\bit.h" />

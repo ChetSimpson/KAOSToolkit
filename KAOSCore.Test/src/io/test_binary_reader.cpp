@@ -405,20 +405,38 @@ namespace hypertech::kaos::core::io::unittests
 		}
 	}
 
-	TYPED_TEST_P(test_binary_reader, read_vector_direct_past_eof)
+
+
+	namespace
 	{
-		if constexpr (!std::is_same_v<typename TypeParam::value_type, bool>)
+
+		template<class TypeParam_>
+			requires core::integral_not_bool_v<typename TypeParam_::value_type>
+		void run_read_vector_direct_past_eof()
 		{
-			using test_data = TypeParam;
+			using test_data = TypeParam_;
 
 			std::istringstream input;
 			binary_reader reader(input, test_data::ordering);
 
 			EXPECT_THROWS_MESSAGE(
-				DEBUG_DiscardResult(reader.read_vector<test_data::value_type>(1)),
+				DEBUG_DiscardResult(reader.read_vector<typename test_data::value_type>(1)),
 				exceptions::end_of_file_error,
 				"file error: attempt to read past end of file");
 		}
+
+		template<class TypeParam_>
+			requires std::is_same_v<typename TypeParam_::value_type, bool>
+		void run_read_vector_direct_past_eof()
+		{
+			// We do not test anything for bool types since the reader does not support it.
+		}
+
+	}
+
+	TYPED_TEST_P(test_binary_reader, read_vector_direct_past_eof)
+	{
+		run_read_vector_direct_past_eof<TypeParam>();
 	}
 
 

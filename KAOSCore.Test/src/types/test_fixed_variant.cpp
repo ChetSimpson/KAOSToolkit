@@ -22,11 +22,17 @@ namespace hypertech::kaos::core::types::unittests
 		constexpr auto double_type_max(std::numeric_limits<fixed_variant::double_type>::max());
 		constexpr auto double_type_min(std::numeric_limits<fixed_variant::double_type>::min());
 
-		const auto color1int(int32_t(0x0055AAFF));
-		const auto color2int(int32_t(0xFFAA5500));
+		const auto rgba_color1int(int32_t(0x0055AAFF));
+		const auto rgba_color2int(int32_t(0xFFAA5500));
 
-		const auto color1uint(uint32_t(0x0055AAFF));
-		const auto color2uint(uint32_t(0xFFAA5500));
+		const auto argb_color1int(int32_t(0xFF0055AA));
+		const auto argb_color2int(int32_t(0x00FFAA55));
+
+		const auto rgba_color1uint(uint32_t(0x0055AAFF));
+		const auto rgba_color2uint(uint32_t(0xFFAA5500));
+
+		const auto argb_color1uint(uint32_t(0xFF0055AA));
+		const auto argb_color2uint(uint32_t(0x00FFAA55));
 
 		const auto color1color(fixed_variant::color_type(0x00, 0x55, 0xAA, 0xFF));
 		const auto color2color(fixed_variant::color_type(0xFF, 0xAA, 0x55, 0x00));
@@ -704,11 +710,17 @@ namespace hypertech::kaos::core::types::unittests
 		EXPECT_TRUE(exception_caught);
 	}
 
-	TEST(fixed_variant, convert_integer_to_color)
+	TEST(fixed_variant, convert_integer_rgba_to_color)
 	{
 		//	int -> color
-		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(color1int)).as_color(), color1color);
-		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(color2int)).as_color(), color2color);
+		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(rgba_color1int)).as_color(), color1color);
+		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(rgba_color2int)).as_color(), color2color);
+	}
+
+	TEST(fixed_variant, convert_integer_argb_to_color)
+	{
+		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(argb_color1int)).as_color(fixed_variant::color_space_type::argb), color1color);
+		EXPECT_EQ(fixed_variant(fixed_variant::integer_type(argb_color2int)).as_color(fixed_variant::color_space_type::argb), color2color);
 	}
 
 	TEST(fixed_variant, convert_integer_to_uuid)
@@ -908,11 +920,17 @@ namespace hypertech::kaos::core::types::unittests
 		EXPECT_TRUE(exception_caught);
 	}
 
-	TEST(fixed_variant, convert_unsigned_to_color)
+	TEST(fixed_variant, convert_unsigned_rgba_to_color)
 	{
 		//	unsigned -> color
-		EXPECT_EQ(fixed_variant(fixed_variant::unsigned_type(color1uint)).as_color(), color1color);
-		EXPECT_EQ(fixed_variant(fixed_variant::unsigned_type(color2uint)).as_color(), color2color);
+		EXPECT_EQ(fixed_variant(fixed_variant::unsigned_type(rgba_color1uint)).as_color(), color1color);
+		EXPECT_EQ(fixed_variant(fixed_variant::unsigned_type(rgba_color2uint)).as_color(), color2color);
+	}
+
+	TEST(fixed_variant, convert_unsigned_argb_to_color)
+	{
+		EXPECT_EQ(fixed_variant(fixed_variant::unsigned_type(argb_color1uint)).as_color(fixed_variant::color_space_type::argb), color1color);
+		EXPECT_EQ(fixed_variant(fixed_variant::unsigned_type(argb_color2uint)).as_color(fixed_variant::color_space_type::argb), color2color);
 	}
 
 	TEST(fixed_variant, convert_unsigned_to_uuid)
@@ -1176,11 +1194,17 @@ namespace hypertech::kaos::core::types::unittests
 		EXPECT_TRUE(exception_caught);
 	}
 
-	TEST(fixed_variant, convert_float_to_color)
+	TEST(fixed_variant, convert_float_rgba_to_color)
 	{
 		//	float -> color
-		EXPECT_EQ(fixed_variant(fixed_variant::float_type(color1int)).as_color(), color1color);
-		EXPECT_EQ(fixed_variant(fixed_variant::float_type(color2int)).as_color(), color2color);
+		EXPECT_EQ(fixed_variant(fixed_variant::float_type(rgba_color1int)).as_color(), color1color);
+		EXPECT_EQ(fixed_variant(fixed_variant::float_type(rgba_color2int)).as_color(), color2color);
+	}
+
+	TEST(fixed_variant, convert_float_argb_to_color)
+	{
+		EXPECT_EQ(fixed_variant(fixed_variant::float_type(argb_color1int)).as_color(fixed_variant::color_space_type::argb), color1color);
+		EXPECT_EQ(fixed_variant(fixed_variant::float_type(argb_color2int)).as_color(fixed_variant::color_space_type::argb), color2color);
 	}
 
 	TEST(fixed_variant, convert_float_to_uuid)
@@ -1497,11 +1521,17 @@ namespace hypertech::kaos::core::types::unittests
 		EXPECT_TRUE(exception_caught);
 	}
 
-	TEST(fixed_variant, convert_double_to_color)
+	TEST(fixed_variant, convert_double_rgba_to_color)
 	{
 		//	double -> color
-		EXPECT_EQ(fixed_variant(fixed_variant::double_type(color1int)).as_color(), color1color);
-		EXPECT_EQ(fixed_variant(fixed_variant::double_type(color2int)).as_color(), color2color);
+		EXPECT_EQ(fixed_variant(fixed_variant::double_type(rgba_color1int)).as_color(), color1color);
+		EXPECT_EQ(fixed_variant(fixed_variant::double_type(rgba_color2int)).as_color(), color2color);
+	}
+
+	TEST(fixed_variant, convert_double_argb_to_color)
+	{
+		EXPECT_EQ(fixed_variant(fixed_variant::double_type(argb_color1int)).as_color(fixed_variant::color_space_type::argb), color1color);
+		EXPECT_EQ(fixed_variant(fixed_variant::double_type(argb_color2int)).as_color(fixed_variant::color_space_type::argb), color2color);
 	}
 
 	TEST(fixed_variant, convert_double_to_uuid)
@@ -1894,13 +1924,26 @@ namespace hypertech::kaos::core::types::unittests
 		EXPECT_EQ(fixed_variant(fixed_variant::string_type("../Test.txt")).as_path(), fixed_variant::path_type("../Test.txt"));
 	}
 
-	TEST(fixed_variant, convert_string_to_color)
+	TEST(fixed_variant, convert_string_rgba_to_color)
 	{
 		//	string -> color
 		EXPECT_EQ(fixed_variant("#0055AAFF").as_color(), color1color);
+		EXPECT_EQ(fixed_variant("#0055AA").as_color(), color1color);
+		EXPECT_EQ(fixed_variant("#55AA").as_color(), color1color);
 		EXPECT_EQ(fixed_variant("#FFAA5500").as_color(), color2color);
 		EXPECT_THROW(fixed_variant(fixed_variant::string_type()).as_color(), exceptions::lexical_error);
 		EXPECT_THROW(fixed_variant("#xxx").as_color(), exceptions::lexical_error);
+	}
+
+	TEST(fixed_variant, convert_string_argb_to_color)
+	{
+		//	string -> color
+		EXPECT_EQ(fixed_variant("#FF0055AA").as_color(fixed_variant::color_space_type::argb), color1color);
+		EXPECT_EQ(fixed_variant("#0055AA").as_color(fixed_variant::color_space_type::argb), color1color);
+		EXPECT_EQ(fixed_variant("#55AA").as_color(fixed_variant::color_space_type::argb), color1color);
+		EXPECT_EQ(fixed_variant("#00FFAA55").as_color(fixed_variant::color_space_type::argb), color2color);
+		EXPECT_THROW(fixed_variant(fixed_variant::string_type()).as_color(fixed_variant::color_space_type::argb), exceptions::lexical_error);
+		EXPECT_THROW(fixed_variant("#xxx").as_color(fixed_variant::color_space_type::argb), exceptions::lexical_error);
 	}
 
 	TEST(fixed_variant, convert_string_to_color_exception_typeinfo)
@@ -2174,29 +2217,29 @@ namespace hypertech::kaos::core::types::unittests
 	TEST(fixed_variant, convert_color_to_integer)
 	{
 		//	color -> int
-		EXPECT_EQ(color1value.as_integer(), color1int);
-		EXPECT_EQ(color2value.as_integer(), color2int);
+		EXPECT_EQ(color1value.as_integer(), rgba_color1int);
+		EXPECT_EQ(color2value.as_integer(), rgba_color2int);
 	}
 
 	TEST(fixed_variant, convert_color_to_unsigned)
 	{
 		//	color -> unsigned
-		EXPECT_EQ(color1value.as_unsigned(), color1uint);
-		EXPECT_EQ(color2value.as_unsigned(), color2uint);
+		EXPECT_EQ(color1value.as_unsigned(), rgba_color1uint);
+		EXPECT_EQ(color2value.as_unsigned(), rgba_color2uint);
 	}
 
 	TEST(fixed_variant, convert_color_to_float)
 	{
 		//	color -> float
-		EXPECT_EQ(color1value.as_float(), color1int);
-		EXPECT_EQ(color2value.as_float(), color2int);
+		EXPECT_EQ(color1value.as_float(), rgba_color1int);
+		EXPECT_EQ(color2value.as_float(), rgba_color2int);
 	}
 
 	TEST(fixed_variant, convert_color_to_double)
 	{
 		//	color -> double
-		EXPECT_EQ(color1value.as_double(), color1int);
-		EXPECT_EQ(color2value.as_double(), color2int);
+		EXPECT_EQ(color1value.as_double(), rgba_color1int);
+		EXPECT_EQ(color2value.as_double(), rgba_color2int);
 	}
 
 	TEST(fixed_variant, convert_color_to_string)

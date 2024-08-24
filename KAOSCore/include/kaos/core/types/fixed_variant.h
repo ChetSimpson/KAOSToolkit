@@ -40,6 +40,17 @@ namespace hypertech::kaos::core::types
 			Map,		//!<	Map of fixed_variant types with string as the key
 		};
 
+		//	FIXME: This is wrong and expects the client to know the details of the source
+		//	data which is not likely to be available and breaks fixed_variant as being
+		//	a generic container for a specific color representation
+
+		/// @brief Color space specifier for color conversions
+		enum class color_space_type
+		{
+			rgba,
+			argb
+		};
+
 		
 		using empty_type = std::monostate;		//!< @brief Type held by an empty fixed_variant.
 		using string_type = std::string;		//!< @brief String type held by fixed_variant.
@@ -396,6 +407,9 @@ namespace hypertech::kaos::core::types
 		/// like format prefixed with a hash symbol followed by 8 hexdecimal digits
 		/// (i.e. "#RRGGBBAA"). 
 		/// 
+		/// @param source_color_space Specifies the source color space of the color data.
+		/// Defaults to rgba.
+		/// 
 		/// @return The value as a RGBA color.
 		/// 
 		/// @exception empty_cast_error The value is currently empty.
@@ -405,7 +419,7 @@ namespace hypertech::kaos::core::types
 		/// not fit in the signed value type representing an RGBA color value..
 		/// @exception lexical_error The current string value is not the correct format
 		/// and cannot be converted.
-		color_type as_color() const;
+		color_type as_color(color_space_type source_color_space = color_space_type::rgba) const;
 
 		/// @brief Gets the value as a RGBA color value.
 		/// 

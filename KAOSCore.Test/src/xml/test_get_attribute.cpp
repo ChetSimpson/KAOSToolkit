@@ -2,6 +2,7 @@
 //
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
+#include "attribute_conversion_details.h"
 #include <kaos/core/xml/pugixml_extensions.h>
 #include <pugixml/pugixml.hpp>
 #include <kaos/test/gtest-extensions.h>
@@ -18,16 +19,17 @@ namespace hypertech::kaos::core::xml::unittests
 
 	namespace
 	{
-		template<class TestDataType_>
+
 		class test_get_attribute_fixture : public ::testing::Test
 		{
 		protected:
+
 			xml_node create_node(const std::string& value)
 			{
 				doc = xml_document();
 				xml_node node(doc.append_child("node"));
 				xml_attribute attribute(node.append_attribute(attribute_name_.c_str()));
-				
+
 				attribute.set_value(value.c_str());
 
 				return node;
@@ -169,7 +171,7 @@ namespace hypertech::kaos::core::xml::unittests
 
 
 
-	using test_try_get_attribute_as_string = test_get_attribute_fixture<std::string>;
+	using test_try_get_attribute_as_string = test_get_attribute_fixture;
 
 	TEST_F(test_try_get_attribute_as_string, no_exist)
 	{
@@ -186,8 +188,37 @@ namespace hypertech::kaos::core::xml::unittests
 	}
 
 
+	using test_get_attribute_as_enum = test_get_attribute_fixture;
+
+	TEST_F(test_get_attribute_as_enum, convert_valid_value)
+	{
+		auto node(create_node("node"));
+		node.append_attribute("one").set_value("one");
+		node.append_attribute("two").set_value("two");
+		node.append_attribute("three").set_value("three");
+
+		EXPECT_EQ(pugi::get_attribute_as<test_enum>(node, "one"), test_enum::one);
+		EXPECT_EQ(pugi::get_attribute_as<test_enum>(node, "two"), test_enum::two);
+		EXPECT_EQ(pugi::get_attribute_as<test_enum>(node, "three"), test_enum::three);
+	}
+
+	using test_try_get_attribute_as_enum = test_get_attribute_fixture;
+
+	TEST_F(test_try_get_attribute_as_enum, convert_valid_value)
+	{
+		auto node(create_node("node"));
+		node.append_attribute("one").set_value("one");
+		node.append_attribute("two").set_value("two");
+		node.append_attribute("three").set_value("three");
+
+		EXPECT_EQ(pugi::try_get_attribute_as<test_enum>(node, "one"), test_enum::one);
+		EXPECT_EQ(pugi::try_get_attribute_as<test_enum>(node, "two"), test_enum::two);
+		EXPECT_EQ(pugi::try_get_attribute_as<test_enum>(node, "three"), test_enum::three);
+	}
+
+
 	template<class Type_>
-	using test_try_get_attribute_as = test_get_attribute_fixture<Type_>;
+	using test_try_get_attribute_as = test_get_attribute_fixture;
 
 	TYPED_TEST_CASE_P(test_try_get_attribute_as);
 
@@ -294,7 +325,7 @@ namespace hypertech::kaos::core::xml::unittests
 
 		auto node(this->create_node(expectations.negative_overflow_attribute_string));
 
-		if constexpr (std::is_signed_v<TypeParam>)
+		if (std::is_signed_v<TypeParam>)
 		{
 			EXPECT_THROWS_MESSAGE(
 				DEBUG_DiscardResult(try_get_attribute_as<TypeParam>(node, this->attribute_name_)),
@@ -352,7 +383,7 @@ namespace hypertech::kaos::core::xml::unittests
 
 
 	template<class Type_>
-	using test_get_attribute_as = test_get_attribute_fixture<Type_>;
+	using test_get_attribute_as = test_get_attribute_fixture;
 
 	TYPED_TEST_CASE_P(test_get_attribute_as);
 
@@ -425,7 +456,7 @@ namespace hypertech::kaos::core::xml::unittests
 
 		auto node(this->create_node(expectations.negative_overflow_attribute_string));
 
-		if constexpr (std::is_signed_v<TypeParam>)
+		if (std::is_signed_v<TypeParam>)
 		{
 			EXPECT_THROWS_MESSAGE(
 				DEBUG_DiscardResult(get_attribute_as<TypeParam>(node, this->attribute_name_)),

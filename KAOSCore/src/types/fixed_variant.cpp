@@ -70,7 +70,7 @@ namespace hypertech::kaos::core::types
 			}
 		}
 
-		class packedcolor_from_hex   // For use with boost::lexical_cast
+		class rgba_color_from_hex   // For use with boost::lexical_cast
 		{
 			fixed_variant::color_type::unsigned_packed_color_type value;
 
@@ -81,13 +81,32 @@ namespace hypertech::kaos::core::types
 				return value;
 			}
 
-			friend std::istream& operator>>( std::istream& in, packedcolor_from_hex& out_value )
+			friend std::istream& operator>>( std::istream& in, rgba_color_from_hex& out_value )
 			{
 				in >> std::hex >> out_value.value;
 
 				return in;
 			}
 		};
+
+
+		fixed_variant::color_type::unsigned_packed_color_type to_rgba_color_space(
+			fixed_variant::color_type::unsigned_packed_color_type value,
+			fixed_variant::color_space_type color_space)
+		{
+			switch (color_space)
+			{
+			case fixed_variant::color_space_type::rgba:
+				return value;
+
+			case fixed_variant::color_space_type::argb:
+				return ((value & 0xff000000) >> 24) | ((value & 0x00ffffff) << 8);
+			}
+
+			throw std::runtime_error("unsupported or unknown colorspace encountered when converting attribute");
+		}
+
+
 
 		template<class ReturnType_, class VariantType_>
 		ReturnType_ as_vector_impl(VariantType_& variant, fixed_variant::tag_type source_type)
@@ -473,8 +492,10 @@ namespace hypertech::kaos::core::types
 	}
 
 	//	FIXME: We need a "source type" argument to handle converting different types to KAOS RGBA.
-	fixed_variant::color_type fixed_variant::as_color() const
+	fixed_variant::color_type fixed_variant::as_color(color_space_type source_color_space) const
 	{
+		color_type::signed_packed_color_type color_value(0);
+
 		switch (type())
 		{
 		case tag_type::Empty:
@@ -484,27 +505,48 @@ namespace hypertech::kaos::core::types
 			return std::get<boolean_type>(value_) ? color_type(255, 255, 255) : color_type();
 
 		case tag_type::Integer:
-			return color_type(extended_numeric_cast<color_type::signed_packed_color_type>(std::get<integer_type>(value_)));
+			color_value = extended_numeric_cast<color_type::signed_packed_color_type>(std::get<integer_type>(value_));
+			break;
 
 		case tag_type::Unsigned:
-			return color_type(extended_numeric_cast<color_type::unsigned_packed_color_type>(std::get<unsigned_type>(value_)));
+			color_value = extended_numeric_cast<color_type::unsigned_packed_color_type>(std::get<unsigned_type>(value_));
+			break;
 
 		case tag_type::Float:
-			return color_type(extended_numeric_cast<color_type::signed_packed_color_type>(std::get<float_type>(value_)));
+			color_value = extended_numeric_cast<color_type::signed_packed_color_type>(std::get<float_type>(value_));
+			break;
 
 		case tag_type::Double:
-			return color_type(extended_numeric_cast<color_type::signed_packed_color_type>(std::get<double_type>(value_)));
+			color_value = extended_numeric_cast<color_type::signed_packed_color_type>(std::get<double_type>(value_));
+			break;
 
 		case tag_type::String:
 			try
 			{
-				const auto& value(std::get<string_type>(value_));
+				auto value(std::get<string_type>(value_));
 				if (value.empty() || value[0] != '#')
 				{
 					throw exceptions::lexical_error(typeid(string_type), typeid(color_type));
 				}
 
-				return color_type(::boost::lexical_cast<packedcolor_from_hex>(value.data() + 1, value.size() - 1));
+				//	Remove hash and pad with zero's
+				value.erase(0, 1);
+				if (value.size() == 6)
+				{
+					switch (source_color_space)
+					{
+					case color_space_type::rgba:
+						value = string_type(6 - value.size(), '0') + value + "ff";
+						break;
+
+					case color_space_type::argb:
+						value = "ff" + string_type(6 - value.size(), '0') + value;
+						break;
+					}
+				}
+
+				color_value = ::boost::lexical_cast<rgba_color_from_hex>(value.data(), value.size());
+				break;
 			}
 			catch (::boost::bad_lexical_cast&)
 			{
@@ -515,7 +557,8 @@ namespace hypertech::kaos::core::types
 			throw exceptions::incompatible_type_error(typeid(path_type), typeid(color_type));
 
 		case tag_type::Color:
-			return std::get<color_type>(value_);
+			color_value = std::get<color_type>(value_).to_unsigned();
+			break;
 
 		case tag_type::Uuid:
 			throw exceptions::incompatible_type_error(typeid(uuid_type), typeid(color_type));
@@ -525,9 +568,12 @@ namespace hypertech::kaos::core::types
 
 		case tag_type::Map:
 			throw exceptions::incompatible_type_error(typeid(map_type), typeid(color_type));
+
+		default:
+			throw std::runtime_error("Unknown value type encountered in conversion to color");
 		}
 
-		throw std::runtime_error("Unknown value type encountered in conversion to color");
+		return color_type(to_rgba_color_space(color_value, source_color_space));
 	}
 
 	fixed_variant::uuid_type fixed_variant::as_uuid() const

@@ -130,6 +130,12 @@
     <ClInclude Include="include\kaos\core\resource_locator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\kaos\core\types\collection_range.h">
+      <Filter>Header Files\types</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\core\types\string_literal_argument.h">
+      <Filter>Header Files\types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

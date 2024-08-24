@@ -67,6 +67,7 @@
     <ClCompile Include="src\Types\test_vector2.cpp" />
     <ClCompile Include="src\utility\test_bit_reader.cpp" />
     <ClCompile Include="src\utility\test_byteswap.cpp" />
+    <ClCompile Include="src\xml\test_append_attribute.cpp" />
     <ClCompile Include="src\xml\test_get_attribute.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\xml\attribute_conversion_details.h" />
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

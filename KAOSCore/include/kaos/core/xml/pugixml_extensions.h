@@ -22,6 +22,107 @@ namespace pugi
 
 		using ::hypertech::kaos::core::integral_not_bool_v;
 
+		template<class Type>
+		struct attribute_conversion_details;
+
+		/// @brief Append an attribute to an XML node and set its value
+		/// 
+		/// @tparam Type_ Value type
+		/// 
+		/// @param node XML node to add the attribute to
+		/// @param name Name of the attribute
+		/// @param value Value to set in the attribute
+		/// 
+		/// @return The XML attribute added to the node.
+		template<class Type_>
+		[[nodiscard]] xml_attribute append_attribute(xml_node& node, const char* name, const Type_& value)
+		{
+			auto attribute(node.append_attribute(name));
+			attribute.set_value(value);
+			return std::move(attribute);
+		}
+
+		/// @brief Append an attribute to an XML node and set its value
+		/// 
+		/// @param node XML node to add the attribute to
+		/// @param name Name of the attribute
+		/// @param value String value to set in the attribute
+		/// 
+		/// @return The XML attribute added to the node.
+		[[nodiscard]] inline xml_attribute append_attribute(xml_node& node, const char* name, const std::string& value)
+		{
+			auto attribute(node.append_attribute(name));
+			attribute.set_value(value.c_str());
+			return std::move(attribute);
+		}
+
+		/// @brief Append an attribute to an XML node and set its value
+		/// 
+		/// Append an attribute to an XML node and set its value from an enumeration. The enumeration
+		/// conversion requires an appropriate specialization for pugi::details::conversion_details
+		/// containing an appropriate container (usually a map) named `enum_to_string_list` to handle
+		/// converting from the enumeration value to a string.
+		/// 
+		/// @param node XML node to add the attribute to
+		/// @param name Name of the attribute
+		/// @param value Enumeration value to set in the attribute
+		/// 
+		/// @return The XML attribute added to the node.
+		/// 
+		/// @exception hypertech::kaos::core::exceptions::attribute_conversion_error if `enum_to_string_list`
+		/// does not contain a key/pair value representing the enumeration to string conversion.
+		template<class Type_>
+		[[nodiscard]] xml_attribute append_attribute(
+			xml_node& node,
+			const char* name,
+			const Type_& value) requires std::is_enum_v<Type_>
+		{
+			using conversion_details = attribute_conversion_details<Type_>;
+
+			const auto conversion_data_ptr(conversion_details::enum_to_string_list.find(value));
+			if (conversion_data_ptr == conversion_details::enum_to_string_list.end())
+			{
+				throw ::hypertech::kaos::core::exceptions::attribute_conversion_error(
+					"unknown value",
+					name,
+					typeid(Type_));
+			}
+
+			auto attribute(node.append_attribute(name));
+			attribute.set_value(conversion_data_ptr->second.c_str());
+			return attribute;
+
+		}
+
+		/// @brief Converts a string of characters to an enumeration value type.
+		/// 
+		/// Converts a string of characters to an enumeration value type. The enumeration
+		/// type must have an associated specialization of pugi::details::attribute_conversion_details
+		/// containing a static map with a string as the key and the enumeration as
+		/// the value.
+		/// 
+		/// @tparam Type_ The enumeration type to convert to.
+		/// 
+		/// @param string_value The characters to convert
+		/// @param output The converted string value
+		template<class Type_>
+		[[nodiscard]] std::from_chars_result convert_from_chars(
+			const std::string& string_value,
+			Type_& output) requires std::is_enum_v<Type_>
+		{
+			using conversion_details = attribute_conversion_details<Type_>;
+
+			const auto conversion_data_ptr(conversion_details::string_to_enum_list.find(string_value));
+			if (conversion_data_ptr == conversion_details::string_to_enum_list.end())
+			{
+				return { string_value.c_str(), std::errc::invalid_argument };
+			}
+
+			output = conversion_data_ptr->second;
+
+			return {string_value.c_str() + string_value.size()};
+		}
+
 		/// @brief Converts a string of characters to a string value type.
 		/// 
 		/// Converts a string of characters to am string  value type.
@@ -347,6 +448,37 @@ namespace pugi
 		}
 
 		return default_value;
+	}
+
+
+	/// @brief Append an attribute to an XML node and set its value
+	/// 
+	/// @tparam Type_ Value type
+	/// 
+	/// @param node XML node to add the attribute to
+	/// @param name Name of the attribute
+	/// @param value Value to set in the attribute
+	/// 
+	/// @return The XML attribute added to the node.
+	template<class Type_>
+	xml_attribute append_attribute(xml_node& node, const std::string& name, const Type_& value)
+	{
+		return details::append_attribute(node, name.c_str(), value);
+	}
+
+	/// @brief Append an attribute to an XML node and set its value
+	/// 
+	/// @tparam Type_ Value type
+	/// 
+	/// @param node XML node to add the attribute to
+	/// @param name Name of the attribute
+	/// @param value Value to set in the attribute
+	/// 
+	/// @return The XML attribute added to the node.
+	template<class Type_>
+	xml_attribute append_attribute(xml_node& node, const char* name, const Type_& value)
+	{
+		return details::append_attribute(node, name, value);
 	}
 
 }

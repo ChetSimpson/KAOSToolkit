@@ -66,8 +66,16 @@
     <ClCompile Include="src\test_resource_locator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\xml\test_append_attribute.cpp">
+      <Filter>Source Files\xml</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\xml\attribute_conversion_details.h">
+      <Filter>Source Files\xml</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
