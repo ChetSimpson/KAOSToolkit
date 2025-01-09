@@ -40,21 +40,21 @@ namespace hypertech::kaos::assetfoo::images::vef
 		auto native_color_map(reader.read_vector<native_packed_color_type>(format_details::colormap_length));
 		native_color_map.resize(image_descriptor.layout.max_colors_in_pixel());
 		auto colormap(color_converter().create_colormap(native_color_space, native_color_map));
-		auto image(std::make_unique<image_type>(image_descriptor.dimensions));
+		auto bitmap(std::make_unique<bitmap_type>(image_descriptor.dimensions));
 
 		if (is_compressed)
 		{
-			load_compressed_pixel_data(reader, *image, *colormap, image_descriptor.layout);
+			load_compressed_pixel_data(reader, *bitmap, *colormap, image_descriptor.layout);
 		}
 		else
 		{
-			load_uncompressed_pixel_data(reader, *image, *colormap, image_descriptor.layout);
+			load_uncompressed_pixel_data(reader, *bitmap, *colormap, image_descriptor.layout);
 		}
 
-		image->set_attribute(attributes::native_color_space, native_color_space);
-		image->set_attribute(attributes::native_color_map, native_color_map);
+		bitmap->set_attribute(attributes::native_color_space, native_color_space);
+		bitmap->set_attribute(attributes::native_color_map, native_color_map);
 
-		return image;
+		return bitmap;
 	}
 	catch (core::exceptions::end_of_file_error&)
 	{
@@ -65,7 +65,7 @@ namespace hypertech::kaos::assetfoo::images::vef
 
 	void vef_image_reader::load_compressed_pixel_data(
 		core::io::binary_reader& reader,
-		image_type& image,
+		bitmap_type& bitmap,
 		const color_map_type& colormap,
 		const pixels::packed_pixel_layout& layout) const
 	try
@@ -74,7 +74,7 @@ namespace hypertech::kaos::assetfoo::images::vef
 		const auto pixels_per_byte(layout.pixels_per_packed_value());
 
 		const pixels::packed_pixel_converter converter;
-		for (auto row : image.create_view(image.width() / 2))
+		for (auto row : bitmap.create_view(bitmap.width() / 2))
 		{
 			const auto block_size(reader.read<uint8_t>());
 			const auto block_data(reader.read_vector<uint8_t>(block_size));

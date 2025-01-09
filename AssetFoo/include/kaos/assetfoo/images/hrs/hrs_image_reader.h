@@ -23,7 +23,7 @@ namespace hypertech::kaos::assetfoo::images::hrs
 		using format_details = hrs_image_format_details;
 
 		/// @brief The type of image created by the asset reader
-		using image_type = images::image;
+		using bitmap_type = images::color_bitmap;
 
 
 	public:

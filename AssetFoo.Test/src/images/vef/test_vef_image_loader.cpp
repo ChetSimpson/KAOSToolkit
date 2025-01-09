@@ -243,15 +243,15 @@ namespace hypertech::kaos::assetfoo::images::vef::unittests
 		using attributes = vef_image_reader::attributes;
 		TypeParam expectations;
 
-		auto image(vef_image_reader().load_as<vef_image_reader::image_type>(expectations.filename));
+		auto bitmap(vef_image_reader().load_as<vef_image_reader::bitmap_type>(expectations.filename));
 
-		ASSERT_NE(image, nullptr);
-		EXPECT_FALSE(image->empty());
-		EXPECT_EQ(image->width(), expectations.width);
-		EXPECT_EQ(image->height(), expectations.height);
-		EXPECT_EQ(image->get_attribute(attributes::native_color_space), expectations.colorspace);
-		EXPECT_EQ(image->get_attribute(attributes::native_color_map), expectations.native_colormap);
-		EXPECT_EQ(calculate_md5_hash(*image), expectations.hash);
+		ASSERT_NE(bitmap, nullptr);
+		EXPECT_FALSE(bitmap->empty());
+		EXPECT_EQ(bitmap->width(), expectations.width);
+		EXPECT_EQ(bitmap->height(), expectations.height);
+		EXPECT_EQ(bitmap->get_attribute(attributes::native_color_space), expectations.colorspace);
+		EXPECT_EQ(bitmap->get_attribute(attributes::native_color_map), expectations.native_colormap);
+		EXPECT_EQ(calculate_md5_hash(*bitmap), expectations.hash);
 	}
 
 	REGISTER_TYPED_TEST_CASE_P(test_vef_image_reader_typed, load);

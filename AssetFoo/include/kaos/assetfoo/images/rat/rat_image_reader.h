@@ -18,7 +18,7 @@ namespace hypertech::kaos::assetfoo::images::rat
 	public:
 
 		/// @brief The type of image created by the asset reader
-		using image_type = images::image;
+		using bitmap_type = images::color_bitmap;
 
 		/// @copydoc rat_image_format_details
 		using format_details = rat_image_format_details;
@@ -72,7 +72,7 @@ namespace hypertech::kaos::assetfoo::images::rat
 		/// the end of the input stream.
 		void load_compressed_pixel_data(
 			core::io::binary_reader& reader,
-			image_type& image,
+			bitmap_type& bitmap,
 			const color_map_type& colormap,
 			const pixels::packed_pixel_layout& layout,
 			uint8_t escape_value) const;

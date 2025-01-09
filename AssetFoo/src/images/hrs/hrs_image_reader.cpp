@@ -22,7 +22,7 @@ namespace hypertech::kaos::assetfoo::images::hrs
 		const auto native_color_map(reader.read_vector<native_packed_color_type>(format_details::colormap_length));
 		const auto colormap(color_converter().create_colormap(native_color_space, native_color_map));
 
-		auto image(std::make_unique<image_type>(format_details::dimensions));
+		auto image(std::make_unique<bitmap_type>(format_details::dimensions));
 
 		load_uncompressed_pixel_data(reader, *image, *colormap, format_details::pixel_layout);
 

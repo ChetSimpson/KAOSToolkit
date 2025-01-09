@@ -3,7 +3,7 @@
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
-#include <kaos/assetfoo/images/image.h>
+#include <kaos/assetfoo/images/color_bitmap.h>
 #include <kaos/assetfoo/asset_reader.h>
 
 
@@ -17,8 +17,8 @@ namespace hypertech::kaos::assetfoo::images::png
 	{
 	public:
 
-		/// @brief The type of image created by the asset reader
-		using image_type = images::image;
+		/// @brief The type of bitmap created by the asset reader
+		using bitmap_type = images::color_bitmap;
 
 
 	public:

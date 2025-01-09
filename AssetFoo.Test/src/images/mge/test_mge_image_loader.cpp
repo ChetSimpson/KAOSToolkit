@@ -133,20 +133,20 @@ namespace hypertech::kaos::assetfoo::images::mge::unittests
 
 		TypeParam expectations;
 
-		auto image(mge_image_reader().load_as<mge_image_reader::image_type>(expectations.filename));
+		auto bitmap(mge_image_reader().load_as<mge_image_reader::bitmap_type>(expectations.filename));
 
-		ASSERT_NE(image, nullptr);
-		EXPECT_FALSE(image->empty());
-		EXPECT_EQ(image->width(), expectations.width);
-		EXPECT_EQ(image->height(), expectations.height);
-		EXPECT_EQ(image->get_attribute(attributes::title), expectations.title);
-		EXPECT_EQ(image->get_attribute(attributes::native_color_space), expectations.colorspace);
-		EXPECT_EQ(image->get_attribute(attributes::native_color_map), expectations.native_colormap);
-		EXPECT_EQ(image->get_attribute(attributes::color_animation_rate), expectations.color_animation_rate);
-		EXPECT_EQ(image->get_attribute(attributes::color_animation_start_index), expectations.color_animation_start_index);
-		EXPECT_EQ(image->get_attribute(attributes::color_animation_end_index), expectations.color_animation_end_index);
+		ASSERT_NE(bitmap, nullptr);
+		EXPECT_FALSE(bitmap->empty());
+		EXPECT_EQ(bitmap->width(), expectations.width);
+		EXPECT_EQ(bitmap->height(), expectations.height);
+		EXPECT_EQ(bitmap->get_attribute(attributes::title), expectations.title);
+		EXPECT_EQ(bitmap->get_attribute(attributes::native_color_space), expectations.colorspace);
+		EXPECT_EQ(bitmap->get_attribute(attributes::native_color_map), expectations.native_colormap);
+		EXPECT_EQ(bitmap->get_attribute(attributes::color_animation_rate), expectations.color_animation_rate);
+		EXPECT_EQ(bitmap->get_attribute(attributes::color_animation_start_index), expectations.color_animation_start_index);
+		EXPECT_EQ(bitmap->get_attribute(attributes::color_animation_end_index), expectations.color_animation_end_index);
 
-		EXPECT_EQ(calculate_md5_hash(*image), expectations.hash);
+		EXPECT_EQ(calculate_md5_hash(*bitmap), expectations.hash);
 	}
 
 	REGISTER_TYPED_TEST_CASE_P(test_mge_image_reader_typed, load);

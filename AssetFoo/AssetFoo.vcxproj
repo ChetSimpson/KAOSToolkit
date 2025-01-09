@@ -35,7 +35,7 @@
     <ClCompile Include="src\images\cm3\cm3_image_reader.cpp" />
     <ClCompile Include="src\images\hash.cpp" />
     <ClCompile Include="src\images\hrs\hrs_image_reader.cpp" />
-    <ClCompile Include="src\images\image.cpp" />
+    <ClCompile Include="src\images\color_bitmap.cpp" />
     <ClCompile Include="src\images\mge\mge_image_attributes.cpp" />
     <ClCompile Include="src\images\mge\mge_image_reader.cpp" />
     <ClCompile Include="src\images\png\png_image_reader.cpp" />
@@ -72,13 +72,14 @@
     <ClInclude Include="include\kaos\assetfoo\composites\objects\polygon.h" />
     <ClInclude Include="include\kaos\assetfoo\composites\objects\rectangle.h" />
     <ClInclude Include="include\kaos\assetfoo\exceptions.h" />
+    <ClInclude Include="include\kaos\assetfoo\images\basic_bitmap.h" />
     <ClInclude Include="include\kaos\assetfoo\images\cm3\cm3_image_attributes.h" />
     <ClInclude Include="include\kaos\assetfoo\images\cm3\cm3_image_format_details.h" />
     <ClInclude Include="include\kaos\assetfoo\images\cm3\cm3_image_reader.h" />
     <ClInclude Include="include\kaos\assetfoo\images\hash.h" />
     <ClInclude Include="include\kaos\assetfoo\images\hrs\hrs_image_format_details.h" />
     <ClInclude Include="include\kaos\assetfoo\images\hrs\hrs_image_reader.h" />
-    <ClInclude Include="include\kaos\assetfoo\images\image.h" />
+    <ClInclude Include="include\kaos\assetfoo\images\color_bitmap.h" />
     <ClInclude Include="include\kaos\assetfoo\images\mge\mge_image_attributes.h" />
     <ClInclude Include="include\kaos\assetfoo\images\mge\mge_image_format_details.h" />
     <ClInclude Include="include\kaos\assetfoo\images\mge\mge_image_reader.h" />

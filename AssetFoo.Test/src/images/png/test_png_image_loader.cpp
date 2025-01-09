@@ -105,13 +105,13 @@ namespace hypertech::kaos::assetfoo::images::png::unittests
 	{
 		TypeParam expectations;
 
-		auto image(png_image_reader().load_as<png_image_reader::image_type>(expectations.filename));
+		auto bitmap(png_image_reader().load_as<png_image_reader::bitmap_type>(expectations.filename));
 
-		ASSERT_NE(image, nullptr);
-		EXPECT_FALSE(image->empty());
-		EXPECT_EQ(image->width(), expectations.width);
-		EXPECT_EQ(image->height(), expectations.height);
-		EXPECT_EQ(calculate_md5_hash(*image), expectations.hash);
+		ASSERT_NE(bitmap, nullptr);
+		EXPECT_FALSE(bitmap->empty());
+		EXPECT_EQ(bitmap->width(), expectations.width);
+		EXPECT_EQ(bitmap->height(), expectations.height);
+		EXPECT_EQ(calculate_md5_hash(*bitmap), expectations.hash);
 	}
 
 	REGISTER_TYPED_TEST_CASE_P(test_png_image_reader_typed, load);

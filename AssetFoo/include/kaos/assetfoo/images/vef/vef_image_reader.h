@@ -20,11 +20,14 @@ namespace hypertech::kaos::assetfoo::images::vef
 	{
 	public:
 
+		/// @copydoc images::color_bitmap
+		using bitmap_type = color_bitmap;
+
 		/// @brief Describes details of a VEF image type
 		struct image_descriptor
 		{
 			/// @brief The width and eight in pixels of the image
-			const image::dimensions_type dimensions;
+			const color_bitmap::dimensions_type dimensions;
 			/// @brief The packed pixel layout of the image
 			const pixels::packed_pixel_layout& layout;
 		};
@@ -32,8 +35,8 @@ namespace hypertech::kaos::assetfoo::images::vef
 		/// @copydoc vef_image_format_details
 		using format_details = vef_image_format_details;
 
-		/// @brief The type of image created by the asset reader
-		using image_type = images::image;
+		/// @brief The type of bitmap created by the asset reader
+		using bitmap_type = images::color_bitmap;
 
 		/// @brief List of image types supported by the VEF format
 		static const std::array<image_descriptor, 5> image_type_descriptors;
@@ -83,7 +86,7 @@ namespace hypertech::kaos::assetfoo::images::vef
 		/// the end of the input stream.
 		void load_compressed_pixel_data(
 			core::io::binary_reader& reader,
-			image_type& image,
+			bitmap_type& bitmap,
 			const color_map_type& colormap,
 			const pixels::packed_pixel_layout& layout) const;
 	};

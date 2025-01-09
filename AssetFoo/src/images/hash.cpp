@@ -3,7 +3,7 @@
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #include <kaos/assetfoo/images/hash.h>
-#include <kaos/assetfoo/images/image.h>
+#include <kaos/assetfoo/images/color_bitmap.h>
 #include <boost/uuid/detail/md5.hpp>
 
 
@@ -12,13 +12,13 @@ namespace hypertech::kaos::assetfoo::images
 
 	using boost::uuids::detail::md5;
 
-	std::array<uint32_t, 4> calculate_md5_hash(const image& img)
+	std::array<uint32_t, 4> calculate_md5_hash(const color_bitmap& img)
 	{
 		md5 hash;
 
 		for (const auto& pixel : img.get_sequence())
 		{
-			std::array<image::pixel_type::component_value_type, 4> color_components;
+			std::array<color_bitmap::pixel_type::component_value_type, 4> color_components;
 
 			color_components[0] = pixel.r;
 			color_components[1] = pixel.g;

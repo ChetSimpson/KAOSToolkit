@@ -21,7 +21,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 	public:
 
 		/// @brief The type of image created by the asset reader
-		using image_type = images::image;
+		using bitmap_type = images::color_bitmap;
 		/// @copydoc cm3_image_attributes::size_type
 		using size_type = cm3_image_attributes::size_type;
 		/// @copydoc cm3_image_attributes::pattern_type
@@ -89,7 +89,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		/// the end of the input stream.
 		void load_compressed_pixel_data(
 			core::io::binary_reader& reader,
-			image_type& image,
+			bitmap_type& bitmap,
 			const color_map_type& colormap,
 			const pixels::packed_pixel_layout& layout,
 			size_type page_count) const;
@@ -103,7 +103,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		/// @param page_index The index of the paage being loaded
 		void load_page_compressed_pixel_data(
 			core::io::binary_reader& reader,
-			image_type::view_type page_view,
+			bitmap_type::view_type page_view,
 			const color_map_type& colormap,
 			const pixels::packed_pixel_layout& layout,
 			size_type page_index) const;

@@ -718,22 +718,22 @@ namespace hypertech::kaos::assetfoo::images::cm3::unittests
 		using attributes = cm3_image_reader::attributes;
 		TypeParam expectations;
 
-		auto image(cm3_image_reader().load_as<cm3_image_reader::image_type>(expectations.filename));
+		auto bitmap(cm3_image_reader().load_as<cm3_image_reader::bitmap_type>(expectations.filename));
 		
-		ASSERT_NE(image, nullptr);
-		EXPECT_FALSE(image->empty());
-		EXPECT_EQ(image->width(), expectations.width);
-		EXPECT_EQ(image->height(), expectations.height);
-		EXPECT_EQ(image->get_attribute(attributes::native_color_space), expectations.colorspace);
-		EXPECT_EQ(image->get_attribute(attributes::native_color_map), expectations.native_colormap);
-		EXPECT_EQ(image->get_attribute(attributes::color_animation_rate), expectations.color_animation_rate);
-		EXPECT_EQ(image->get_attribute(attributes::color_animation_start_index), expectations.color_animation_start_index);
-		EXPECT_EQ(image->get_attribute(attributes::color_animation_end_index), expectations.color_animation_end_index);
-		EXPECT_EQ(image->get_attribute(attributes::color_cycle_rate), expectations.color_cycle_rate);
-		EXPECT_EQ(image->get_attribute(attributes::color_cycle_index), expectations.color_cycle_index);
-		EXPECT_EQ(image->get_attribute(attributes::color_cycle_colors), expectations.color_cycle_colors);
-		EXPECT_EQ(image->get_attribute(attributes::patterns), expectations.patterns);
-		EXPECT_EQ(calculate_md5_hash(*image), expectations.hash);
+		ASSERT_NE(bitmap, nullptr);
+		EXPECT_FALSE(bitmap->empty());
+		EXPECT_EQ(bitmap->width(), expectations.width);
+		EXPECT_EQ(bitmap->height(), expectations.height);
+		EXPECT_EQ(bitmap->get_attribute(attributes::native_color_space), expectations.colorspace);
+		EXPECT_EQ(bitmap->get_attribute(attributes::native_color_map), expectations.native_colormap);
+		EXPECT_EQ(bitmap->get_attribute(attributes::color_animation_rate), expectations.color_animation_rate);
+		EXPECT_EQ(bitmap->get_attribute(attributes::color_animation_start_index), expectations.color_animation_start_index);
+		EXPECT_EQ(bitmap->get_attribute(attributes::color_animation_end_index), expectations.color_animation_end_index);
+		EXPECT_EQ(bitmap->get_attribute(attributes::color_cycle_rate), expectations.color_cycle_rate);
+		EXPECT_EQ(bitmap->get_attribute(attributes::color_cycle_index), expectations.color_cycle_index);
+		EXPECT_EQ(bitmap->get_attribute(attributes::color_cycle_colors), expectations.color_cycle_colors);
+		EXPECT_EQ(bitmap->get_attribute(attributes::patterns), expectations.patterns);
+		EXPECT_EQ(calculate_md5_hash(*bitmap), expectations.hash);
 	}
 
 	REGISTER_TYPED_TEST_CASE_P(test_cm3_image_reader_typed, load);

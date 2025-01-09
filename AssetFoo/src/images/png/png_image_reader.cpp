@@ -3,7 +3,7 @@
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #include <kaos/assetfoo/images/png/png_image_reader.h>
-#include <kaos/assetfoo/images/image.h>
+#include <kaos/assetfoo/images/color_bitmap.h>
 #include <kaos/core/exceptions.h>
 #include <lodepng/lodepng.h>
 #include <istream>
@@ -36,12 +36,12 @@ namespace hypertech::kaos::assetfoo::images::png
 			throw core::exceptions::file_format_error("image file format error: unexpected error encountered while decoding `" + location_text() + "`");
 		}
 
-		std::vector<image::pixel_type> pixel_buffer;
+		std::vector<bitmap_type::pixel_type> pixel_buffer;
 		try
 		{
-			pixel_buffer = std::vector<image::pixel_type>(
-				reinterpret_cast<image::pixel_type*>(pixel_buffer_ptr),
-				reinterpret_cast<image::pixel_type*>(pixel_buffer_ptr) + size_t(width) * size_t(height));
+			pixel_buffer = std::vector<bitmap_type::pixel_type>(
+				reinterpret_cast<bitmap_type::pixel_type*>(pixel_buffer_ptr),
+				reinterpret_cast<bitmap_type::pixel_type*>(pixel_buffer_ptr) + size_t(width) * size_t(height));
 		}
 		catch (...)
 		{
@@ -51,7 +51,7 @@ namespace hypertech::kaos::assetfoo::images::png
 
 		free(pixel_buffer_ptr);
 
-		return std::make_unique<image>(width, height, move(pixel_buffer));
+		return std::make_unique<bitmap_type>(width, height, move(pixel_buffer));
 	}
 
 }

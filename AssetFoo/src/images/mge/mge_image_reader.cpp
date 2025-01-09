@@ -33,26 +33,26 @@ namespace hypertech::kaos::assetfoo::images::mge
 
 		auto colormap(color_converter().create_colormap(native_color_space, native_color_map));
 
-		auto image(std::make_unique<image_type>(format_details::dimensions));
+		auto bitmap(std::make_unique<bitmap_type>(format_details::dimensions));
 
 		const auto& layout(pixels::basic_packed_pixel_layout::BPP4);
 		if (is_compressed)
 		{
-			load_compressed_pixel_data(reader, *image, *colormap, layout);
+			load_compressed_pixel_data(reader, *bitmap, *colormap, layout);
 		}
 		else
 		{
-			load_uncompressed_pixel_data(reader, *image, *colormap, layout);
+			load_uncompressed_pixel_data(reader, *bitmap, *colormap, layout);
 		}
 
-		image->set_attribute(attributes::title, title);
-		image->set_attribute(attributes::native_color_space, native_color_space);
-		image->set_attribute(attributes::native_color_map, native_color_map);
-		image->set_attribute(attributes::color_animation_rate, animation_rate);
-		image->set_attribute(attributes::color_animation_start_index, (animation_indexes >> 4) & 0x0f);
-		image->set_attribute(attributes::color_animation_end_index, animation_indexes & 0x0f);
+		bitmap->set_attribute(attributes::title, title);
+		bitmap->set_attribute(attributes::native_color_space, native_color_space);
+		bitmap->set_attribute(attributes::native_color_map, native_color_map);
+		bitmap->set_attribute(attributes::color_animation_rate, animation_rate);
+		bitmap->set_attribute(attributes::color_animation_start_index, (animation_indexes >> 4) & 0x0f);
+		bitmap->set_attribute(attributes::color_animation_end_index, animation_indexes & 0x0f);
 
-		return image;
+		return bitmap;
 	}
 	catch (core::exceptions::end_of_file_error&)
 	{
@@ -63,7 +63,7 @@ namespace hypertech::kaos::assetfoo::images::mge
 
 	void mge_image_reader::load_compressed_pixel_data(
 		core::io::binary_reader& reader,
-		image_type& image,
+		bitmap_type& bitmap,
 		const color_map_type& colormap,
 		const pixels::packed_pixel_layout& layout) const
 	try
@@ -71,7 +71,7 @@ namespace hypertech::kaos::assetfoo::images::mge
 		const auto bpp(layout.bits_per_pixel());
 		const pixels::packed_pixel_converter converter;
 
-		for (auto sequence(image.get_sequence()); !sequence.empty(); )
+		for (auto sequence(bitmap.get_sequence()); !sequence.empty(); )
 		{
 			auto rlepair(reader.read_pair<uint8_t, uint8_t>());
 			sequence = converter.unpack(

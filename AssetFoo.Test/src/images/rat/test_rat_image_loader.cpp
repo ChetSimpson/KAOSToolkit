@@ -22,7 +22,7 @@ namespace hypertech::kaos::assetfoo::images::rat::unittests
 		struct rattitle_rat_expectations : rat_image_reader_test_expectations
 		{
 			static const inline auto filename = "TestData/images/rat/rat.rat";
-			static const inline auto background_color = image::pixel_type (0, 0, 85);
+			static const inline auto background_color = bitmap_type::pixel_type (0, 0, 85);
 			const native_color_map_type native_colormap
 			{
 				0x01, 0x10, 0x36, 0x20, 0x02, 0x38, 0x3e, 0x22,
@@ -38,7 +38,7 @@ namespace hypertech::kaos::assetfoo::images::rat::unittests
 		struct title1_rat_expectations : rat_image_reader_test_expectations
 		{
 			static const inline auto filename = "TestData/images/rat/rat1.rat";
-			static const inline auto background_color = image::pixel_type(255, 0, 0);
+			static const inline auto background_color = bitmap_type::pixel_type(255, 0, 0);
 
 			const native_color_map_type native_colormap
 			{
@@ -110,16 +110,16 @@ namespace hypertech::kaos::assetfoo::images::rat::unittests
 		using attributes = rat_image_reader::attributes;
 		TypeParam expectations;
 
-		auto image(rat_image_reader().load_as<rat_image_reader::image_type>(expectations.filename));
+		auto bitmap(rat_image_reader().load_as<rat_image_reader::bitmap_type>(expectations.filename));
 
-		ASSERT_NE(image, nullptr);
-		EXPECT_FALSE(image->empty());
-		EXPECT_EQ(image->width(), expectations.width);
-		EXPECT_EQ(image->height(), expectations.height);
-		EXPECT_EQ(image->get_attribute(attributes::native_color_space), expectations.colorspace);
-		EXPECT_EQ(image->get_attribute(attributes::native_color_map), expectations.native_colormap);
-		EXPECT_EQ(image->get_attribute(attributes::background_color), expectations.background_color);
-		EXPECT_EQ(calculate_md5_hash(*image), expectations.hash);
+		ASSERT_NE(bitmap, nullptr);
+		EXPECT_FALSE(bitmap->empty());
+		EXPECT_EQ(bitmap->width(), expectations.width);
+		EXPECT_EQ(bitmap->height(), expectations.height);
+		EXPECT_EQ(bitmap->get_attribute(attributes::native_color_space), expectations.colorspace);
+		EXPECT_EQ(bitmap->get_attribute(attributes::native_color_map), expectations.native_colormap);
+		EXPECT_EQ(bitmap->get_attribute(attributes::background_color), expectations.background_color);
+		EXPECT_EQ(calculate_md5_hash(*bitmap), expectations.hash);
 	}
 
 	REGISTER_TYPED_TEST_CASE_P(test_rat_image_reader_typed, load);

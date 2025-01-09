@@ -12,7 +12,7 @@ namespace hypertech::kaos::assetfoo::images::tc1014
 
 	void tc1014_image_reader::load_uncompressed_pixel_data(
 		core::io::binary_reader& reader,
-		image& image,
+		bitmap_type& bitmap,
 		const color_map_type& colormap,
 		const pixels::packed_pixel_layout& layout) const
 	try
@@ -20,7 +20,7 @@ namespace hypertech::kaos::assetfoo::images::tc1014
 		const auto bpp(layout.bits_per_pixel());
 		const pixels::packed_pixel_converter converter;
 
-		for (auto sequence(image.get_sequence()); !sequence.empty(); )
+		for (auto sequence(bitmap.get_sequence()); !sequence.empty(); )
 		{
 			sequence = converter.unpack(bpp, colormap, reader.read<uint8_t>(), sequence);
 		}

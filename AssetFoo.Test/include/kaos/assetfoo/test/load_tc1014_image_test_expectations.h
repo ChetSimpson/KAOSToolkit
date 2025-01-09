@@ -19,6 +19,7 @@ namespace hypertech::kaos::assetfoo::unittests
 		struct tc1014_image_reader_test_expectations
 	{
 		using size_type = size_t;
+		using bitmap_type = images::color_bitmap;
 		using color_map_type = images::tc1014::tc1014_image_reader::color_map_type;
 		using color_type = images::tc1014::tc1014_image_reader::color_type;
 		using color_space_type = images::tc1014::tc1014_image_reader::color_space_type;

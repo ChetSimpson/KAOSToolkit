@@ -30,23 +30,23 @@ namespace hypertech::kaos::assetfoo::images::rat
 
 		auto colormap(color_converter().create_colormap(native_color_space, native_color_map));
 
-		auto image(std::make_unique<image_type>(format_details::dimensions));
+		auto bitmap(std::make_unique<bitmap_type>(format_details::dimensions));
 
 		const auto& layout(format_details::pixel_layout);
 		if (is_compressed)
 		{
-			load_compressed_pixel_data(reader, *image, *colormap, layout, escape_value);
+			load_compressed_pixel_data(reader, *bitmap, *colormap, layout, escape_value);
 		}
 		else
 		{
-			load_uncompressed_pixel_data(reader, *image, *colormap, layout);
+			load_uncompressed_pixel_data(reader, *bitmap, *colormap, layout);
 		}
 
-		image->set_attribute(attributes::native_color_space, native_color_space);
-		image->set_attribute(attributes::native_color_map, native_color_map);
-		image->set_attribute(attributes::background_color, color_converter().to_color(native_background_color));
+		bitmap->set_attribute(attributes::native_color_space, native_color_space);
+		bitmap->set_attribute(attributes::native_color_map, native_color_map);
+		bitmap->set_attribute(attributes::background_color, color_converter().to_color(native_background_color));
 
-		return image;
+		return bitmap;
 	}
 	catch (core::exceptions::end_of_file_error&)
 	{
@@ -57,7 +57,7 @@ namespace hypertech::kaos::assetfoo::images::rat
 
 	void rat_image_reader::load_compressed_pixel_data(
 		core::io::binary_reader& reader,
-		image_type& image,
+		bitmap_type& bitmap,
 		const color_map_type& colormap,
 		const pixels::packed_pixel_layout& layout,
 		uint8_t escape_value) const
@@ -66,7 +66,7 @@ namespace hypertech::kaos::assetfoo::images::rat
 		const auto bpp(layout.bits_per_pixel());
 		const pixels::packed_pixel_converter converter;
 
-		for (auto sequence(image.get_sequence()); !sequence.empty(); )
+		for (auto sequence(bitmap.get_sequence()); !sequence.empty(); )
 		{
 			const auto data_byte(reader.read<uint8_t>());
 			if (data_byte != escape_value)

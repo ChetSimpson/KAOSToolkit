@@ -3,7 +3,7 @@
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
-#include <kaos/assetfoo/images/image.h>
+#include <kaos/assetfoo/images/color_bitmap.h>
 #include <kaos/assetfoo/pixels/basic_packed_pixel_layout.h>
 
 
@@ -19,8 +19,8 @@ namespace hypertech::kaos::assetfoo::images::mge
 			color_320x200_4bpp = 0	//!<	Specifies a 320x200 16 color (4bpp) image.
 		};
 
-		/// @copydoc image::size_type
-		using size_type = image::size_type;
+		/// @copydoc color_bitmap::size_type
+		using size_type = color_bitmap::size_type;
 		/// @brief Number of colors expected in the colormap
 		static const size_type colormap_size = 16;
 		/// @brief Maximum length of the title attribute
@@ -28,7 +28,7 @@ namespace hypertech::kaos::assetfoo::images::mge
 		/// @brief The number of colors supported.
 		static const size_t colormap_length = 16;
 		/// @brief The width and height of the image
-		static inline const auto dimensions = image::dimensions_type(320, 200);
+		static inline const auto dimensions = color_bitmap::dimensions_type(320, 200);
 		/// @brief Pixel layout of the image
 		static const inline pixels::packed_pixel_layout& pixel_layout{ pixels::basic_packed_pixel_layout::BPP4 };
 	};

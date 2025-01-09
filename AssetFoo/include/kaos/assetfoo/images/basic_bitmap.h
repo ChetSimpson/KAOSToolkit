@@ -6,7 +6,6 @@
 #include <kaos/assetfoo/asset.h>
 #include <kaos/core/types/vector2.h>
 #include <kaos/core/types/dimension2.h>
-#include <kaos/core/types/rgba_color.h>
 #include <kaos/core/types/box_view.h>
 #include <kaos/core/types/attribute_extension.h>
 #include <vector>
@@ -15,10 +14,9 @@
 namespace hypertech::kaos::assetfoo::images
 {
 
-	//	FIXME: rename to rgba_image
-
 	/// @brief RGBA image
-	class image
+	template<class PixelType_>
+	class basic_bitmap
 		:
 		public asset,
 		public core::types::attribute_extension
@@ -26,7 +24,7 @@ namespace hypertech::kaos::assetfoo::images
 	public:
 
 		/// @brief The type of pixel stored in the image
-		using pixel_type = core::types::rgba_color;
+		using pixel_type = PixelType_;
 		/// @brief Value size type
 		using size_type = std::size_t;
 		/// @brief Position type
@@ -48,7 +46,7 @@ namespace hypertech::kaos::assetfoo::images
 	public:
 
 		/// @brief Creates an empty image with no size.
-		image() noexcept = default;
+		basic_bitmap() noexcept = default;
 
 		/// @brief Creates an images
 		/// 
@@ -61,7 +59,22 @@ namespace hypertech::kaos::assetfoo::images
 		/// 
 		/// @exception std::invalid_argument if \p width is 0
 		/// @exception std::invalid_argument if \p height is 0
-		image(size_type width, size_type height, pixel_type init_pixel = pixel_type());
+		basic_bitmap(size_type width, size_type height, pixel_type init_pixel = pixel_type())
+			:
+			width_(width),
+			height_(height),
+			pixel_data_(width * height, init_pixel)
+		{
+			if (width_ == 0)
+			{
+				throw std::invalid_argument("image width cannot be 0");
+			}
+
+			if (height_ == 0)
+			{
+				throw std::invalid_argument("image height cannot be 0");
+			}
+		}
 
 		/// @brief Creates an image with precomposed pixel data
 		/// 
@@ -75,7 +88,28 @@ namespace hypertech::kaos::assetfoo::images
 		/// @exception std::invalid_argument if \p width is 0
 		/// @exception std::invalid_argument if \p height is 0
 		/// @exception std::invalid_argument if the length of \p pixel_data is not the exact size of the dimensions.
-		image(size_type width, size_type height, const collection_type& pixel_data);
+		basic_bitmap(size_type width, size_type height, const collection_type& pixel_data)
+			:
+			width_(width),
+			height_(height)
+		{
+			if (width_ == 0)
+			{
+				throw std::invalid_argument("image width cannot be 0");
+			}
+
+			if (height_ == 0)
+			{
+				throw std::invalid_argument("image height cannot be 0");
+			}
+
+			if (width_ * height_ != pixel_data.size())
+			{
+				throw std::invalid_argument("specified dimensions of image does not match buffer size");
+			}
+
+			pixel_data_ = pixel_data;
+		}
 
 		/// @brief Creates an image with precomposed pixel data
 		/// 
@@ -91,7 +125,28 @@ namespace hypertech::kaos::assetfoo::images
 		/// @exception std::invalid_argument if \p width is 0
 		/// @exception std::invalid_argument if \p height is 0
 		/// @exception std::invalid_argument if the length of \p pixel_data is not the exact size of the dimensions.
-		image(size_type width, size_type height, collection_type&& pixel_data);
+		basic_bitmap(size_type width, size_type height, collection_type&& pixel_data)
+			:
+			width_(width),
+			height_(height)
+		{
+			if (width_ == 0)
+			{
+				throw std::invalid_argument("image width cannot be 0");
+			}
+
+			if (height_ == 0)
+			{
+				throw std::invalid_argument("image height cannot be 0");
+			}
+
+			if (width_ * height_ != pixel_data.size())
+			{
+				throw std::invalid_argument("specified dimensions of image does not match buffer size");
+			}
+
+			pixel_data_ = move(pixel_data);
+		}
 
 		/// @brief Creates an images
 		/// 
@@ -103,7 +158,9 @@ namespace hypertech::kaos::assetfoo::images
 		/// 
 		/// @exception std::invalid_argument if width of the \p dimensions is 0
 		/// @exception std::invalid_argument if height of the \p dimensions is 0
-		explicit image(dimensions_type dimensions, pixel_type init_pixel = pixel_type());
+		explicit basic_bitmap(dimensions_type dimensions, pixel_type init_pixel = pixel_type())
+			: basic_bitmap(dimensions.width, dimensions.height, init_pixel)
+		{}
 
 		/// @brief Creates an image with precomposed pixel data
 		/// 
@@ -117,7 +174,9 @@ namespace hypertech::kaos::assetfoo::images
 		/// @exception std::invalid_argument if width of the \p dimensions is 0
 		/// @exception std::invalid_argument if height of the \p dimensions is 0
 		/// @exception std::invalid_argument if the length of \p pixel_data is not the exact size of the dimensions.
-		image(dimensions_type dimensions, const collection_type& pixel_data);
+		basic_bitmap(dimensions_type dimensions, const collection_type& pixel_data)
+			: basic_bitmap(dimensions.width, dimensions.height, pixel_data)
+		{}
 
 		/// @brief Creates an image with precomposed pixel data
 		/// 
@@ -132,8 +191,9 @@ namespace hypertech::kaos::assetfoo::images
 		/// @exception std::invalid_argument if width of the \p dimensions is 0
 		/// @exception std::invalid_argument if height of the \p dimensions is 0
 		/// @exception std::invalid_argument if the length of \p pixel_data is not the exact size of the dimensions.
-		image(dimensions_type dimensions, collection_type&& pixel_data);
-
+		basic_bitmap(dimensions_type dimensions, collection_type&& pixel_data)
+			: basic_bitmap(dimensions.width, dimensions.height, move(pixel_data))
+		{}
 
 		/// @brief Creates an image from a box view
 		/// 
@@ -142,13 +202,31 @@ namespace hypertech::kaos::assetfoo::images
 		/// @param view the box view containing a view of the data to create an image from.
 		/// 
 		/// @exception std::invalid_argument if the \p view is empty
-		explicit image(const_view_type view);
+		explicit basic_bitmap(const_view_type view)
+			:
+			width_(view.width()),
+			height_(view.height()),
+			pixel_data_(view.width() * view.height())
+		{
+			if (view.empty())
+			{
+				throw std::invalid_argument("cannot create image from empty view");
+			}
 
+			view_type pixels(pixel_data_.data(), width_, height_);
+
+			auto out_row(pixels.begin());
+			for (const auto& row : view)
+			{
+				std::copy(row.begin(), row.end(), (*out_row).begin());
+				++out_row;
+			}
+		}
 
 		/// @brief Creates a copy of an image
 		/// 
 		/// @param other The image to copy
-		image(const image& other) = default;
+		basic_bitmap(const basic_bitmap& other) = default;
 
 		/// @brief Creates an image using move semantics
 		/// 
@@ -156,7 +234,15 @@ namespace hypertech::kaos::assetfoo::images
 		/// empty state (empty() returns true).
 		/// 
 		/// @param other The image to move.
-		image(image&& other) noexcept;
+		basic_bitmap(basic_bitmap&& other) noexcept
+			:
+			width_(other.width_),
+			height_(other.height_),
+			pixel_data_(move(other.pixel_data_))
+		{
+			other.width_ = decltype(other.width_)();
+			other.height_ = decltype(other.width_)();
+		}
 
 
 		/// @brief Checks if the image is empty
@@ -164,35 +250,56 @@ namespace hypertech::kaos::assetfoo::images
 		/// Checks if the image is empty (width and height = 0).
 		/// 
 		/// @return true if the image is empty; false if the image is not empty.
-		[[nodiscard]] bool empty() const noexcept;
+		[[nodiscard]] bool empty() const noexcept
+		{
+			return pixel_data_.empty();
+		}
 
 		/// @brief Retrieve the dimensions of the image
 		/// 
 		/// @return The dimentions of the image.
-		[[nodiscard]] dimensions_type dimensions() const noexcept;
+		[[nodiscard]] dimensions_type dimensions() const noexcept
+		{
+			return dimensions_type(width_, height_);
+		}
 
 		/// @brief Retrieve the width of the image
 		/// 
 		/// @return The width of the image or 0 if the image is empty.
-		[[nodiscard]] size_type width() const noexcept;
+		[[nodiscard]] size_type width() const noexcept
+		{
+			return width_;
+		}
 
 		/// @brief Retrieve the height of the image
 		/// 
 		/// @return The height of the image or 0 if the image is empty.
-		[[nodiscard]] size_type height() const noexcept;
+		[[nodiscard]] size_type height() const noexcept
+		{
+			return height_;
+		}
 
 		/// @brief Retrieves the number of pixels in the image
 		/// 
 		/// @return The total number of pixels in the image
-		[[nodiscard]] size_type length() const noexcept;
+		[[nodiscard]] size_type length() const noexcept
+		{
+			return pixel_data_.size();
+		}
 
 		/// @brief Get a pointer to the pixel data
 		/// @return A pointer to the pixel data or null if the image is empty.
-		[[nodiscard]] pixel_type* data() noexcept;
+		[[nodiscard]] pixel_type* data() noexcept
+		{
+			return pixel_data_.data();
+		}
 
 		/// @brief Get a pointer to the pixel data
 		/// @return A const qualified pointer to the pixel data or null if the image is empty.
-		[[nodiscard]] const pixel_type* data() const noexcept;
+		[[nodiscard]] const pixel_type* data() const noexcept
+		{
+			return pixel_data_.data();
+		}
 
 
 		/// @brief Returns a sequence view to a specified row in the image
@@ -204,7 +311,10 @@ namespace hypertech::kaos::assetfoo::images
 		/// @exception std::runtime_error if the image is empty (empty() returns true)
 		/// @exception std::out_of_range if the row specified in \p index is greater
 		/// than the number of rows in the image.
-		[[nodiscard]] sequence_type at(size_type index);
+		[[nodiscard]] sequence_type at(size_type index)
+		{
+			return at<sequence_type>(pixel_data_, index);
+		}
 
 		/// @brief Returns a sequence view to a specified row in the image
 		/// 
@@ -217,13 +327,22 @@ namespace hypertech::kaos::assetfoo::images
 		/// @exception std::runtime_error if the image is empty (empty() returns true)
 		/// @exception std::out_of_range if the row specified in \p index is greater
 		/// than the number of rows in the image.
-		[[nodiscard]] const_sequence_type at(size_type index) const;
+		[[nodiscard]] const_sequence_type at(size_type index) const
+		{
+			return at<const_sequence_type>(pixel_data_, index);
+		}
 
 		/// @copydoc at()
-		[[nodiscard]] sequence_type operator[](size_type index);
+		[[nodiscard]] sequence_type operator[](size_type index)
+		{
+			return at<sequence_type>(pixel_data_, index);
+		}
 
 		/// @copydoc at()
-		[[nodiscard]] const_sequence_type operator[](size_type index) const;
+		[[nodiscard]] const_sequence_type operator[](size_type index) const
+		{
+			return at<const_sequence_type>(pixel_data_, index);
+		}
 
 
 		/// @brief Returns a sequence view of all pixels in the image
@@ -233,10 +352,17 @@ namespace hypertech::kaos::assetfoo::images
 		/// @exception std::runtime_error if the image is empty (empty() returns true)
 		/// @exception std::out_of_range if the row specified in \p index is greater
 		/// than the number of rows in the image.
-		[[nodiscard]] sequence_type get_sequence() noexcept;
+		[[nodiscard]] sequence_type get_sequence() noexcept
+		{
+			return sequence_type(pixel_data_);
+		}
 
 		/// @copydoc get_sequence()
-		[[nodiscard]] const_sequence_type get_sequence() const noexcept;
+		[[nodiscard]] const_sequence_type get_sequence() const noexcept
+		{
+			return const_sequence_type(pixel_data_);
+		}
+
 
 		/// @brief Creates a 2 dimensional view of the image
 		/// 
@@ -246,7 +372,10 @@ namespace hypertech::kaos::assetfoo::images
 		/// @return A view of the image
 		/// 
 		/// @exception std::runtime_error If the image is empty (empty() returns true)
-		[[nodiscard]] view_type create_view();
+		[[nodiscard]] view_type create_view()
+		{
+			return create_view<view_type>(pixel_data_);
+		}
 
 		/// @brief Creates skewed 2 dimensional view of the image
 		/// 
@@ -264,7 +393,10 @@ namespace hypertech::kaos::assetfoo::images
 		/// image
 		/// @exception std::out_of_range if \p view_width is not a multiple of the total
 		/// size of the image (width * height)
-		[[nodiscard]] view_type create_view(size_type view_width);
+		[[nodiscard]] view_type create_view(size_type view_width)
+		{
+			return create_view<view_type>(pixel_data_, view_width);
+		}
 
 		/// @brief Creates a 2 dimensional view of a portion of the image.
 		/// 
@@ -285,7 +417,10 @@ namespace hypertech::kaos::assetfoo::images
 		/// @exception std::out_of_range if \p y is greater than the height of the image.
 		/// @exception std::out_of_range If the size of the view exceeds the right or bottom
 		/// edge of the image (x + width, y + height)
-		[[nodiscard]] view_type create_view(size_type x, size_type y, size_type view_width, size_type view_height);
+		[[nodiscard]] view_type create_view(size_type x, size_type y, size_type view_width, size_type view_height)
+		{
+			return create_view<view_type>(pixel_data_, x, y, view_width, view_height);
+		}
 
 		/// @brief Creates a 2 dimensional view of a portion of the image.
 		/// 
@@ -304,29 +439,93 @@ namespace hypertech::kaos::assetfoo::images
 		/// @exception std::out_of_range if y position specified in \p position is greater than the height of the image.
 		/// @exception std::out_of_range If the size of the view exceeds the right or bottom
 		/// edge of the image (x + width, y + height)
-		[[nodiscard]] view_type create_view(position_type position, dimensions_type size);
+		[[nodiscard]] view_type create_view(position_type position, dimensions_type size)
+		{
+			return create_view<view_type>(pixel_data_, position.x, position.y, size.width, size.height);
+		}
 
 
 		/// @copydoc create_view()
-		[[nodiscard]] const_view_type create_view() const;
+		[[nodiscard]] const_view_type create_view() const
+		{
+			return create_view<const_view_type>(pixel_data_);
+		}
+
 		/// @copydoc create_view(size_type)
-		[[nodiscard]] const_view_type create_view(size_type view_width) const;
+		[[nodiscard]] const_view_type create_view(size_type view_width) const
+		{
+			return create_view<const_view_type>(pixel_data_, view_width);
+		}
+
 		/// @copydoc create_view(size_type,size_type,size_type,size_type)
-		[[nodiscard]] const_view_type create_view(size_type x, size_type y, size_type view_width, size_type view_height) const;
+		[[nodiscard]] const_view_type create_view(size_type x, size_type y, size_type view_width, size_type view_height) const
+		{
+			return create_view<const_view_type>(pixel_data_, x, y, view_width, view_height);
+		}
+
 		/// @copydoc create_view(position_type,dimensions_type)
-		[[nodiscard]] const_view_type create_view(position_type position, dimensions_type size) const;
+		[[nodiscard]] const_view_type create_view(position_type position, dimensions_type size) const
+		{
+			return create_view<const_view_type>(pixel_data_, position.x, position.y, size.width, size.height);
+		}
 
 
 	private:
 
 		template<class SequenceType_, class CollectionType_>
-		[[nodiscard]] SequenceType_ at(CollectionType_& data, size_type index) const;
+		[[nodiscard]] SequenceType_ at(CollectionType_& data, size_type index) const
+		{
+			if (data.empty())
+			{
+				throw std::runtime_error("cannot access subscript on empty image");
+			}
+
+			if (index >= height_)
+			{
+				throw std::out_of_range("image subscript index out of range");
+			}
+
+			const auto base_address(data.data() + (index * width_));
+
+			return SequenceType_(base_address, base_address + width_);
+		}
 
 		template<class ViewType_, class CollectionType_>
-		[[nodiscard]] ViewType_ create_view(CollectionType_& data) const;
+		[[nodiscard]] ViewType_ create_view(CollectionType_& data) const
+		{
+			if (data.empty())
+			{
+				throw std::runtime_error("cannot create view on empty image");
+			}
+
+			return { data.data(), width_, height_ };
+		}
 
 		template<class ViewType_, class CollectionType_>
-		[[nodiscard]] ViewType_ create_view(CollectionType_& data, size_type view_width) const;
+		[[nodiscard]] ViewType_ create_view(CollectionType_& data, size_type view_width) const
+		{
+			if (data.empty())
+			{
+				throw std::runtime_error("cannot create width based view on empty image");
+			}
+
+			if (view_width == 0)
+			{
+				throw std::out_of_range("image view width cannot be 0");
+			}
+
+			if (view_width > width_)
+			{
+				throw std::out_of_range("image view width cannot be greater than the image width");
+			}
+
+			if (data.size() % view_width != 0)
+			{
+				throw std::out_of_range("image view width must be a multiple of the image data size");
+			}
+
+			return { data.data(), view_width, data.size() / view_width };
+		}
 
 		template<class ViewType_, class CollectionType_>
 		[[nodiscard]] ViewType_ create_view(
@@ -334,8 +533,53 @@ namespace hypertech::kaos::assetfoo::images
 			size_type x,
 			size_type y,
 			size_type view_width,
-			size_type view_height) const;
+			size_type view_height) const
+		{
+			if (data.empty())
+			{
+				throw std::runtime_error("cannot create boxed view on empty image");
+			}
 
+
+			//	Check for zero width/height
+			if (view_width == 0)
+			{
+				throw std::out_of_range("image boxed view width cannot be 0");
+			}
+
+			if (view_height == 0)
+			{
+				throw std::out_of_range("image boxed view height cannot be 0");
+			}
+
+
+			//	Check for position out of bounds
+			if (x >= width_)
+			{
+				throw std::out_of_range("x position of requested image boxed view exceeds bounds of image");
+			}
+
+			if (y >= height_)
+			{
+				throw std::out_of_range("y position of requested image boxed view exceeds bounds of image");
+			}
+
+
+			//	Check for right/bottom edge out of bounds
+			if (x + view_width > width_)
+			{
+				throw std::out_of_range("width of requested image boxed view exceeds bounds of image");
+			}
+
+			if (y + view_height > height_)
+			{
+				throw std::out_of_range("height of requested image boxed view exceeds bounds of image");
+			}
+
+
+			//	TADA!
+			return ViewType_(data.data() + (y * width_) + x, view_width, view_height, width_);
+		}
 
 	private:
 
@@ -357,10 +601,11 @@ namespace hypertech::kaos::assetfoo::images
 	/// 
 	/// @param value The instance to be moved.
 	/// 
-	/// @return An rvalue reference to an instance of image
-	inline image&& move(image& img)
+	/// @return An rvalue reference to an instance of the image
+	template<class PixelType_>
+	inline basic_bitmap<PixelType_>&& move(basic_bitmap<PixelType_>& img)
 	{
-		return static_cast<image&&>(img);
+		return static_cast<basic_bitmap<PixelType_>&&>(img);
 	}
 
 }

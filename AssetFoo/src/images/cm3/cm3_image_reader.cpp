@@ -49,7 +49,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		const auto page_count((image_flags & format_details::double_page_flag_mask) == 0 ? 1 : 2);
 		const auto include_patterns((image_flags & format_details::exclude_patterns_flag_mask) == 0);
 
-		const auto dimensions(image_type::dimensions_type(format_details::page_width, format_details::page_height * page_count));
+		const auto dimensions(bitmap_type::dimensions_type(format_details::page_width, format_details::page_height * page_count));
 
 		auto colormap(color_converter().create_colormap(native_color_space, native_color_map));
 		//	Load the patterns if they exist
@@ -59,25 +59,25 @@ namespace hypertech::kaos::assetfoo::images::cm3
 			patterns = load_patterns(*colormap, reader);
 		}
 
-		auto image(std::make_unique<image_type>(dimensions, color_type(255, 255, 255)));
+		auto bitmap(std::make_unique<bitmap_type>(dimensions, color_type(255, 255, 255)));
 		load_compressed_pixel_data(
 			reader,
-			*image,
+			*bitmap,
 			*colormap,
 			format_details::pixel_layout,
 			page_count);
 
-		image->set_attribute(attributes::native_color_space, native_color_space);
-		image->set_attribute(attributes::native_color_map, native_color_map);
-		image->set_attribute(attributes::color_animation_rate, animation_rate);
-		image->set_attribute(attributes::color_animation_start_index, format_details::color_animation_start_index);
-		image->set_attribute(attributes::color_animation_end_index, format_details::color_animation_end_index);
-		image->set_attribute(attributes::color_cycle_rate, cycle_rate);
-		image->set_attribute(attributes::color_cycle_index, format_details::color_cycle_index);
-		image->set_attribute(attributes::color_cycle_colors, color_converter().convert_colors(native_color_space, cycle_colors));
-		image->set_attribute(attributes::patterns, patterns);
+		bitmap->set_attribute(attributes::native_color_space, native_color_space);
+		bitmap->set_attribute(attributes::native_color_map, native_color_map);
+		bitmap->set_attribute(attributes::color_animation_rate, animation_rate);
+		bitmap->set_attribute(attributes::color_animation_start_index, format_details::color_animation_start_index);
+		bitmap->set_attribute(attributes::color_animation_end_index, format_details::color_animation_end_index);
+		bitmap->set_attribute(attributes::color_cycle_rate, cycle_rate);
+		bitmap->set_attribute(attributes::color_cycle_index, format_details::color_cycle_index);
+		bitmap->set_attribute(attributes::color_cycle_colors, color_converter().convert_colors(native_color_space, cycle_colors));
+		bitmap->set_attribute(attributes::patterns, patterns);
 
-		return image;
+		return bitmap;
 	}
 	catch (core::exceptions::end_of_file_error&)
 	{
@@ -113,19 +113,19 @@ namespace hypertech::kaos::assetfoo::images::cm3
 
 	void cm3_image_reader::load_compressed_pixel_data(
 		core::io::binary_reader& reader,
-		image_type& image,
+		bitmap_type& bitmap,
 		const color_map_type& colormap,
 		const pixels::packed_pixel_layout& layout,
 		size_type page_count) const
 	{
-		auto page_size(image.height() / page_count);
+		auto page_size(bitmap.height() / page_count);
 
 		for (auto page(0U); page < page_count; ++page)
 		{
 			auto y_position(page_size * page);
 			load_page_compressed_pixel_data(
 				reader,
-				image.create_view(0, y_position, image.width(), page_size),
+				bitmap.create_view(0, y_position, bitmap.width(), page_size),
 				colormap,
 				layout,
 				page);
@@ -135,7 +135,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 
 	void cm3_image_reader::load_page_compressed_pixel_data(
 		core::io::binary_reader& reader,
-		image_type::view_type page_view,
+		bitmap_type::view_type page_view,
 		const color_map_type& colormap,
 		const pixels::packed_pixel_layout& layout,
 		size_type page_index) const

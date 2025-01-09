@@ -116,7 +116,7 @@
     <ClCompile Include="src\Colors\color_layout.cpp">
       <Filter>Source Files\colors</Filter>
     </ClCompile>
-    <ClCompile Include="src\images\image.cpp">
+    <ClCompile Include="src\images\color_bitmap.cpp">
       <Filter>Source Files\images</Filter>
     </ClCompile>
     <ClCompile Include="src\images\hash.cpp">
@@ -217,7 +217,7 @@
     <ClInclude Include="include\kaos\assetfoo\images\hash.h">
       <Filter>Header Files\images</Filter>
     </ClInclude>
-    <ClInclude Include="include\kaos\assetfoo\images\image.h">
+    <ClInclude Include="include\kaos\assetfoo\images\color_bitmap.h">
       <Filter>Header Files\images</Filter>
     </ClInclude>
     <ClInclude Include="include\kaos\assetfoo\images\monochrome_pattern.h">
@@ -315,6 +315,9 @@
     </ClInclude>
     <ClInclude Include="include\kaos\assetfoo\composites\object.h">
       <Filter>Header Files\composites</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\images\basic_bitmap.h">
+      <Filter>Header Files\images</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

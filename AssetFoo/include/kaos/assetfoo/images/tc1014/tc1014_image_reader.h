@@ -4,7 +4,7 @@
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
 #include <kaos/assetfoo/asset_reader.h>
-#include <kaos/assetfoo/images/image.h>
+#include <kaos/assetfoo/images/color_bitmap.h>
 #include <kaos/assetfoo/images/tc1014/tc1014_image_attributes.h>
 #include <kaos/assetfoo/colors/tc1014/tc1014_color_converter.h>
 #include <kaos/assetfoo/pixels/packed_pixel_converter.h>
@@ -21,6 +21,8 @@ namespace hypertech::kaos::assetfoo::images::tc1014
 	{
 	public:
 
+		/// @copydoc images::color_bitmap
+		using bitmap_type = color_bitmap;
 		/// @copydoc colors::tc1014::tc1014_color_converter::color_map_type
 		using color_map_type = colors::tc1014::tc1014_color_converter::color_map_type;
 		/// @copydoc colors::tc1014::tc1014_color_converter::color_type
@@ -73,7 +75,7 @@ namespace hypertech::kaos::assetfoo::images::tc1014
 		/// the end of the input stream.
 		virtual void load_uncompressed_pixel_data(
 			core::io::binary_reader& reader,
-			image& image,
+			bitmap_type& bitmap,
 			const color_map_type& colormap,
 			const pixels::packed_pixel_layout& layout) const;
 

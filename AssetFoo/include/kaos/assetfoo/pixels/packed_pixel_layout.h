@@ -47,7 +47,7 @@ namespace hypertech::kaos::assetfoo::pixels
 		virtual ~packed_pixel_layout() noexcept = default;
 
 
-		/// @brief Returns the maximum number of colors pixels per
+		/// @brief Returns the maximum number of colors available in a single pixel 
 		virtual size_type max_colors_in_pixel() const noexcept = 0;
 
 		/// @brief Returns the number of pixels packed in a single value.

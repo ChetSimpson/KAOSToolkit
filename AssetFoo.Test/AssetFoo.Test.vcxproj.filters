@@ -78,7 +78,7 @@
     <ClCompile Include="src\colors\test_color_converter_withoutalpha.cpp">
       <Filter>Source Files\colors</Filter>
     </ClCompile>
-    <ClCompile Include="src\images\test_image.cpp">
+    <ClCompile Include="src\images\test_basic_bitmap.cpp">
       <Filter>Source Files\images</Filter>
     </ClCompile>
     <ClCompile Include="src\images\mge\test_mge_image_loader.cpp">

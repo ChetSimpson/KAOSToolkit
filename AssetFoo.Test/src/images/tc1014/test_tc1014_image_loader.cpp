@@ -30,13 +30,13 @@ namespace hypertech::kaos::assetfoo::images::tc1014::unittests
 
 			virtual void load_uncompressed_pixel_data(
 				core::io::binary_reader& reader,
-				image& image,
+				bitmap_type& bitmap,
 				const color_map_type& colormap,
 				const pixels::packed_pixel_layout& layout,
 				const path_type& source_name)
 			{
 				start(resource_locator_type(source_name));
-				return tc1014_image_reader::load_uncompressed_pixel_data(reader, image, colormap, layout);
+				return tc1014_image_reader::load_uncompressed_pixel_data(reader, bitmap, colormap, layout);
 			}
 		};
 
@@ -75,7 +75,7 @@ namespace hypertech::kaos::assetfoo::images::tc1014::unittests
 	{
 		const auto colormap(std::make_unique<tc1014_image_reader::color_map_type>(default_colormap_colors));
 		prot_tc1014_image_reader image_reader;
-		images::image image(images::image::dimensions_type(4, 4));
+		images::color_bitmap image(images::color_bitmap::dimensions_type(4, 4));
 
 		std::istringstream input;
 		core::io::binary_reader reader(input);
@@ -91,7 +91,7 @@ namespace hypertech::kaos::assetfoo::images::tc1014::unittests
 		const auto colormap(std::make_unique<tc1014_image_reader::color_map_type>(default_colormap_colors));
 
 		prot_tc1014_image_reader image_reader;
-		images::image image(images::image::dimensions_type(4, 4));
+		images::color_bitmap image(images::color_bitmap::dimensions_type(4, 4));
 
 		std::istringstream input("\x01\x23\x45\x67\x89\xab\xcd\xef");
 		core::io::binary_reader reader(input);

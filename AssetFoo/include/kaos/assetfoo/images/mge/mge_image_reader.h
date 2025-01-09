@@ -20,7 +20,7 @@ namespace hypertech::kaos::assetfoo::images::mge
 	public:
 
 		/// @brief The type of image created by the asset reader
-		using image_type = images::image;
+		using bitmap_type = images::color_bitmap;
 
 		/// @brief String type used for storing the name
 		using string_type = std::string;
@@ -76,7 +76,7 @@ namespace hypertech::kaos::assetfoo::images::mge
 		/// the end of the input stream.
 		void load_compressed_pixel_data(
 			core::io::binary_reader& reader,
-			image_type& image,
+			bitmap_type& bitmap,
 			const color_map_type& colormap,
 			const pixels::packed_pixel_layout& layout) const;
 	};

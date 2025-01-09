@@ -82,7 +82,7 @@
     <ClCompile Include="src\images\png\test_png_image_loader.cpp" />
     <ClCompile Include="src\images\rat\test_rat_image_loader.cpp" />
     <ClCompile Include="src\images\tc1014\test_tc1014_image_loader.cpp" />
-    <ClCompile Include="src\images\test_image.cpp" />
+    <ClCompile Include="src\images\test_basic_bitmap.cpp" />
     <ClCompile Include="src\images\test_monochrome_pattern.cpp" />
     <ClCompile Include="src\images\vef\test_vef_image_loader.cpp" />
     <ClCompile Include="src\Pixels\test_packed_pixel_converter.cpp" />
