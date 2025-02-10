@@ -531,7 +531,7 @@ namespace hypertech::kaos::core::types
 
 				//	Remove hash and pad with zero's
 				value.erase(0, 1);
-				if (value.size() == 6)
+				if (value.size() <= min_rgb_string_size)
 				{
 					switch (source_color_space)
 					{

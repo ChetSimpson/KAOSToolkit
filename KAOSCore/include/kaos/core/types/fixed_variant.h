@@ -517,6 +517,8 @@ namespace hypertech::kaos::core::types
 
 	private:
 
+		static constexpr auto min_rgb_string_size = 6U;
+
 		static const string_type false_string_;
 		static const string_type true_string_;
 
