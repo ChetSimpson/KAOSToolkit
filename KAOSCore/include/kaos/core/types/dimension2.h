@@ -31,19 +31,19 @@ namespace hypertech::kaos::core::types
 		/// @brief Create a default dimension2.
 		/// 
 		/// Creates a default dimension2 with width and height set to 0.
-		dimension2() noexcept = default;
+		constexpr dimension2() noexcept = default;
 
 		/// @brief Creates a dimension2
 		/// 
 		/// @param width The width value of the dimension
 		/// @param height The height value of the dimension
-		dimension2(value_type width, value_type height) noexcept
+		constexpr dimension2(value_type width, value_type height) noexcept
 			: width(width), height(height)
 		{}
 
 		/// @brief Creates a copy of a dimension2
 		/// @param other The dimension2 to create a copy of
-		dimension2(const dimension2& other) noexcept = default;
+		constexpr dimension2(const dimension2& other) noexcept = default;
 
 		/// @brief Creates a copy of a dimension2 that uses a different type for Type_ (value_type).
 		/// 
@@ -52,7 +52,7 @@ namespace hypertech::kaos::core::types
 		/// 
 		/// @param other The dimension2 to make a copy of.
 		template<class OtherType_, bool OtherAllowFastFloatCompare_>
-		dimension2(const dimension2<OtherType_, OtherAllowFastFloatCompare_>& other)
+		constexpr dimension2(const dimension2<OtherType_, OtherAllowFastFloatCompare_>& other)
 			:
 			width(::boost::numeric_cast<Type_>(other.width)),
 			height(::boost::numeric_cast<Type_>(other.height))
@@ -67,7 +67,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of dimension2 to comapre against.
 		/// 
 		/// @return true if they are equal; false if they are not.
-		inline bool operator==(const dimension2& other) const noexcept
+		constexpr bool operator==(const dimension2& other) const noexcept
 		requires ::std::is_integral_v<Type_> || std::bool_constant<AllowFastFloatCompare_>::value
 		{
 			return width == other.width && height == other.height;
@@ -82,7 +82,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of dimension2 to comapre against.
 		/// 
 		/// @return true if they are not equal; false if they are.
-		inline bool operator!=(const dimension2& other) const noexcept
+		constexpr bool operator!=(const dimension2& other) const noexcept
 		requires ::std::is_integral_v<Type_> || std::bool_constant<AllowFastFloatCompare_>::value
 		{
 			return width != other.width || height != other.height;
@@ -98,7 +98,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of dimension2 to comapre against.
 		/// 
 		/// @return true if they are equal; false if they are not.
-		inline bool operator==(const dimension2& other) const noexcept
+		constexpr bool operator==(const dimension2& other) const noexcept
 		requires ::std::is_floating_point_v<Type_> && std::bool_constant<!AllowFastFloatCompare_>::value
 		{
 			return
@@ -116,7 +116,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of dimension2 to comapre against.
 		/// 
 		/// @return true if they are not equal; false if they are.
-		inline bool operator!=(const dimension2& other) const noexcept
+		constexpr bool operator!=(const dimension2& other) const noexcept
 		requires ::std::is_floating_point_v<Type_> && std::bool_constant<!AllowFastFloatCompare_>::value
 		{
 			return
@@ -132,7 +132,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of dimension2 to copy.
 		/// 
 		/// @return *this
-			dimension2& operator=(const dimension2& other) noexcept
+		constexpr dimension2& operator=(const dimension2& other) noexcept
 		{
 			width = other.width;
 			height = other.height;
@@ -148,7 +148,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of dimension2 to copy.
 		/// 
 		/// @return *this
-		dimension2& operator=(dimension2&& other) noexcept
+		constexpr dimension2& operator=(dimension2&& other) noexcept
 		{
 			width = other.width;
 			height = other.height;
@@ -162,7 +162,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of dimension2 on the right side of the expression.
 		/// 
 		/// @return An instance of dimension2 containing the result of the addition.
-		dimension2 operator+(const dimension2& other) const noexcept
+		constexpr dimension2 operator+(const dimension2& other) const noexcept
 		{
 			return dimension2(width + other.width, height + other.height);
 		}
@@ -173,7 +173,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of dimension2 on the right side of the expression.
 		/// 
 		/// @return *this
-		dimension2& operator+=(const dimension2& other) noexcept
+		constexpr dimension2& operator+=(const dimension2& other) noexcept
 		{
 			width += other.width;
 			height += other.height;
@@ -187,7 +187,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of dimension2 on the right side of the expression.
 		/// 
 		/// @return An instance of dimension2 containing the result of the subtraction.
-		dimension2 operator-(const dimension2& other) const noexcept
+		constexpr dimension2 operator-(const dimension2& other) const noexcept
 		{
 			return dimension2(width - other.width, height - other.height);
 		}
@@ -198,7 +198,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of dimension2 on the right side of the expression.
 		/// 
 		/// @return *this
-		dimension2& operator-=(const dimension2& other) noexcept
+		constexpr dimension2& operator-=(const dimension2& other) noexcept
 		{
 			width -= other.width;
 			height -= other.height;
@@ -212,7 +212,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of dimension2 on the right side of the expression.
 		/// 
 		/// @return An instance of dimension2 containing the result of the multiplication.
-		dimension2 operator*(const dimension2& other) const
+		constexpr dimension2 operator*(const dimension2& other) const
 		{
 			return dimension2(width * other.width, height * other.height);
 		}
@@ -223,7 +223,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of dimension2 on the right side of the expression.
 		/// 
 		/// @return *this
-		dimension2& operator*=(const dimension2& other) noexcept
+		constexpr dimension2& operator*=(const dimension2& other) noexcept
 		{
 			width *= other.width;
 			height *= other.height;
@@ -237,7 +237,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of dimension2 on the right side of the expression.
 		/// 
 		/// @return An instance of dimension2 containing the result of the division.
-		dimension2 operator/(const dimension2& other) const noexcept
+		constexpr dimension2 operator/(const dimension2& other) const noexcept
 		{
 			return dimension2(width / other.width, height / other.height);
 		}
@@ -248,12 +248,20 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of dimension2 on the right side of the division.
 		/// 
 		/// @return *this
-		dimension2& operator/=(const dimension2& other) noexcept
+		constexpr dimension2& operator/=(const dimension2& other) noexcept
 		{
 			width /= other.width;
 			height /= other.height;
 
 			return *this;
+		}
+
+		/// @brief Retrieves the area of the dimentions.
+		/// 
+		/// @return The area.
+		constexpr value_type area() const noexcept
+		{
+			return width * height;
 		}
 
 

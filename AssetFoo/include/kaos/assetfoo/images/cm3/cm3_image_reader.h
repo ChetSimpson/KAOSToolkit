@@ -74,12 +74,12 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		/// @param reader Binary reader to read the patterns from
 		/// 
 		/// @return A list of patterns.
-		pattern_list_type load_patterns(color_map_type colormap, core::io::binary_reader& reader) const;
+		pattern_list_type load_patterns(const color_map_type& colormap, core::io::binary_reader& reader) const;
 
 		/// @brief Loads a compressed CM3 image
 		/// 
 		/// @param reader The binary reader the image file is attached to.
-		/// @param image The RGBA image to load the converted CM3 image data into
+		/// @param bitmap The RGBA bitmap to load the converted CM3 image data into
 		/// @param colormap The colormap used to map color indexes to.
 		/// @param layout The pixel layout of the image data
 		/// @param page_count The number of pages to load.

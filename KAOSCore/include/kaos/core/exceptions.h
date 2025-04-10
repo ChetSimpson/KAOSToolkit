@@ -5,6 +5,7 @@
 #pragma once
 #include <stdexcept>
 #include <typeinfo>
+#include <format>
 
 
 namespace hypertech::kaos::core::exceptions
@@ -82,7 +83,7 @@ namespace hypertech::kaos::core::exceptions
 		/// The pointer is guaranteed to be valid at least until the exception object
 		/// from which it is obtained is destroyed, or until a non-const member
 		/// function on the exception object is called.
-		const char * what() const noexcept
+		const char * what() const noexcept override
 		{  return "bad value cast"; }
 
 		/// @brief Returns the type information of the source value type.
@@ -116,7 +117,7 @@ namespace hypertech::kaos::core::exceptions
 		using bad_value_cast::bad_value_cast;
 
 		/// @inheritdoc
-		const char * what() const noexcept
+		const char * what() const noexcept override
 		{  return "bad value cast: conversion from empty type"; }
 	};
 
@@ -131,7 +132,7 @@ namespace hypertech::kaos::core::exceptions
 		using bad_value_cast::bad_value_cast;
 
 		/// @inheritdoc
-		const char * what() const noexcept
+		const char * what() const noexcept override
 		{  return "bad value cast: negative overflow"; }
 	};
 
@@ -146,7 +147,7 @@ namespace hypertech::kaos::core::exceptions
 		using bad_value_cast::bad_value_cast;
 
 		/// @inheritdoc
-		const char * what() const noexcept
+		const char * what() const noexcept override
 		{ return "bad value cast: positive overflow"; }
 	};
 
@@ -161,7 +162,7 @@ namespace hypertech::kaos::core::exceptions
 		using bad_value_cast::bad_value_cast;
 
 		/// @inheritdoc
-		const char * what() const noexcept
+		const char * what() const noexcept override
 		{ return "bad value cast: incompatible types"; }
 	};
 
@@ -176,7 +177,7 @@ namespace hypertech::kaos::core::exceptions
 		using bad_value_cast::bad_value_cast;
 
 		/// @inheritdoc
-		const char * what() const noexcept
+		const char * what() const noexcept override
 		{ return "bad value cast: lexical conversion error"; }
 	};
 
@@ -190,7 +191,7 @@ namespace hypertech::kaos::core::exceptions
 		/// @brief Create an attribute_not_found_error exception
 		/// 
 		/// @param attribute_name The name of the attribute that wasn't found
-		attribute_not_found_error(const std::string& attribute_name)
+		explicit attribute_not_found_error(const std::string& attribute_name)
 			: std::runtime_error("attribute `" + attribute_name + "` not found")
 		{}
 
@@ -213,12 +214,11 @@ namespace hypertech::kaos::core::exceptions
 			const std::string& attribute_name,
 			const std::type_info& target_type)
 			: std::runtime_error(
-				error_message
-				+ " error encountered while converting attribute `"
-				+ attribute_name
-				+ "` to `"
-				+ target_type.name()
-				+ "`")
+				std::format(
+					"{} error encountered while converting attribute `{}` to `{}`",
+					error_message,
+					attribute_name,
+					target_type.name()))
 		{}
 
 	};

@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <span>
+#include <bit>
 
 
 namespace hypertech::kaos::core::io

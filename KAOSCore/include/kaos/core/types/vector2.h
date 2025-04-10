@@ -12,6 +12,8 @@
 namespace hypertech::kaos::core::types
 {
 
+	// FIXME: This should be renamed to something like basic_position
+
 	/// @brief Vector containing two values x and y.
 	/// 
 	/// @tparam Type_ The value type for x and y members
@@ -31,19 +33,19 @@ namespace hypertech::kaos::core::types
 		/// @brief Create a default vector2.
 		/// 
 		/// Creates a default vector2 with x and y set to 0.
-		vector2() noexcept = default;
+		constexpr vector2() noexcept = default;
 
 		/// @brief Creates a vector2
 		/// 
 		/// @param x The x value of the vector
 		/// @param y The y value of the vector
-		vector2(value_type x, value_type y) noexcept
+		constexpr vector2(value_type x, value_type y) noexcept
 			: x(x), y(y)
 		{}
 
 		/// @brief Creates a copy of a vector2
 		/// @param other The vector2 to create a copy of
-		vector2(const vector2& other) noexcept = default;
+		constexpr vector2(const vector2& other) noexcept = default;
 
 		/// @brief Creates a copy of a vector2 that uses a different type for Type_ (value_type).
 		/// 
@@ -52,7 +54,7 @@ namespace hypertech::kaos::core::types
 		/// 
 		/// @param other The vector2 to make a copy of.
 		template<class OtherType_, bool OtherAllowFastFloatCompare_>
-		vector2(const vector2<OtherType_, OtherAllowFastFloatCompare_>& other)
+		constexpr vector2(const vector2<OtherType_, OtherAllowFastFloatCompare_>& other)
 			:
 			x(::boost::numeric_cast<Type_>(other.x)),
 			y(::boost::numeric_cast<Type_>(other.y))
@@ -67,7 +69,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of vector2 to comapre against.
 		/// 
 		/// @return true if they are equal; false if they are not.
-		inline bool operator==(const vector2& other) const noexcept
+		constexpr bool operator==(const vector2& other) const noexcept
 		requires ::std::is_integral_v<Type_> || std::bool_constant<AllowFastFloatCompare_>::value
 		{
 			return x == other.x && y == other.y;
@@ -82,7 +84,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of vector2 to comapre against.
 		/// 
 		/// @return true if they are not equal; false if they are.
-		inline bool operator!=(const vector2& other) const noexcept
+		constexpr bool operator!=(const vector2& other) const noexcept
 		requires ::std::is_integral_v<Type_> || std::bool_constant<AllowFastFloatCompare_>::value
 		{
 			return x != other.x || y != other.y;
@@ -98,7 +100,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of vector2 to comapre against.
 		/// 
 		/// @return true if they are equal; false if they are not.
-		inline bool operator==(const vector2& other) const noexcept
+		constexpr bool operator==(const vector2& other) const noexcept
 		requires ::std::is_floating_point_v<Type_> && std::bool_constant<!AllowFastFloatCompare_>::value
 		{
 			return
@@ -116,7 +118,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of vector2 to comapre against.
 		/// 
 		/// @return true if they are not equal; false if they are.
-		inline bool operator!=(const vector2& other) const noexcept
+		constexpr bool operator!=(const vector2& other) const noexcept
 		requires ::std::is_floating_point_v<Type_> && std::bool_constant<!AllowFastFloatCompare_>::value
 		{
 			return
@@ -132,7 +134,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of vector2 to copy.
 		/// 
 		/// @return *this
-		vector2& operator=(const vector2& other) noexcept
+		constexpr vector2& operator=(const vector2& other) noexcept
 		{
 			x = other.x;
 			y = other.y;
@@ -148,7 +150,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of vector2 to copy.
 		/// 
 		/// @return *this
-		vector2& operator=(vector2&& other) noexcept
+		constexpr vector2& operator=(vector2&& other) noexcept
 		{
 			x = other.x;
 			y = other.y;
@@ -162,7 +164,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of vector2 on the right side of the expression.
 		/// 
 		/// @return An instance of vector2 containing the result of the addition.
-		vector2 operator+(const vector2& other) const noexcept
+		constexpr vector2 operator+(const vector2& other) const noexcept
 		{
 			return vector2(x + other.x, y + other.y);
 		}
@@ -173,7 +175,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of vector2 on the right side of the expression.
 		/// 
 		/// @return *this
-		vector2& operator+=(const vector2& other) noexcept
+		constexpr vector2& operator+=(const vector2& other) noexcept
 		{
 			x += other.x;
 			y += other.y;
@@ -187,7 +189,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of vector2 on the right side of the expression.
 		/// 
 		/// @return An instance of vector2 containing the result of the subtraction.
-		vector2 operator-(const vector2& other) const noexcept
+		constexpr vector2 operator-(const vector2& other) const noexcept
 		{
 			return vector2(x - other.x, y - other.y);
 		}
@@ -198,7 +200,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of vector2 on the right side of the expression.
 		/// 
 		/// @return *this
-		vector2& operator-=(const vector2& other) noexcept
+		constexpr vector2& operator-=(const vector2& other) noexcept
 		{
 			x -= other.x;
 			y -= other.y;
@@ -212,7 +214,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of vector2 on the right side of the expression.
 		/// 
 		/// @return An instance of vector2 containing the result of the multiplication.
-		vector2 operator*(const vector2& other) const
+		constexpr vector2 operator*(const vector2& other) const
 		{
 			return vector2(x * other.x, y * other.y);
 		}
@@ -223,7 +225,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of vector2 on the right side of the expression.
 		/// 
 		/// @return *this
-		vector2& operator*=(const vector2& other) noexcept
+		constexpr vector2& operator*=(const vector2& other) noexcept
 		{
 			x *= other.x;
 			y *= other.y;
@@ -237,7 +239,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of vector2 on the right side of the expression.
 		/// 
 		/// @return An instance of vector2 containing the result of the division.
-		vector2 operator/(const vector2& other) const noexcept
+		constexpr vector2 operator/(const vector2& other) const noexcept
 		{
 			return vector2(x / other.x, y / other.y);
 		}
@@ -248,7 +250,7 @@ namespace hypertech::kaos::core::types
 		/// @param other The instance of vector2 on the right side of the division.
 		/// 
 		/// @return *this
-		vector2& operator/=(const vector2& other) noexcept
+		constexpr vector2& operator/=(const vector2& other) noexcept
 		{
 			x /= other.x;
 			y /= other.y;

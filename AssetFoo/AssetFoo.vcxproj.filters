@@ -107,9 +107,6 @@
     <ClCompile Include="src\Colors\color_converter.cpp">
       <Filter>Source Files\colors</Filter>
     </ClCompile>
-    <ClCompile Include="src\Colors\color_map.cpp">
-      <Filter>Source Files\colors</Filter>
-    </ClCompile>
     <ClCompile Include="src\Pixel\packed_pixel_converter.cpp">
       <Filter>Source Files\pixel</Filter>
     </ClCompile>
@@ -318,6 +315,9 @@
     </ClInclude>
     <ClInclude Include="include\kaos\assetfoo\images\basic_bitmap.h">
       <Filter>Header Files\images</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\assetfoo\colors\basic_color_map.h">
+      <Filter>Header Files\colors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

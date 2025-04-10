@@ -136,6 +136,15 @@
     <ClInclude Include="include\kaos\core\types\string_literal_argument.h">
       <Filter>Header Files\types</Filter>
     </ClInclude>
+    <ClInclude Include="include\kaos\core\types\rgb_color.h">
+      <Filter>Header Files\types</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\core\types\sized_rectangle.h">
+      <Filter>Header Files\types</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kaos\core\types\rectangle.h">
+      <Filter>Header Files\types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

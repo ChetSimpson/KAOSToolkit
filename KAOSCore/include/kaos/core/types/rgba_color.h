@@ -3,6 +3,7 @@
 // Distributed under the MIT License. See accompanying LICENSE file or copy
 // at https://github.com/ChetSimpson/KAOSToolkit/blob/main/LICENSE
 #pragma once
+#include <kaos/core/types/rgb_color.h>
 #include <limits>
 #include <cstdint>
 
@@ -102,7 +103,7 @@ namespace hypertech::kaos::core::types
 		{}
 
 		
-		/// @brief Create a color from a packed RGBA value
+		/// @brief Create a color from a packed RGBA value.
 		/// 
 		/// Creates an instance of rgba_color with red, green, blue, and alpha color
 		/// component values packed in a signed integer.
@@ -116,6 +117,25 @@ namespace hypertech::kaos::core::types
 			b((packedvalue >> 8) & 0xff),
 			a((packedvalue >> 0) & 0xff)
 		{}
+
+		/// @brief Create a color from an instance of a rgb_color.
+		/// 
+		/// Creates an instance of rgba_color with the red, green, blue components
+		/// of a rgb_color and sets its alpha value to fully opaque.
+		/// 
+		/// @param color The rgb_color instance copy the red, green, and blue
+		/// component values from.
+		explicit rgba_color(const rgb_color& color) noexcept
+			: rgba_color(color.r, color.g, color.b, max_component_value())
+		{}
+
+		/// @brief Conversion operator that returns an instance of rgb_color.
+		/// @return An instance of rgb_color containing the red, green, and blue
+		/// values of this instance of rgba_color.
+		explicit(false) operator rgb_color() const noexcept
+		{
+			return rgb_color(r, g, b);
+		}
 
 		/// @brief Copy constructor
 		/// 
@@ -145,25 +165,35 @@ namespace hypertech::kaos::core::types
 		/// @return A reference to the rgba_color being moved to.
 		rgba_color& operator=(rgba_color&& other) noexcept = default;
 
+		/// @brief Replaces the color components of the rgba_color with the values from
+		/// an instance of rgb_color.
+		/// 
+		/// @param other The rgb_color being assigned to this rgba_color.
+		/// 
+		/// @return A reference to the rgba_color being assigned to.
+		rgba_color& operator=(const rgb_color& other) noexcept
+		{
+			r = other.r;
+			g = other.g;
+			b = other.b;
+			a = max_component_value();
+
+			return *this;
+		}
+
 		/// @brief Tests if this rgba_color object is equal to the rgba_color on the
 		/// right side an expression.
 		/// 
 		/// @param other The other instance of rgba_color to compare to.
 		/// @return true if the colors are equal; false if the colors are not equal.
-		bool operator==(const rgba_color& other) const noexcept
-		{
-			return r == other.r && g == other.g && b == other.b && a == other.a;
-		}
+		bool operator==(const rgba_color& other) const noexcept = default;
 
 		/// @brief Tests if this rgba_color object is not equal to the rgba_color on the
 		/// right side an expression.
 		/// 
 		/// @param other The other instance of rgba_color to compare to.
 		/// @return true if the colors are not equal; false if the colors are equal.
-		bool operator!=(const rgba_color& other) const noexcept
-		{
-			return r != other.r || g != other.g || b != other.b || a != other.a;
-		}
+		bool operator!=(const rgba_color& other) const noexcept = default;
 
 		/// @brief Converts the color to packed unsigned integer value.
 		/// @return The packed color value

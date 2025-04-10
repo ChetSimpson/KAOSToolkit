@@ -41,8 +41,8 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		const auto animation_rate(reader.read<uint8_t>());
 		const auto cycle_rate(reader.read<uint8_t>());
 		const auto cycle_colors(reader.read_vector<native_packed_color_type>(format_details::cycle_color_count));
-		const auto animation_flags(reader.read<uint8_t>());
-		const auto cycling_flags(reader.read<uint8_t>());
+		[[maybe_unused]] const auto animation_flags(reader.read<uint8_t>());
+		[[maybe_unused]] const auto cycling_flags(reader.read<uint8_t>());
 
 		//	Extract the details we need and create the colormap
 		const auto native_color_space(color_space_type::rgb);	//	Needs user supplied option
@@ -86,7 +86,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 	}
 
 	cm3_image_reader::pattern_list_type cm3_image_reader::load_patterns(
-		color_map_type colormap,
+		[[maybe_unused]] const color_map_type& colormap,
 		binary_reader& reader) const
 	try
 	{
@@ -145,22 +145,22 @@ namespace hypertech::kaos::assetfoo::images::cm3
 		if (row_count != page_view.height())
 		{
 			throw core::exceptions::file_format_error(
-				"image file format error: invalid row count of "
-				+ std::to_string(row_count)
-				+ " in image page "
-				+ std::to_string(page_index)
-				+ " of `" + location_text() + "`");
+				std::format(
+					"image file format error: invalid row count of {} in image page {} of `{}`",
+					std::to_string(row_count),
+					std::to_string(page_index),
+					location_text()));
 		}
 
 		const auto bpp(layout.bits_per_pixel());
-		const pixels::packed_pixel_converter converter;
+		const auto converter = pixels::packed_pixel_converter();
 
 		std::array<uint8_t, format_details::decompression_line_buffer_size> line_buffer = { 0 };
 		std::array<uint8_t, format_details::horizontal_bitstream_size_in_bytes> horizontal_dictionary_buffer = { 0 };
 		std::vector<uint8_t> vertical_dictionary_buffer;
 		uint8_t last_byte = 0;
 
-		for (auto row : page_view)
+		for (auto& row : page_view)
 		{
 			auto control_byte(reader.read<uint8_t>());
 			if ((control_byte & 0x80) != 0)
@@ -182,20 +182,20 @@ namespace hypertech::kaos::assetfoo::images::cm3
 					? bit_reader<uint8_t>()
 					: bit_reader<uint8_t>(vertical_dictionary_buffer));
 
-				for (auto line_ptr(line_buffer.begin()); line_ptr != line_buffer.end(); ++line_ptr)
+				for (auto& byte_ref : line_buffer)
 				{
 
 					//	If the next bit in the horizontal dictionary is not set we use the previous
 					//	byte
 					if (!horizontal_dictionary.read())
 					{
-						*line_ptr = last_byte;
+						byte_ref = last_byte;
 					}
 					//	Otherwise if the next bit in the vertical_dictionary is set we get the next
 					//	byte in the input stream
 					else if (vertical_dictionary.read())
 					{
-						*line_ptr = reader.read<uint8_t>();
+						byte_ref = reader.read<uint8_t>();
 					}
 
 					// NOTE: In the case where neither the next bit in the horizontal dictionary is set 
@@ -206,7 +206,7 @@ namespace hypertech::kaos::assetfoo::images::cm3
 
 					//	We need to track the last byte read for the case where the horizontal
 					//	bit is not set.
-					last_byte = *line_ptr;
+					last_byte = byte_ref;
 				}
 
 				converter.unpack(bpp, colormap, line_buffer, row);
@@ -216,9 +216,10 @@ namespace hypertech::kaos::assetfoo::images::cm3
 	catch (core::exceptions::end_of_file_error&)
 	{
 		throw core::exceptions::file_format_error(
-			"image file format error: attempt to read past end of file while processing uncompressed image data in page "
-			+ std::to_string(page_index)
-			+ " of `" + location_text() + "`");
+			std::format(
+				"image file format error: attempt to read past end of file while processing uncompressed image data in page {} of `{}`",
+				std::to_string(page_index),
+				location_text()));
 	}
 
 }
